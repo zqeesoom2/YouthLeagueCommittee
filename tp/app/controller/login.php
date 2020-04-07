@@ -13,6 +13,7 @@ class login extends BaseController
     use PublicController;
     //登录首页
     public function index() {
+
         if (!empty($_SESSION)){
             $this->assign("jumpUrl", __APP__);
             $this->success('登录成功');
@@ -39,9 +40,11 @@ class login extends BaseController
                 $_SESSION['username'] = $login['username'];
                 $_SESSION['user_id'] = $login['uid'];
                 $_SESSION['email'] = $login['email'];
-                echo $login['synlogin'];//输出同步登录代码 （这步很重要）
-                $this->assign("jumpUrl", __APP__);
-                $this->success('登录成功');
+                echo"<pre>";var_dump($login);
+                echo '<img src="'.UC_API.'/avatar.php?uid='.$login['uid'].'&size=middle" />';exit();
+                //echo $login['synlogin'];//输出同步登录代码 （这步很重要）
+               // $this->assign("jumpUrl", __APP__);
+                //$this->success('登录成功');
             }
         } else {
             $this->error('错误，用户名和密码不能为空');

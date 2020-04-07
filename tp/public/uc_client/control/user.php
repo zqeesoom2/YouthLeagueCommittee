@@ -110,6 +110,7 @@ class usercontrol extends uc_base {
 		$password = $this->input('password');
 		$checkques = $this->input('checkques');
 		$questionid = $this->input('questionid');
+
 		$answer = $this->input('answer');
 		if($isuid == 1) {
 			$user = $_ENV['user']->get_user_by_uid($username);

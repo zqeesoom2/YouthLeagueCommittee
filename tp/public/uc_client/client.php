@@ -69,6 +69,7 @@ function uc_api_post($module, $action, $arg = array()) {
 		$sep = '&';
 	}
 	$postdata = uc_api_requestdata($module, $action, $s);
+
 	return uc_fopen2(UC_API.'/index.php', 500000, $postdata, '', TRUE, UC_IP, 20);
 }
 
@@ -96,6 +97,7 @@ function uc_api_mysql($model, $action, $args=array()) {
 		include_once UC_ROOT."./control/$model.php";
 		eval("\$uc_controls['$model'] = new {$model}control();");
 	}
+
 	if($action{0} != '_') {
 		$args = uc_addslashes($args, 1, TRUE);
 		$action = 'on'.$action;
@@ -176,6 +178,7 @@ function uc_fopen2($url, $limit = 0, $post = '', $cookie = '', $bysocket = FALSE
 }
 
 function uc_fopen($url, $limit = 0, $post = '', $cookie = '', $bysocket = FALSE, $ip = '', $timeout = 15, $block = TRUE) {
+
 	$return = '';
 	$matches = parse_url($url);
 	!isset($matches['host']) && $matches['host'] = '';
@@ -207,6 +210,7 @@ function uc_fopen($url, $limit = 0, $post = '', $cookie = '', $bysocket = FALSE,
 		$out .= "Host: $host\r\n";
 		$out .= "Connection: Close\r\n";
 		$out .= "Cookie: $cookie\r\n\r\n";
+
 	}
 
 	if(function_exists('fsockopen')) {
@@ -242,6 +246,7 @@ function uc_fopen($url, $limit = 0, $post = '', $cookie = '', $bysocket = FALSE,
 			}
 		}
 		@fclose($fp);
+		echo $return;
 		return $return;
 	}
 }

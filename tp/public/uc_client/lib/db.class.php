@@ -7,7 +7,6 @@
 	$Id: db.class.php 1059 2011-03-01 07:25:09Z monkey $
 */
 
-
 class ucclient_db {
 	var $querynum = 0;
 	var $link;
@@ -34,7 +33,7 @@ class ucclient_db {
 		$this->time = $time;
 
 		if($pconnect) {
-			if(!$this->link = mysql_pconnect($dbhost, $dbuser, $dbpw)) {
+			if(!$this->link = mysqli_pconnect($dbhost, $dbuser, $dbpw)) {
 				$this->halt('Can not connect to MySQL server');
 			}
 		} else {
@@ -43,8 +42,8 @@ class ucclient_db {
 			}*/
 			//echo "$dbhost:3306 ,".$dbuser ." ," .$dbpw." ,".$dbname;
             if(!$this->link = mysqli_connect("$dbhost", $dbuser, $dbpw, $dbname)) {
-               // $this->halt('Can not connect to MySQL server');
-                die("连接错误: " . mysqli_connect_error());
+              // $this->halt('Can not connect to MySQL server');
+               die("连接错误: " . iconv('GBK', 'UTF-8', mysqli_connect_error()));
             }
 
 
@@ -53,22 +52,22 @@ class ucclient_db {
 
 		if($this->version() > '4.1') {
 			if($dbcharset) {
-				mysql_query("SET character_set_connection=".$dbcharset.", character_set_results=".$dbcharset.", character_set_client=binary", $this->link);
+				mysqli_query("SET character_set_connection=".$dbcharset.", character_set_results=".$dbcharset.", character_set_client=binary", $this->link);
 			}
 
 			if($this->version() > '5.0.1') {
-				mysql_query("SET sql_mode=''", $this->link);
+				mysqli_query("SET sql_mode=''", $this->link);
 			}
 		}
 
 		if($dbname) {
-			mysql_select_db($dbname, $this->link);
+			mysqli_select_db($dbname, $this->link);
 		}
 
 	}
 
-	function fetch_array($query, $result_type = MYSQL_ASSOC) {
-		return mysql_fetch_array($query, $result_type);
+	function fetch_array($query, $result_type = MYSQLI_ASSOC) {
+		return mysqli_fetch_array($query, $result_type);
 	}
 
 	function result_first($sql) {
@@ -95,64 +94,73 @@ class ucclient_db {
 	}
 
 	function query($sql, $type = '', $cachetime = FALSE) {
-		$func = $type == 'UNBUFFERED' && @function_exists('mysql_unbuffered_query') ? 'mysql_unbuffered_query' : 'mysql_query';
-		if(!($query = $func($sql, $this->link)) && $type != 'SILENT') {
+		$func = $type == 'UNBUFFERED' && @function_exists('mysqli_unbuffered_query') ? 'mysqli_unbuffered_query' : 'mysqli_query';
+		if(!($query = $func( $this->link,$sql)) && $type != 'SILENT') {
+
 			$this->halt('MySQL Query Error', $sql);
 		}
+
 		$this->querynum++;
 		$this->histories[] = $sql;
 		return $query;
 	}
 
 	function affected_rows() {
-		return mysql_affected_rows($this->link);
+		return mysqli_affected_rows($this->link);
 	}
 
 	function error() {
-		return (($this->link) ? mysql_error($this->link) : mysql_error());
+		return (($this->link) ? mysqli_error($this->link) : mysqli_error());
 	}
 
 	function errno() {
-		return intval(($this->link) ? mysql_errno($this->link) : mysql_errno());
+		return intval(($this->link) ? mysqli_errno($this->link) : mysqli_errno());
 	}
 
-	function result($query, $row) {
+	/*function result($query, $row) {
 		$query = @mysql_result($query, $row);
 		return $query;
-	}
+	}*/
+
+    function result($result, $number, $field=0) {
+        mysqli_data_seek($result, $number);
+        $row = mysqli_fetch_array($result);
+        return $row[$field];
+    }
+
 
 	function num_rows($query) {
-		$query = mysql_num_rows($query);
+		$query = mysqli_num_rows($query);
 		return $query;
 	}
 
 	function num_fields($query) {
-		return mysql_num_fields($query);
+		return mysqli_num_fields($query);
 	}
 
 	function free_result($query) {
-		return mysql_free_result($query);
+		return mysqli_free_result($query);
 	}
 
 	function insert_id() {
-		return ($id = mysql_insert_id($this->link)) >= 0 ? $id : $this->result($this->query("SELECT last_insert_id()"), 0);
+		return ($id = mysqli_insert_id($this->link)) >= 0 ? $id : $this->result($this->query("SELECT last_insert_id()"), 0);
 	}
 
 	function fetch_row($query) {
-		$query = mysql_fetch_row($query);
+		$query = mysqli_fetch_row($query);
 		return $query;
 	}
 
 	function fetch_fields($query) {
-		return mysql_fetch_field($query);
+		return mysqli_fetch_field($query);
 	}
 
 	function version() {
-		return mysql_get_server_info($this->link);
+		return mysqli_get_server_info($this->link);
 	}
 
 	function close() {
-		return mysql_close($this->link);
+		return mysqli_close($this->link);
 	}
 
 	function halt($message = '', $sql = '') {
@@ -172,6 +180,7 @@ class ucclient_db {
 			$s .= '<b>Error:</b>'.$error.'<br />';
 			$s .= '<b>Errno:</b>'.$errorno.'<br />';
 			$s = str_replace(UC_DBTABLEPRE, '[Table]', $s);
+
 			exit($s);
 		}
 	}
