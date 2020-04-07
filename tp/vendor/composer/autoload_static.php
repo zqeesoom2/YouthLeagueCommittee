@@ -9,9 +9,10 @@ class ComposerStaticInitb98a5354d22627ed67cc96c17d025880
     public static $files = array (
         '9b552a3cc426e3287cc811caefa3cf53' => __DIR__ . '/..' . '/topthink/think-helper/src/helper.php',
         '538ca81a9a966a6716601ecf48f4eaef' => __DIR__ . '/..' . '/opis/closure/functions.php',
-        '25072dd6e2470089de65ae7bf11d3109' => __DIR__ . '/..' . '/symfony/polyfill-php72/bootstrap.php',
         '0e6d7bf4a5811bfa5cf40c5ccd6fae6a' => __DIR__ . '/..' . '/symfony/polyfill-mbstring/bootstrap.php',
+        '25072dd6e2470089de65ae7bf11d3109' => __DIR__ . '/..' . '/symfony/polyfill-php72/bootstrap.php',
         '667aeda72477189d0494fecd327c3641' => __DIR__ . '/..' . '/symfony/var-dumper/Resources/functions/dump.php',
+        '1cfd2761b63b0a29ed23657ea394cb2d' => __DIR__ . '/..' . '/topthink/think-captcha/src/helper.php',
     );
 
     public static $prefixLengthsPsr4 = array (
@@ -19,6 +20,8 @@ class ComposerStaticInitb98a5354d22627ed67cc96c17d025880
         array (
             'think\\view\\driver\\' => 18,
             'think\\trace\\' => 12,
+            'think\\captcha\\' => 14,
+            'think\\app\\' => 10,
             'think\\' => 6,
         ),
         'a' => 
@@ -58,12 +61,20 @@ class ComposerStaticInitb98a5354d22627ed67cc96c17d025880
         array (
             0 => __DIR__ . '/..' . '/topthink/think-trace/src',
         ),
+        'think\\captcha\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/topthink/think-captcha/src',
+        ),
+        'think\\app\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/topthink/think-multi-app/src',
+        ),
         'think\\' => 
         array (
-            0 => __DIR__ . '/..' . '/topthink/think-helper/src',
-            1 => __DIR__ . '/..' . '/topthink/think-orm/src',
-            2 => __DIR__ . '/..' . '/topthink/think-template/src',
-            3 => __DIR__ . '/..' . '/topthink/framework/src/think',
+            0 => __DIR__ . '/..' . '/topthink/framework/src/think',
+            1 => __DIR__ . '/..' . '/topthink/think-helper/src',
+            2 => __DIR__ . '/..' . '/topthink/think-orm/src',
+            3 => __DIR__ . '/..' . '/topthink/think-template/src',
         ),
         'app\\' => 
         array (
