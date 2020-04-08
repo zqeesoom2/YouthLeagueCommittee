@@ -1,0 +1,75 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="renderer" content="webkit|ie-comp|ie-stand">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no" />
+    <meta http-equiv="Cache-Control" content="no-siteapp" />
+    <LINK rel="Bookmark" href="/favicon.ico" >
+    <LINK rel="Shortcut Icon" href="/favicon.ico" />
+    <title>湘西志愿者后台系统</title>
+    <style>
+        .loginWraper{position: relative;width: 200px;margin: 0 auto;}
+        .row {padding: 10px 0;}
+        input{padding:5px;}
+        #particles-js{background: url("/static/admin/img/admin.jpg") no-repeat center #3284ac !important;}
+        #fail{color:red;background: #fff;text-align:center;display: none;}
+        .fail{display:block !important;}
+    </style>
+    <meta name="keywords" content="湘西志愿者后台系统">
+    <meta name="description" content="湘西志愿者后台系统">
+</head>
+<style>.row{margin-right:0px;}</style>
+<body>
+<div style="position: absolute;left: 0; top: 0;width: 100%;height: 100%;background-color: #3984e8;" id="particles-js"></div>
+<input type="hidden" id="TenantId" name="TenantId" value="" />
+<div class="header" style="padding-top: 10%;z-index: 22;position: relative;"><h1 style="text-align:center;color: #fff;">湘西志愿者后台管理系统</h1></div>
+<div class="loginWraper">
+
+    <div id="loginform" class="loginBox">
+
+        <form class="form form-horizontal" action="{:url('index')}" method="post">
+            <div class="row cl">
+                <label class="form-label col-xs-3 {$show}" id="fail">账号或密码错误!!</label>
+            </div>
+            <div class="row cl">
+                <label class="form-label col-xs-3" style="color:#fff;"><i class="Hui-iconfont">用户名：</i></label>
+                <div class="formControls col-xs-8">
+                    <input {if isset($account)}value="{$account.username}"{/if} name="username" type="text" placeholder="账户" class="input-text size-L">
+                </div>
+            </div>
+            <div class="row cl">
+                <label class="form-label col-xs-3" style="color:#fff;"><i class="Hui-iconfont">密码：</i></label>
+                <div class="formControls col-xs-8">
+                    <input {if isset($account)}value="{$account.password}"{/if} name="password" type="password" placeholder="密码" class="input-text size-L">
+                </div>
+            </div>
+
+            <div class="row cl">
+                <div class="form-label col-xs-3">
+
+                </div>
+                <div class="check-box">
+                    <input type="checkbox" name="remember" {if isset($account)} checked {/if} id="checkbox-1">
+                    <label for="checkbox-1" style="color:#fff;">记住密码</label>
+                </div>
+
+
+            </div>
+            <div class="row cl">
+
+                <div class="formControls col-xs-8 col-xs-offset-3">
+
+                    <input name="submit" type="submit" class="btn btn-success radius size-L" value="&nbsp;登&nbsp;&nbsp;&nbsp;&nbsp;录&nbsp;" style="width:50%;">
+
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+<div class="footer" style="border-top:0px solid 1px">Copyright @ 2019 湘西志愿者后台管理系统</div>
+<script src="/static/admin/js/part.js"></script>
+<script src="/static/admin/js/part2.js"></script>
+</body>
+</html>
