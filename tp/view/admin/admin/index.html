@@ -1,0 +1,67 @@
+{extend name="public/admin_public"} {block name="content"}
+<div class="mdui-m-a-1 mdui-typo mdui-table-fluid">
+
+    <h1 class="mdui-m-l-3">用户管理</h1>
+    <table class="mdui-table mdui-textfield mdui-table-hoverable">
+        <thead>
+        <tr>
+            <th>#</th>
+            <th>用户名称</th>
+            <th>角色列表</th>
+            <th>操作</th>
+        </tr>
+        </thead>
+        <tbody>
+        {//volist name="userData" id="vo"}
+        <tr>
+            <td>{//$vo.uid}</td>
+            <td>{//$vo.username}</td>
+            <td>{//$vo.email}</td>
+            <td>
+                <div class="layui-btn-group">
+                    <button class="layui-btn layui-btn-primary layui-btn-sm">编辑</button>
+                    <button class="layui-btn layui-btn-primary layui-btn-sm">删除</button>
+                </div>
+            </td>
+        </tr>
+        {// /volist}
+        </tbody>
+    </table>
+
+</div>
+
+{/block} {block name="js"}
+<script>
+    var $$ = mdui.JQ,
+        data = '';;
+
+    $$('#user').addClass('mdui-collapse-item-open');
+    $$('#setUser').addClass('mdui-list-item-active');
+
+    $$('#submit').on('click', function () {
+        data = $$('form').serialize();
+
+        $$.ajax({
+            method: 'post',
+            url: '',
+            data: data,
+            dataType: 'json',
+            success: function (res) {
+                if (res.code == 0) {
+                    mdui.snackbar(res.message, {
+                        timeout: 2000,
+                        position: 'top'
+                    })
+                } else {
+                    mdui.snackbar(res.message, {
+                        timeout: 2000,
+                        position: 'top'
+                    })
+                }
+
+            }
+        })
+
+        return false;
+    })
+</script> {/block}

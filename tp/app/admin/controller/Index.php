@@ -3,12 +3,10 @@ declare (strict_types = 1);
 
 namespace app\admin\controller;
 
-use app\BaseController;
 use think\Request;
 use think\facade\View;
-use think\facade\Db;
-use think\facade\Config;
-class login extends BaseController
+
+class Index
 {
     /**
      * 显示资源列表
@@ -17,23 +15,21 @@ class login extends BaseController
      */
     public function index(Request $request)
     {
-        $show = '';
-        if (!empty($request->post('submit'))) {
-             $strSalt =  Config::get('cus.salt');
-             $password = md5($request->post('password').$strSalt);
-             $username = $request->post('username');
-             $arrUser = Db::name('admin')->where([
-                 'username'=>$username,
-                 'password'=>$password
-             ])->find();
-
-             if ($arrUser){
-                return redirect((string) url('adminIndex'));
-             }
-             else
-                 $show = 'fail' ;
-        }
-        view::assign('show',$show);
+        // 获取系统信息
+        $serverinfo =[
+            "操作系统"    =>PHP_OS,
+            "运行环境"    =>($request->server())["SERVER_SOFTWARE"],
+            "主机名"      =>$request->host(),
+            "WEB服务端口" =>$request->port(),
+            "网站文档目录" =>$request->root(),
+            "浏览器信息"  =>($request->server())["HTTP_USER_AGENT"],
+            "通信协议"    => $request->protocol(),
+            "请求方法"    => $request->method(),
+        ];
+        // 模板赋值和渲染
+        View::assign([
+            "serverinfo" => $serverinfo,
+        ]);
         return  View::fetch();
     }
 

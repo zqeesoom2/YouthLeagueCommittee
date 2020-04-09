@@ -1,39 +1,40 @@
 <?php
 declare (strict_types = 1);
 
-namespace app\admin\controller;
+namespace app\home\controller;
 
-use app\BaseController;
 use think\Request;
-use think\facade\View;
 use think\facade\Db;
+use think\facade\View;
 use think\facade\Config;
-class login extends BaseController
+
+class login
 {
     /**
      * 显示资源列表
      *
      * @return \think\Response
      */
-    public function index(Request $request)
+    public function login(Request $request)
     {
-        $show = '';
-        if (!empty($request->post('submit'))) {
-             $strSalt =  Config::get('cus.salt');
-             $password = md5($request->post('password').$strSalt);
-             $username = $request->post('username');
-             $arrUser = Db::name('admin')->where([
-                 'username'=>$username,
-                 'password'=>$password
-             ])->find();
 
-             if ($arrUser){
-                return redirect((string) url('adminIndex'));
-             }
-             else
-                 $show = 'fail' ;
+
+        if ($request->isPost()) {
+            $strSalt =  Config::get('cus.salt');
+            $password = md5($request->param('password').$strSalt);
+            $username = $request->param('username');
+            $arrUser = Db::name('admin')->where([
+                'username'=>$username,
+                'password'=>$password
+            ])->find();
+
+            if ($arrUser){
+                return json(['state'=>0,'data'=>'登陆成功！']);
+            }
+            else
+                return json(['state'=>1,'data'=>'登陆失败！']);
         }
-        view::assign('show',$show);
+
         return  View::fetch();
     }
 
