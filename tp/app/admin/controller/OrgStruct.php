@@ -4,8 +4,11 @@ declare (strict_types = 1);
 namespace app\admin\controller;
 
 use think\Request;
+use think\facade\Db;
 use think\facade\View;
-class Admin
+use app\admin\model\org;
+
+class OrgStruct
 {
     /**
      * 显示资源列表
@@ -14,8 +17,10 @@ class Admin
      */
     public function index()
     {
+        $arrOrg = make_tree((new org())->listOrg());
+        View::assign('arrOrg',$arrOrg);
 
-        return  View::fetch();
+        return View::fetch();
     }
 
     /**
@@ -68,9 +73,10 @@ class Admin
      * @param  int  $id
      * @return \think\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request)
     {
-        //
+
+      return  json((new org())->editorg($request->post()));
     }
 
     /**
