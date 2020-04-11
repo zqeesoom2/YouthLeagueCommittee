@@ -1,42 +1,22 @@
 <?php
 declare (strict_types = 1);
 
-namespace app\admin\controller;
+namespace app\mobile\controller;
 
-use app\BaseController;
 use think\Request;
 use think\facade\View;
-use think\facade\Db;
-use think\facade\Config;
-use think\facade\Session;
-class login extends BaseController
+
+class Index
 {
     /**
      * 显示资源列表
      *
      * @return \think\Response
      */
-    public function index(Request $request)
+    public function index()
     {
-        $show = '';
-        if (!empty($request->post('submit'))) {
-             $strSalt =  Config::get('cus.salt');
-             $password = md5($request->post('password').$strSalt);
-             $username = $request->post('username');
-             $arrUser = Db::name('admin')->where([
-                 'username'=>$username,
-                 'password'=>$password
-             ])->find();
 
-             if ($arrUser){
-                 Session::set('privil',$arrUser['org_id']);
-                return redirect((string) url('adminIndex'));
-             }
-             else
-                 $show = 'fail' ;
-        }
-        view::assign('show',$show);
-        return  View::fetch();
+        return View::fetch();
     }
 
     /**

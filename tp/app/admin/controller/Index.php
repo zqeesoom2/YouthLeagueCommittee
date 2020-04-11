@@ -25,6 +25,8 @@ class Index
             "浏览器信息"  =>($request->server())["HTTP_USER_AGENT"],
             "通信协议"    => $request->protocol(),
             "请求方法"    => $request->method(),
+            "手机端"=>  $request->isMobile() ? 'true'  :  'false'
+
         ];
         // 模板赋值和渲染
         View::assign([

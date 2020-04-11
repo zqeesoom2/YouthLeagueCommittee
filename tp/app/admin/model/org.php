@@ -3,6 +3,7 @@ declare (strict_types = 1);
 
 namespace app\admin\model;
 
+use think\facade\Session;
 use think\Model;
 
 /**
@@ -11,8 +12,7 @@ use think\Model;
 class org extends Model
 {
     function listOrg() {
-
-        return self::select()->toArray();
+        return self::where('path',Session::get('privil'))->select()->toArray();
     }
 
     function getRegistAuthAttr($value){
