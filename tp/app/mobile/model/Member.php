@@ -37,7 +37,11 @@ class Member extends Model
 
     function memberByName($name) {
 
-        return Member::where('username',$name)->find()->toArray();
+         $obj = Member::where('username',$name)->find();
+        if ($obj) {
+            return $obj->toArray();
+        }
+        return null;
 
     }
 

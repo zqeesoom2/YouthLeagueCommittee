@@ -191,8 +191,8 @@
     <div class="tab_pane" data-control="PANE" id="Pane_1">
         <div id="showGoods"></div>
     </div>
-    <div class="tab_pane" data-control="PANE" id="Pane_2" style="margin-top:3em">
-        <div class="ub ub-ver">
+    <div class="tab_pane " data-control="PANE" id="Pane_2" style="margin-top:3em">
+        <div class="ub ub-ver uhide" id="me">
             <div class="ub-img1 perBg uh-per1 ub-fh ub ub-ver">
                 <div class="uinn-a1 ub ub-f1">
                     <div class="uwh-per2 uc-a-per1 bc-bg ub ub-ac ub-pc uinn-a16">
@@ -393,7 +393,11 @@
 
     }
     (function($) {
-        $("#avatar").html('<img src="http://www.07430743.com/uc_server/avatar.php?uid='+u.user_id+'&size=small" />');
+        if (u){
+            $("#avatar").html('<img src="http://www.07430743.com/uc_server/avatar.php?uid='+u.user_id+'&size=small" />');
+            $("#me").removeClass('uhide');
+        }
+
         var url = window.location.href.split('/');
         if (url[url.length-1]=='me'){
             tabIndex(2);
