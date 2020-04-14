@@ -3,29 +3,22 @@ declare (strict_types = 1);
 
 namespace app\mobile\controller;
 
-use app\mobile\model\Member;
 use think\facade\Session;
 use think\Request;
+use app\mobile\model\Member;
 use think\facade\View;
 
-class Index
+class Reg
 {
     /**
      * 显示资源列表
      *
      * @return \think\Response
      */
-    public function index()
+    public function index(Request $request)
     {
 
-        $arrM = (new Member() )->memberByName(Session::get('userInfo')['username']);
 
-        View::assign('me',$arrM);
-        return View::fetch();
-    }
-
-    public function login()
-    {
 
         return View::fetch();
     }
@@ -35,9 +28,21 @@ class Index
      *
      * @return \think\Response
      */
-    public function create()
+    public function create(Request $request)
     {
-        //
+        $arrCreate = $request->post();
+        $arrCreate['username'] = Session::get('userInfo')['username'];
+
+        $objM = new Member();
+
+        if (empty($objM->memberByName($arrCreate['username']))) {
+            $arr = $objM->add($arrCreate);
+
+            return  json($arr);
+        }
+
+        return json( ['state'=>1,'message'=>'已激活']);
+
     }
 
     /**

@@ -9,7 +9,7 @@
             <h1 class="ut ub-f1 ulev-3 ut-s tx-c" tabindex="0">湘西志愿者服务平台</h1>
         </div>
     </div>
-    <div class="uh ub ub-f1 ub-pc ub-ac uhide header bc-head" data-control="HEADERBOX" id="Header_1">
+    <div class="uh ub ub-f1 ub-pc ub-ac uhide header bc-head" data-control="HEADERBOX" id="Header_1" style="position:relative;">
         <div class="uinput ub bc-border uba ub-f1 umar-l umar-r" data-control="SEARCH" id="Search">
             <div class="uinn fa fa-search sc-text"></div>
             <input placeholder="请输入关键词" type="search" class="ub-f1 ub ub-pc ub-ac" data-control-scope="Search">
@@ -72,12 +72,12 @@
                                 最新动态
                             </div>
                         </div>
-                        <div class="ub-f1 ub ub-ac ub-ver ubr ubb" style="width:33%">
+                        <div class="ub-f1 ub ub-ac ub-ver ubr ubb" style="width:33%" id="signIn">
                             <div class="uwh-ele2 uc-a-ele1 c-wh ub ub-ac ub-pc">
                                 <div class="btn_wh1 ub-img eleIcon2"></div>
                             </div>
-                            <div class="umar-at1 t-gra7 tx-c ulev-2">
-                                志愿者登陆
+                            <div class="umar-at1 t-gra7 tx-c ulev-2" >
+                                <a href="{:url('moblielogin')}">志愿者登陆</a>
                             </div>
                         </div>
                         <div class="ub-f1 ub ub-ac ub-ver ubb" style="width:33%">
@@ -104,7 +104,7 @@
                                 <div class="btn_wh1 ub-img "></div>
                             </div>
                             <div class="umar-at1 t-gra7 tx-c ulev-2">
-                                &nbsp;&nbsp;&nbsp;&nbsp;
+                               <!-- <a href="https://share.0743sh.com/wap/login/register?url=https%3A%2F%2Fshare.0743sh.com%2F">志愿者注册</a>-->
                             </div>
                         </div>
                         <div class="ub-f1 ub ub-ac ub-ver ubb" style="width:33%">
@@ -191,20 +191,20 @@
     <div class="tab_pane" data-control="PANE" id="Pane_1">
         <div id="showGoods"></div>
     </div>
-    <div class="tab_pane" data-control="PANE" id="Pane_2">
+    <div class="tab_pane" data-control="PANE" id="Pane_2" style="margin-top:3em">
         <div class="ub ub-ver">
             <div class="ub-img1 perBg uh-per1 ub-fh ub ub-ver">
                 <div class="uinn-a1 ub ub-f1">
                     <div class="uwh-per2 uc-a-per1 bc-bg ub ub-ac ub-pc uinn-a16">
-                        <div class="ub-fh ub-fv  ub-img setImg1 uc-a-per2"></div>
+                        <div class="ub-fh ub-fv  ub-img setImg1 uc-a-per2" id="avatar"> </div>
                     </div>
                     <div class="ub-f1 umar-at1 umar-l-per1 ub ub-ver">
                         <div class="ub ">
-                            <div class="umar-ar3 bc-text-head">
-                                用户名
+                            <div class="umar-ar3">
+                                {$me.username}
                             </div>
-                            <div class="sc-bg-alert uc-a1 uinn3 ulev-2 bc-text-head">
-                                V<span class="ulev-2">2</span>会员
+                            <div class="sc-bg-alert uc-a1 uinn3 ulev-2 bc-text-head" id="status">
+                                {$me.status}
                             </div>
                         </div>
                         <div class="ulev-4 t-wh2 umar-t ub-f1">
@@ -216,17 +216,17 @@
                                     服务时长
                                 </div>
                                 <div class="ulev0 ufm1 umar-l ufsty">
-                                    123
+                                    {$me.length_ser}
                                 </div>
                             </div>
-                            <!--<div class="ub ub-ae">
+                            <div class="ub ub-ae">
                                 <div class="ulev-4">
-                                    服务时长
+                                    服务星级
                                 </div>
-                                <div class="ulev0 ufm1 umar-l ufsty">
-                                    123
+                                <div class="ulev0 ufm1 umar-l ufsty sc-text-warn">
+                                    0
                                 </div>
-                            </div>-->
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -236,7 +236,7 @@
                             正在参加的项目
                         </div>
                         <div class="ub-ae sc-text-warn ufm1 tx-c">
-                            2
+                            0
                         </div>
                     </div>
                     <div class="ub ub-ver ub-f1 ub-pc ubr b-gra-per">
@@ -273,7 +273,7 @@
                     </div>-->
                 </div>
             </div>
-            <div class="ub-f1 ub ub-ver">
+           <!-- <div class="ub-f1 ub ub-ver">
                 <div id="indexCon_2-listview1"  class="ubt bc-border c-wh">
 
                 </div>
@@ -287,7 +287,7 @@
 
                 </div>
 
-            </div>
+            </div>-->
         </div>
     </div>
     <div class="tab_pane" data-control="PANE" id="Pane_3">
@@ -382,5 +382,24 @@
 <script src="__JS__/appcan.tab.js"></script>
 <script src="__JS__/appcan.slider.js"></script>
 <script src="__JS__/index.js"></script>
+<script>
+    var u = JSON.parse(appcan.locStorage.val('userInfo'));
+    function tabIndex(index) {
+        $('.tab_pane').removeClass('active');
+        $($('.tab_pane')[index]).addClass('active');
+        $('.header').addClass('uhide');
+        $($('.header')[index]).removeClass('uhide');
+        tabview_Tab.moveTo(index);
+
+    }
+    (function($) {
+        $("#avatar").html('<img src="http://www.07430743.com/uc_server/avatar.php?uid='+u.user_id+'&size=small" />');
+        var url = window.location.href.split('/');
+        if (url[url.length-1]=='me'){
+            tabIndex(2);
+            $("#ScrollContent_Pa34I9").addClass('uhide');
+        }
+    })($);
+</script>
 </body>
 </html>

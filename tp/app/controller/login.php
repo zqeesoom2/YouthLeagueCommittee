@@ -4,9 +4,12 @@ declare (strict_types = 1);
 namespace app\controller;
 use app\BaseController;
 use app\PublicController;
+use think\facade\Config;
+use think\facade\Db;
 use think\Request;
 use app\ucenter\UcApi;
 use think\facade\View;
+use think\facade\Session;
 
 class login extends BaseController
 {
@@ -35,19 +38,38 @@ class login extends BaseController
         if (!empty($_POST['username']) && !empty($_POST['password'])) {
             $login = UcApi::login($_POST['username'], $_POST['password']);
             if ($login === FALSE) {
-                echo (UcApi::getError());
-            } else {
-                $_SESSION['username'] = $login['username'];
-                $_SESSION['user_id'] = $login['uid'];
-                $_SESSION['email'] = $login['email'];
-                echo"<pre>";var_dump($login);
-                echo '<img src="'.UC_API.'/avatar.php?uid='.$login['uid'].'&size=middle" />';exit();
+                return json(['state'=>1,'data'=>UcApi::getError()]);
+            } else {//得到UC
+
+                $arrU = [
+                    'username'=>$login['username'],
+                    'user_id'=> $login['uid']
+                ];
+                Session::set("userInfo",$arrU);
+
+                $strSalt =  Config::get('cus.salt');
+                $password = md5($request->param('password').$strSalt);
+
+                $arrUser = Db::name('member')->where([
+                    'username'=>$login['username'],
+                    'password'=>$password
+                ])->find();
+
+                if ($arrUser){//登陆成功！
+
+                    return json(['state'=>0,'data'=>$arrU]);
+                }else{//激活
+
+                    $arrU['password'] = $password;
+                    return json(['state'=>0,'data'=>$arrU]);
+                }
+
+
                 //echo $login['synlogin'];//输出同步登录代码 （这步很重要）
-               // $this->assign("jumpUrl", __APP__);
-                //$this->success('登录成功');
+
             }
         } else {
-            $this->error('错误，用户名和密码不能为空');
+            return json(['state'=>1,'data'=>'错误，用户名和密码不能为空']);
         }
     }
 

@@ -1,0 +1,225 @@
+{include file="public/head"}
+        <link rel="stylesheet" href="__CSS__/reg.css">
+    </head>
+    
+    <body class="bc-bg" ontouchstart>
+        
+        <div class="uh bc-head  ubb bc-border" data-control="HEADER" id="Header_qE68aR">
+            <div class="ub">
+                <div class="nav-btn" id="nav-left">
+                    <div class="fa fa-1g ub-img1 fa-angle-left fa-2x bc-text-head"></div>
+                </div>
+                <h1 class="ut ub-f1 ulev-3 ut-s tx-c bc-text-head" tabindex="0">志愿者激活</h1>
+                <div class="nav-btn" id="nav-right">
+                    <div class="fa  fa-1g  ub-img1">
+                    </div>
+                </div>
+            </div>
+        </div>
+
+                <div class="bc-bg ub ub-ver ub-ac ub-con ub-f1" style="margin-top:3em;" data-control="FLEXBOXVER" id="ContentFlexVer_CZ61a9">
+                    <div class="ub ub-pc ub-ac" data-control="BOX" id="Box_8UyLIr">
+                        <div data-control="TEXT" class="ub" id="Text_ttD97s">真实姓名：</div>
+                        <div class="uinput ub bc-border uba ub-f1" data-control="INPUT" id="real_name">
+                            <input placeholder="请输入真实姓名" type="text" class="ub-f1 ub" data-control-scope="real_name" data-bind="value:real_name">
+                            <input  type="hidden" class="ub-f1 ub" data-control-scope="real_name" data-bind="value:password">
+                        </div>
+                    </div>
+                    <div class="ub" data-control="BOX" id="Box_Ecojpk">
+                        <div data-control="TEXT" class="ub" id="Text_ahXe3n">电话号码：</div>
+                        <div class="uinput ub bc-border uba ub-f1" data-control="INPUT" id="phone">
+                            <input placeholder="" type="text" class="ub-f1 ub" data-control-scope="phone" data-bind="value:phone">
+                        </div>
+                    </div>
+                    <div class="ub" data-control="BOX" id="Box_rmAjzU">
+                        <div data-control="TEXT" class="ub" id="Text_qP2dWl">email：</div>
+                        <div class="uinput ub bc-border uba ub-f1" data-control="INPUT" id="email">
+                            <input placeholder="" type="text" class="ub-f1 ub" data-control-scope="email" data-bind="value:email">
+                        </div>
+                    </div>
+                    <div class="ub" data-control="BOX" id="Box_dr4EcA">
+                        <div data-control="TEXT" class="ub" id="Text_ooyp9P">民族：</div>
+                        <div class="uinput ub bc-border uba ub-f1" data-control="INPUT" id="nation">
+                            <input placeholder="" type="text" class="ub-f1 ub" data-control-scope="nation" data-bind="value:nation">
+                        </div>
+                    </div>
+                    <div class="ub" data-control="BOX" id="Box_tYlLkC">
+                        <div data-control="TEXT" class="ub" id="Text_xLTJKB">出生日期：</div>
+                        <div class="uinput ub bc-border uba" data-control="INPUT" id="brith">
+                            <input placeholder="" type="text" class="ub-f1 ub" data-control-scope="brith" data-bind="value:brith">
+                        </div>
+                    </div>
+                    <div class="ub" data-control="BOX" id="Box_FpIDLW">
+                        <div data-control="TEXT" class="ub" id="Text_kydide">性别：</div>
+                        <div class="select uba bc-border bc-text ub-f1" data-control="SELECT" id="gender">
+                            <div class="text">
+                            </div>
+                            <div class="icon">
+                            </div>
+                            <select selectedindex="0" data-control-scope="gender" class="ub" data-bind="value:gender">
+                                <option >请选择</option>
+                                <option value="男">男</option>
+                                <option value="女">女</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="ub" data-control="BOX" id="Box_h47RRm">
+                        <div data-control="TEXT" class="ub" id="Text_yQBHBV">证件类型：</div>
+                        <div class="select uba bc-border bc-text ub-f1" data-control="SELECT" id="card_type">
+                            <div class="text">
+                            </div>
+                            <div class="icon">
+                            </div>
+                            <select selectedindex="0" data-control-scope="card_type" class="ub" data-bind="value:card_type">
+                                <option >请选择</option>
+                                <option value="中国居民身份证">中国居民身份证</option>
+                                <option value="香港居民身份证">香港居民身份证</option>
+                                <option value="澳门居民身份证">澳门居民身份证</option>
+                                <option value="台湾居民身份证">台湾居民身份证</option>
+                                <option value="护照">护照</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="ub" data-control="BOX" id="Box_VeSUmc">
+                        <div data-control="TEXT" class="ub" id="Text_l7RdA2">证件号：</div>
+                        <div class="uinput ub bc-border uba ub-f1" data-control="INPUT" id="card">
+                            <input placeholder="" type="text" class="ub-f1 ub" data-control-scope="card" data-bind="value:card">
+                        </div>
+                    </div>
+                    <div class="ub" data-control="BOX" id="Box_LinX9s">
+                        <div data-control="TEXT" class="ub" id="Text_yk46FB">政治面貌：</div>
+                        <div class="select uba bc-border bc-text ub-f1" data-control="SELECT" id="political_affil">
+                            <div class="text">
+                            </div>
+                            <div class="icon">
+                            </div>
+                            <select selectedindex="0" data-control-scope="political_affil" class="ub" data-bind="value:political_affil">
+                                <option >请选择</option>
+                                <option value="中国共产党党员">中国共产党党员</option>
+                                <option value="中国共产党预备党员">中国共产党预备党员</option>
+                                <option value="中国共产主义青年团团员">中国共产主义青年团团员</option>
+                                <option value="中国国民党革命委员会会员">中国国民党革命委员会会员</option>
+                                <option value="中国民主同盟盟员">中国民主同盟盟员</option>
+                                <option value="中国民主建国会会员">中国民主建国会会员</option>
+                                <option value="中国民主促进会会员">中国民主促进会会员</option>
+                                <option value="中国农工民主党党员">中国农工民主党党员</option>
+                                <option value="中国致公党党员">中国致公党党员</option>
+                                <option value="九三学社社员">九三学社社员</option>
+                                <option value="台湾民主自治同盟盟员">台湾民主自治同盟盟员</option>
+                                <option value="无党派民主人士">无党派民主人士</option>
+                                <option value="中国少年先锋队队员">中国少年先锋队队员</option>
+                                <option value="群众">群众</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="ub" data-control="BOX" id="Box_HsHSCV">
+                        <div data-control="TEXT" class="ub" id="Text_SOgB5m">居住区域：</div>
+                        <div class="select uba bc-border bc-text ub-f1" data-control="SELECT" id="area">
+                            <div class="text">
+                            </div>
+                            <div class="icon">
+                            </div>
+                            <select selectedindex="0" data-control-scope="area" class="ub" data-bind="value:area">
+                                <option >请选择</option>
+                                <option value="吉首">吉首</option>
+                                <option value="龙山">龙山</option>
+                                <option value="永顺">永顺</option>
+                                <option value="保靖">保靖</option>
+                                <option value="花垣">花垣</option>
+                                <option value="凤凰">凤凰</option>
+                                <option value="古丈">古丈</option>
+                                <option value="泸溪">泸溪</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="ub" data-control="BOX" id="Box_86n3ey">
+                        <div data-control="TEXT" class="ub" id="Text_Mx1Ohp">详细地址：</div>
+                        <div class="uinput ub bc-border uba ub-f1" data-control="INPUT" id="address">
+                            <input placeholder="" type="text" class="ub-f1 ub" data-control-scope="address" data-bind="value:address">
+                        </div>
+                    </div>
+                    <div class="ub" data-control="BOX" id="Box_tcewki">
+                        <div data-control="TEXT" class="ub" id="Text_BMJAnr">最高学历：</div>
+                        <div class="select uba bc-border bc-text ub-f1" data-control="SELECT" id="education">
+                            <div class="text">
+                            </div>
+                            <div class="icon">
+                            </div>
+                            <select selectedindex="0" data-control-scope="education" class="ub" data-bind="value:education">
+                                <option >请选择</option>
+                                <option value="博士研究生">博士研究生</option>
+                                <option value="硕士研究生">硕士研究生</option>
+                                <option value="大学本科">大学本科</option>
+                                <option value="大学专科">大学专科</option>
+                                <option value="中等专科">中等专科</option>
+                                <option value="职业高中">职业高中</option>
+                                <option value="技工学校">技工学校</option>
+                                <option value="高中">高中</option>
+                                <option value="初中">初中</option>
+                                <option value="小学">小学</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="ub" data-control="BOX" id="Box_Efwjwe">
+                        <div data-control="TEXT" class="ub" id="Text_7aaLrZ">从业状况：</div>
+                        <div class="select uba bc-border bc-text ub-f1" data-control="SELECT" id="pract">
+                            <div class="text">
+                            </div>
+                            <div class="icon">
+                            </div>
+                            <select selectedindex="0" data-control-scope="pract" class="ub" data-bind="value:pract">
+                                <option >请选择</option>
+                                <option value="国家公务员">国家公务员</option>
+                                <option value="专业技术人员">专业技术人员</option>
+                                <option value="职员">职员</option>
+                                <option value="企业管理人员">企业管理人员</option>
+                                <option value="工人">工人</option>
+                                <option value="农民">农民</option>
+                                <option value="学生">学生</option>
+                                <option value="教师">教师</option>
+                                <option value="现役军人">现役军人</option>
+                                <option value="自由职业者">自由职业者</option>
+                                <option value="个体经营者">个体经营者</option>
+                                <option value="无业人员">无业人员</option>
+                                <option value="退(离)休人员">退(离)休人员</option>
+                                <option value="其他">其他</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="ub" data-control="BOX" id="Box_ImXwIJ">
+                        <div data-control="TEXT" class="ub" id="Text_TwLNjg">服务类别：</div>
+                        <div class="select uba bc-border bc-text ub-f1" data-control="SELECT" id="group">
+                            <div class="text">
+                            </div>
+                            <div class="icon">
+                            </div>
+                            <select selectedindex="0" data-control-scope="group" class="ub" data-bind="value:group">
+                                <option >请选择</option>
+                                <option value="礼义服务">礼义服务</option>
+                                <option value="文明创建宣传">文明创建宣传</option>
+                                <option value="健康义诊">健康义诊</option>
+                                <option value="爱心助学">爱心助学</option>
+                                <option value="心理咨询">心理咨询</option>
+                                <option value="疫情防控">疫情防控</option>
+                                <option value="应急救援">应急救援</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="" data-control="BOX" id="Box_n1tpq0">
+                    </div>
+                    <div class="button ub ub-ac bc-text-head ub-pc bc-btn" id="Button_NMajJN">激活成为实名志愿者</div>
+                    <div class="ub" ><br>
+                        <a href="https://www.07430743.com/data/attachment/zxz.jpg">报名志愿者条件须知</a>
+                        </br>
+                    </div>
+                </div>
+           
+        {include file="public/footer"}
+        <script src="__JS__/mv_reg.js">
+        </script>
+        <script src="__JS__/reg.js">
+        </script>
+
+    </body>
+
+</html>
