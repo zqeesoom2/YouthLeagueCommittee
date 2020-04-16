@@ -1,0 +1,46 @@
+<?php
+declare (strict_types = 1);
+
+namespace app\mobile\model;
+
+use app\mobile\validate\Org as OrgVal;
+use think\Model;
+
+/**
+ * @mixin think\Model
+ */
+class Org extends Model
+{
+    function add ($data){
+        $validate =new OrgVal();
+        $res = $validate->check($data);
+        if (!$res) {
+            $error = $validate ->getError();
+            return ['state'=>1,'error'=>$error];
+        }
+
+        try{
+
+            $objOrg = self::create($data);
+            return ['state'=>0,'data'=>['logo_url'=>$objOrg->logo_url,'status'=>'审核中','org_name'=>$data['org_name'],'org_id'=>$objOrg->id]];
+        }catch(\Exception $e){
+            return ['state'=>1,'message'=>$e->getMessage()];
+        }
+    }
+
+    function orgByName($name) {
+        $obj = self::where('org_name',$name)->find();
+        if ($obj) {
+            return $obj->toArray();
+        }
+        return null;
+    }
+
+    function getPath($id) {
+      return self::field('path')->find($id);
+    }
+
+    function getStatusById($id) {
+        return self::field('status')->find($id);
+    }
+}

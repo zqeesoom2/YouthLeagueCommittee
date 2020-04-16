@@ -85,7 +85,7 @@
                                 <div class="btn_wh1 ub-img eleIcon3"></div>
                             </div>
                             <div class="umar-at1 t-gra7 tx-c ulev-2">
-                                志愿团体注册
+                                <a href="/mobile/index/orgReg">志愿团体注册</a>
                             </div>
                         </div>
 
@@ -200,7 +200,7 @@
                     </div>
                     <div class="ub-f1 umar-at1 umar-l-per1 ub ub-ver">
                         <div class="ub ">
-                            <div class="umar-ar3">
+                            <div class="umar-ar3" id="orgname">
                                 {$me.username}
                             </div>
                             <div class="sc-bg-alert uc-a1 uinn3 ulev-2 bc-text-head" id="status">
@@ -210,9 +210,9 @@
                         <div class="ulev-4 t-wh2 umar-t ub-f1">
                             个性签名
                         </div>
-                        <div class="ub ub-ae">
+                        <div class="ub ub-ae" id="hid1">
                             <div class="ub ub-ae umar-r-per1">
-                                <div class="ulev-4">
+                                <div class="ulev-4" >
                                     服务时长
                                 </div>
                                 <div class="ulev0 ufm1 umar-l ufsty">
@@ -230,7 +230,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="ub c-wh-per uinn-a11 ub-ae">
+                <div class="ub c-wh-per uinn-a11 ub-ae" id="hid">
                     <div class="ub ub-ver ub-f1 ub-pc ubr b-gra-per">
                         <div class="t-gra5 ulev-4 tx-c ub-f1">
                             正在参加的项目
@@ -393,16 +393,35 @@
 
     }
     (function($) {
-        if (u){
-            $("#avatar").html('<img src="http://www.07430743.com/uc_server/avatar.php?uid='+u.user_id+'&size=small" />');
+        if (typeof(u.org_name)!='undefined') {
+            $("#avatar").html('<img width="64" style="position:relative;' + 'left: -10px;' + 'top:-10px;" src="'+u.logo_url+'" />');
+            $("#me").removeClass('uhide');
+            $("#hid,#hid1").remove();
+            $("#status").html(u.status);
+            $("#orgname").html(u.org_name);
+            $.ajax({
+                type: "POST",
+                url: "/mobile/index/getStatus",
+                data: {'id':u.org_id},
+                success: function(data){
+                    $("#status").html(data);
+                }
+            });
+
+        }else{
+            $("#avatar").html('<img  src="http://www.07430743.com/uc_server/avatar.php?uid='+u.user_id+'&size=small" />');
             $("#me").removeClass('uhide');
         }
+
 
         var url = window.location.href.split('/');
         if (url[url.length-1]=='me'){
             tabIndex(2);
             $("#ScrollContent_Pa34I9").addClass('uhide');
         }
+
+
+
     })($);
 </script>
 </body>

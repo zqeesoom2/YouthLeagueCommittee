@@ -1,0 +1,176 @@
+{include file="public/head"}
+        <link rel="stylesheet" href="__CSS__/orgreg.css">
+    </head>
+    
+    <body class="" ontouchstart>
+        <div class="bc-bg" tabindex="0" data-control="PAGE" id="Page_IZbB9E">
+            <div class="uh bc-head  ubb bc-border" data-control="HEADER" id="Header_V5EYrX">
+                <div class="ub">
+                    <div class="nav-btn" id="nav-left">
+                        <div class="fa fa-1g ub-img1 fa-angle-left fa-2x bc-text-head">
+                        </div>
+                    </div>
+                    <h1 class="ut ub-f1 ulev-3 ut-s tx-c bc-text-head" tabindex="0">团体注册</h1>
+                    <div class="nav-btn" id="nav-right">
+                        <div class="fa  fa-1g  ub-img1">
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="bc-bg ub ub-ver ub-ac ub-con" data-control="FLEXBOXVER" id="ContentFlexVer_PrppiY">
+                <div class="" data-control="BOX" id="Box_LyeTSa">
+                </div>
+
+                <div class="ub" data-control="BOX" id="Box_zImG8r">
+                    <div data-control="TEXT" class="" id="Text_MxqX8p">团队名称：</div>
+                     <div class="uinput ub bc-border uba" data-control="INPUT" id="org_name">
+                        <input placeholder="" type="text" class="ub-f1" data-control-scope="org_name" data-bind="value:org_name">
+                    </div>
+               </div>
+
+                <div class="" data-control="BOX" id="Box_LyeTS">
+                </div>
+                <div class="ub" data-control="BOX" id="Box_zImG8">
+                    <div data-control="TEXT" class="" id="Text_MxqX8">设置密码：</div>
+                    <div class="uinput ub bc-border uba" data-control="INPUT" id="password">
+                        <input placeholder="" type="text" class="ub-f1" data-control-scope="password" data-bind="value:password">
+                    </div>
+                </div>
+
+                <div class="" data-control="BOX" id="Box_RHg6mO">
+                </div>
+                <div class="ub" data-control="BOX" id="Box_FQtUaY">
+                    <div data-control="TEXT" class="" id="Text_ZS0zjT">简介：</div>
+                    <div class="uinput ub bc-border uba" data-control="INPUT" id="introduction">
+                        <input placeholder="" type="text" class="ub-f1" data-control-scope="introduction" data-bind="value:introduction">
+                    </div>
+                </div>
+
+                <div class="" data-control="BOX" id="Box_CxlwRC" style="margin-top: 0.5em;">
+                </div>
+                <div class="ub" data-control="BOX" id="Box_6SUxbr">
+                    <div data-control="TEXT" class="" id="Text_r0fe8S">上传logo：</div>
+
+                    <input id="logo_url2" onchange="up()" type="file"  class="ub-f1" >
+
+
+                </div>
+
+                <div class="" data-control="BOX" id="Box_NuHdUF">
+                </div>
+                <div class="ub" data-control="BOX" id="Box_JM1ybz">
+                    <div data-control="TEXT" class="" id="Text_aynDIV">报名权限：</div>
+                    <div class="select uba bc-border bc-text" data-control="SELECT" id="regist_auth">
+                        <div class="text">
+                        </div>
+                        <div class="icon">
+                        </div>
+                        <select selectedindex="0" data-control-scope="regist_auth" data-bind="value:regist_auth">
+                            <option >请选择</option>
+                            <option value="0">内部人员开放</option>
+                            <option value="1">外部人员开放</option>
+
+                        </select>
+                    </div>
+                </div>
+                <div class="" data-control="BOX" id="Box_xfQDON">
+                </div>
+                <div class="ub" data-control="BOX" id="Box_4zQueP">
+                    <div data-control="TEXT" class="" id="Text_JRYqMQ">所属区域：</div>
+                    <div class="select uba bc-border bc-text" data-control="SELECT" id="area_id">
+                        <div class="text">
+                        </div>
+                        <div class="icon">
+                        </div>
+                        <select selectedindex="0" data-control-scope="area_id" data-bind="value:area_id">
+                            <option >请选择</option>
+                            <option value="1">州直单位</option>
+                            <option value="2">州社会团体</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="" data-control="BOX" id="Box_NFO7kA">
+                </div>
+                 <div class="ub" data-control="BOX" id="Box_YwydNp">
+                    <div data-control="TEXT" class="" id="Text_c7RdlE">服务类型：</div>
+                    <div class="select uba bc-border bc-text" data-control="SELECT" id="service">
+                        <div class="text">
+                        </div>
+                        <div class="icon">
+                        </div>
+                        <select selectedindex="0" data-control-scope="service" data-bind="value:service">
+                            <option >请选择</option>
+                            <option value="0">礼义服务</option>
+                            <option value="1">文明创建宣传</option>
+                            <option value="2">健康义诊</option>
+                            <option value="3">爱心助学</option>
+                            <option value="4">心理咨询</option>
+                            <option value="5">疫情防控</option>
+                            <option value="6">应急救援</option>
+                        </select>
+                    </div>
+                </div>
+                
+                <div class="" data-control="BOX" id="Box_NFO7kA">
+                </div>
+                <div class="ub" data-control="BOX" id="Box_0JKaON">
+                    <div data-control="TEXT" class="" id="Text_idfxMB">队长：</div>
+                    <div class="uinput ub bc-border uba" data-control="INPUT" id="captain">
+                        <input placeholder="" type="text" class="ub-f1" data-control-scope="captain" data-bind="value:captain">
+                    </div>
+                </div>
+                <div class="" data-control="BOX" id="Box_8Y4xSE">
+                </div>
+                <div class="ub" data-control="BOX" id="Box_QTy0Ty">
+                    <div data-control="TEXT" class="" id="Text_jfqOoh">队长电话：</div>
+                    <div class="uinput ub bc-border uba" data-control="INPUT" id="captain_tell">
+                        <input placeholder="" type="text" class="ub-f1" data-control-scope="captain_tell" data-bind="value:captain_tell">
+                    </div>
+                </div>
+                <div class="" data-control="BOX" id="Box_Tgffpk">
+                </div>
+                <div class="ub" data-control="BOX" id="Box_TxEQ8W">
+                    <div data-control="TEXT" class="" id="Text_676iSD">详细地址：</div>
+                    <div class="uinput ub bc-border uba" data-control="INPUT" id="address">
+                        <input placeholder="" type="text" class="ub-f1" data-control-scope="address" data-bind="value:address">
+                        <input id="logo_url" type="hidden" class="ub-f1 ub" data-control-scope="address" data-bind="value:logo_url">
+                    </div>
+                </div>
+
+                <div class="" data-control="BOX" id="Box_rp56ij">
+                </div>
+                <div class="button ub ub-ac bc-text-head ub-pc bc-btn" id="Button_kTG4bh">确定</div>
+                <div class="" data-control="BOX" id="Box_9ixFVb">
+                </div>
+               
+            </div>
+        </div>
+
+       {include file="public/footer"}
+        <script src="__JS__/orgreg.js"></script>
+        <script>
+           function up() {
+               file = document.getElementById("logo_url2");
+               var form = new FormData();
+               form.append("fileImg",file.files[0]);
+
+               $.ajax({
+                   type: "POST",
+                   url: "/mobile/regorg",
+                   data: form,
+                   contentType: false,
+                   processData: false,
+                   cache: false,
+                   success: function(data){
+                      $("#logo_url").val(data.logo_url);
+                      $("#Box_CxlwRC").append('<img width=100 src="'+data.logo_url+'">');
+                   },
+                   error:function(e){
+                       alert('上传图片失败')
+                   }
+               });
+           }
+        </script>
+    </body>
+
+</html>

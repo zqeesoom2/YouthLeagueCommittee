@@ -3,6 +3,7 @@ declare (strict_types = 1);
 
 namespace app\admin\controller;
 
+use think\facade\Session;
 use think\Request;
 use think\facade\Db;
 use think\facade\View;
@@ -19,6 +20,7 @@ class OrgStruct
     {
         $arrOrg = make_tree((new org())->listOrg());
         View::assign('arrOrg',$arrOrg);
+        View::assign('privil',Session::get('privil'));
 
         return View::fetch();
     }
@@ -75,8 +77,11 @@ class OrgStruct
      */
     public function update(Request $request)
     {
+        $strAccount = $request->post('org_name');
+        $obj = new \app\mobile\model\Admin();
 
-      return  json((new org())->editorg($request->post()));
+        $obj->edit($strAccount,Session::get('uid'));
+        return  json((new org())->editorg($request->post()));
     }
 
     /**

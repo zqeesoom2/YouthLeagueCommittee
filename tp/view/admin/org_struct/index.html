@@ -28,7 +28,7 @@
             </td>
             <td>{$org.members}</td>
             <td>{$org.release_quan}</td>
-            <td>{$org.captain_id}</td>
+            <td>{$org.captain}</td>
             <td>{$org.address}</td>
             <td>{$org.status} </td>
             <td>
@@ -37,7 +37,6 @@
                     <button class="layui-btn layui-btn-primary layui-btn-sm">删除</button>
                 </div>
             </td>
-
         </tr>
         {/volist}
         </tbody>
@@ -54,14 +53,15 @@
                         <input type="text" name="org_name" required lay-verify="required" placeholder="请输入权限名称" autocomplete="off" class="layui-input">
                     </div>
                 </div>
+                {if $privil=='-'}
                 <div class="layui-form-item">
-
                     <label class="layui-form-label">状态</label>
                     <div class="layui-input-block">
                         <input type="radio" name="status"  value="1"  title="审核通过" />
                         <input type="radio" name="status"  value="0"  title="审核未通过"/>
                     </div>
                 </div>
+                {/if}
                 <div class="layui-form-item">
                     <label class="layui-form-label">报名权限</label>
                     <div class="layui-input-block">
@@ -100,7 +100,7 @@
     });
     var $$ = mdui.JQ,
         data = '',
-        inst = new mdui.Dialog('#editorForum');//注册对话框
+        inst = new mdui.Dialog('#editorForum');
 
     $$('#user').addClass('mdui-collapse-item-open');
     $$('#setOrgs').addClass('mdui-list-item-active');
@@ -127,26 +127,30 @@
                 }
 
             }
-        })
+        });
 
         return false;
     });
     // 编辑
     function editorForum(id) {
         var data = $$(id).find('td');
+        var num1 =num2 = '0';
         $$('#editorForum [name="Id"]').val(data[0].innerText);
         $$('#editorForum [name="org_name"]').val(data[1].innerText);
        // $$('#editorForum [name="status"]').val(data[8].innerText);
         //$$('#editorForum [name="regist_auth"]').val(data[2].innerText);
       //  $$("[name="+name+"][value="+result.entity[name]+"]").prop('checked', true);
-       $$('#editorForum [name="status"][value]').prop('checked', true);
+        {if $privil=='-'}
+            $$('#editorForum [name="status"][value]').prop('checked', true);
+            if (data[8].innerText=='审核通过')
+             num1 = '1';
+             form.val("formTest", { "status":num1 });
+        {/if}
         $$('#editorForum [name="regist_auth"][value]').prop('checked', true);
-        var num1 =num2 = '0';
-        if (data[8].innerText=='审核通过')
-            num1 = '1';
+
         if (data[2].innerText=='对外开放')
             num2 = '1';
-       form.val("formTest", { "status":num1 });
+
        form.val("formTest", { "regist_auth":num2 });
 
         inst.open();

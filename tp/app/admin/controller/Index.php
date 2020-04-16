@@ -3,6 +3,7 @@ declare (strict_types = 1);
 
 namespace app\admin\controller;
 
+use think\facade\Session;
 use think\Request;
 use think\facade\View;
 
@@ -15,7 +16,7 @@ class Index
      */
     public function index(Request $request)
     {
-        // 获取系统信息
+
         $serverinfo =[
             "操作系统"    =>PHP_OS,
             "运行环境"    =>($request->server())["SERVER_SOFTWARE"],
@@ -28,9 +29,11 @@ class Index
             "手机端"=>  $request->isMobile() ? 'true'  :  'false'
 
         ];
-        // 模板赋值和渲染
+
+
         View::assign([
             "serverinfo" => $serverinfo,
+            'privil' => Session::get('privil')
         ]);
         return  View::fetch();
     }

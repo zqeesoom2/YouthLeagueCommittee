@@ -6,7 +6,7 @@ namespace app\admin\controller;
 use think\Request;
 use think\facade\View;
 
-class Role
+class Project
 {
     /**
      * 显示资源列表

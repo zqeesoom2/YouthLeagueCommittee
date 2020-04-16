@@ -30,10 +30,13 @@ class login extends BaseController
 
              if ($arrUser){
                  Session::set('privil',$arrUser['org_id']);
+                 Session::set('uid',$arrUser['Id']);
                 return redirect((string) url('adminIndex'));
              }
-             else
-                 $show = 'fail' ;
+             else{
+                 $show = 'fail';
+             }
+
         }
         view::assign('show',$show);
         return  View::fetch();
@@ -71,15 +74,13 @@ class login extends BaseController
         //
     }
 
-    /**
-     * 显示编辑资源表单页.
-     *
-     * @param  int  $id
-     * @return \think\Response
-     */
-    public function edit($id)
+
+    public function out()
     {
-        //
+
+        Session::delete('privil');
+        Session::delete('uid');
+       return redirect((string) url('login/index'));
     }
 
     /**

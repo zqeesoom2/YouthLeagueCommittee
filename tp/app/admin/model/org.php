@@ -12,7 +12,7 @@ use think\Model;
 class org extends Model
 {
     function listOrg() {
-        return self::where('path',Session::get('privil'))->select()->toArray();
+        return self::where('path','like',Session::get('privil').'%')->select()->toArray();
     }
 
     function getRegistAuthAttr($value){
@@ -26,7 +26,7 @@ class org extends Model
         if ((int)($value))
             return '审核通过';
         else
-            return '审核未通过';
+            return '审核中';
     }
 
     // 修改

@@ -14,3 +14,18 @@ function make_tree($data,$parent_id = 0,$level = 1)
     return $newData;
 }
 
+function upload_img($field){
+
+    $file = request()->file($field);
+
+    try {
+        validate(['file' => [
+            'fileSize' => 8388608, 'fileExt' => 'gif,jpg,png']])->check(['file'=>$file]);
+
+        $savename= \think\facade\Filesystem::disk('public')->putFile('images', $file);
+
+        return $savename;
+    } catch (\think\exception\ValidateException $e) {
+        return  $e->getMessage();
+    }
+}
