@@ -4,6 +4,7 @@ declare (strict_types = 1);
 namespace app\admin\controller;
 
 use app\BaseController;
+use app\mobile\model\Member;
 use think\Request;
 use think\facade\View;
 use think\facade\Db;
@@ -29,8 +30,11 @@ class login extends BaseController
              ])->find();
 
              if ($arrUser){
+
                  Session::set('privil',$arrUser['org_id']);
+
                  Session::set('uid',$arrUser['Id']);
+
                 return redirect((string) url('adminIndex'));
              }
              else{

@@ -3,6 +3,8 @@ declare (strict_types = 1);
 
 namespace app\mobile\model;
 
+use app\admin\model\org;
+use think\facade\Db;
 use think\Model;
 use app\mobile\validate\Member as MemberVal;
 
@@ -51,6 +53,35 @@ class Member extends Model
         }else{
             return "志愿者会员";
         }
+
+    }
+
+    public function list($pri){
+        return self::where('group','like',$pri.'%')->select()->toArray();
+    }
+
+    public function getGroupAttr($value) {
+
+        $arr = array_filter(explode('-',$value));
+        $str = $str2 ='';
+        $key = $key2 = 0;
+        foreach ($arr as  $id) {
+            if($key==0)
+                $str.=$id;
+            else
+                $str.=','.$id;
+            $key++;
+        }
+        $arr = Db::name('org')->field('org_name')->where('Id','in',$str)->select()->toArray();
+        foreach ($arr as $item) {
+
+            if ($key2==0)
+              $str2 .= $item['org_name'] ;
+            else
+                $str2.='->'.$item['org_name'];
+            $key2++;
+        }
+        return $str2;
 
     }
 

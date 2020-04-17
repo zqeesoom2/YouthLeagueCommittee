@@ -1,46 +1,57 @@
 {extend name="public/admin_public"} {block name="content"}
 <div class="mdui-m-a-1 mdui-typo mdui-table-fluid">
 
-    <h1 class="mdui-m-l-3">团队组织结构</h1>
+    <h1 class="mdui-m-l-3">志愿者管理</h1>
     <table class="mdui-table mdui-textfield mdui-table-hoverable">
         <thead>
         <tr>
             <th>#</th>
-            <th>团队名称</th>
-            <th>报名权限</th>
-            <th>地区</th>
-            <th>成员数量</th>
-            <th>发布活动数量</th>
-            <th>队长</th>
+            <th style="display:none">用户名</th>
+            <th>真实姓名</th>
+            <th>电话号码</th>
             <th>详细地址</th>
+            <th>email</th>
+            <th>民族</th>
+            <th>出生日期</th>
+            <th>性别</th>
+            <th>政治面貌</th>
             <th>服务类型</th>
+            <th>证件类型</th>
+            <th>证件号码</th>
+            <th>最高学历</th>
+            <th>从业状况</th>
+            <th>服务时长</th>
             <th>状态</th>
-            {if $privil=='-'}<th>操作</th>{/if}
+            <th>操作</th>
         </tr>
         </thead>
         <tbody>
-        {volist name='arrOrg' id='org'}
-        <tr id="{$org.Id}">
-            <td>{$org.Id}</td>
-            <td>{:str_repeat('——',$org.level-1)}{$org.org_name}</td>
-            <td>{$org.regist_auth} </td>
-            <td>
-                {$org.area_id}
-            </td>
-            <td>{$org.members}</td>
-            <td>{$org.release_quan}</td>
-            <td>{$org.captain}</td>
-            <td>{$org.address}</td>
-            <td>{$org.service}</td>
-            <td>{$org.status} </td>
-            {if $privil=='-'}
+        {volist name='arrVolunteer' id='volu'}
+        <tr id="{$volu.Id}">
+            <td>{$volu.Id}</td>
+            <td style="display:none">{$volu.username}</td>
+            <td>{$volu.real_name}</td>
+            <td>{$volu.phone}</td>
+            <td>{$volu.address}</td>
+            <td>{$volu.email}</td>
+            <td>{$volu.nation}</td>
+            <td>{$volu.brith}</td>
+            <td>{$volu.gender}</td>
+            <td>{$volu.political_affil}</td>
+            <td>{$volu.group}</td>
+            <td>{$volu.card_type}</td>
+            <td>{$volu.card}</td>
+            <td>{$volu.education}</td>
+            <td>{$volu.pract}</td>
+            <td>{$volu.length_ser}</td>
+            <td>{$volu.status}</td>
             <td>
                 <div class="layui-btn-group">
-                    <button class="layui-btn layui-btn-primary layui-btn-sm" onclick ="editorForum('#{$org.Id}')">编辑</button>
+                    <button class="layui-btn layui-btn-primary layui-btn-sm" onclick ="editorForum('#{$volu.Id}')">编辑</button>
                     <button class="layui-btn layui-btn-primary layui-btn-sm">删除</button>
                 </div>
             </td>
-            {/if}
+
         </tr>
         {/volist}
         </tbody>
@@ -54,15 +65,15 @@
                     <input type="hidden" name="Id" id="editfid">
                     <label class="layui-form-label">团队名称</label>
                     <div class="layui-input-block">
-                        <input type="text" lay-verify="required" disabled id="orgname" autocomplete="off" class="layui-input">
+                        <input type="text" name="org_name" required lay-verify="required" placeholder="请输入权限名称" autocomplete="off" class="layui-input">
                     </div>
                 </div>
                 {if $privil=='-'}
                 <div class="layui-form-item">
-                     <label class="layui-form-label">状态</label>
-                     <div class="layui-input-block">
-                         <input type="radio" name="status"  value="1"  title="通过" />
-                        <input type="radio" name="status"  value="0"  title="不通过"/>
+                    <label class="layui-form-label">状态</label>
+                    <div class="layui-input-block">
+                        <input type="radio" name="status"  value="1"  title="审核通过" />
+                        <input type="radio" name="status"  value="0"  title="审核未通过"/>
                     </div>
                 </div>
                 {/if}
@@ -107,7 +118,7 @@
         inst = new mdui.Dialog('#editorForum');
 
     $$('#user').addClass('mdui-collapse-item-open');
-    $$('#setOrgs').addClass('mdui-list-item-active');
+    $$('#setAuth').addClass('mdui-list-item-active');
 
     $$('#submit').on('click', function () {
         data = $$('form').serialize();
@@ -140,57 +151,58 @@
         var data = $$(id).find('td');
         var num1 =num2 = '0';
         $$('#editorForum [name="Id"]').val(data[0].innerText);
-        $$('#orgname').val(data[1].innerText);
-       // $$('#editorForum [name="status"]').val(data[8].innerText);
+        $$('#editorForum [name="org_name"]').val(data[1].innerText);
+        // $$('#editorForum [name="status"]').val(data[8].innerText);
         //$$('#editorForum [name="regist_auth"]').val(data[2].innerText);
-      //  $$("[name="+name+"][value="+result.entity[name]+"]").prop('checked', true);
+        //  $$("[name="+name+"][value="+result.entity[name]+"]").prop('checked', true);
         {if $privil=='-'}
-            if (data[9].innerText=='审核通过')
-             num1 = '1';
-             form.val("formTest", { "status":num1 });
+        $$('#editorForum [name="status"][value]').prop('checked', true);
+        if (data[8].innerText=='审核通过')
+            num1 = '1';
+        form.val("formTest", { "status":num1 });
         {/if}
+            $$('#editorForum [name="regist_auth"][value]').prop('checked', true);
 
+            if (data[2].innerText=='对外开放')
+                num2 = '1';
 
-        if (data[2].innerText=='对外开放')
-            num2 = '1';
+            form.val("formTest", { "regist_auth":num2 });
 
-       form.val("formTest", { "regist_auth":num2 });
+            inst.open();
+        }
+        // 保存
+        $$('#edit').on('click', function () {
+            data = $$('#editForm').serialize();
+            $$.ajax({
+                method: 'post',
+                url: "{:url('orgUpdate')}",
+                data: data,
+                dataType: 'json',
+                success: function (res) {
+                    if (res.code == 0) {
+                        mdui.snackbar(res.message, {
+                            timeout: 2000,
+                            position: 'top',
+                            onClose: function () {
+                                inst.close();
+                            },
+                            onClosed: function () {
+                                location.reload();
+                            }
+                        })
+                    } else {
+                        mdui.snackbar(res.message, {
+                            timeout: 2000,
+                            position: 'top',
+                            onClose: function () {
+                                inst.close();
+                            }
+                        })
+                    }
 
-        inst.open();
-    }
-    // 保存
-    $$('#edit').on('click', function () {
-        data = $$('#editForm').serialize();
-        $$.ajax({
-            method: 'post',
-            url: "{:url('orgUpdate')}",
-            data: data,
-            dataType: 'json',
-            success: function (res) {
-                if (res.code == 0) {
-                    mdui.snackbar(res.message, {
-                        timeout: 2000,
-                        position: 'top',
-                        onClose: function () {
-                            inst.close();
-                        },
-                        onClosed: function () {
-                            location.reload();
-                        }
-                    })
-                } else {
-                    mdui.snackbar(res.message, {
-                        timeout: 2000,
-                        position: 'top',
-                        onClose: function () {
-                            inst.close();
-                        }
-                    })
                 }
+            })
 
-            }
-        })
-
-        return false;
-    })
+            return false;
+        });
 </script> {/block}

@@ -25,7 +25,8 @@ class Project
      */
     public function create()
     {
-        //
+        View::assign('list','');
+        return View::fetch();
     }
 
     /**

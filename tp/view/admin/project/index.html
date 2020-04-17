@@ -1,42 +1,113 @@
 {extend name="public/admin_public"} {block name="content"}
 <div class="mdui-m-a-1 mdui-typo mdui-table-fluid">
 
-    <h1 class="mdui-m-l-3">用户管理</h1>
+    <h1 class="mdui-m-l-3">团队组织结构</h1>
     <table class="mdui-table mdui-textfield mdui-table-hoverable">
         <thead>
         <tr>
             <th>#</th>
-            <th>角色名称</th>
-            <th>权限列表</th>
+            <th>团队名称</th>
+            <th>报名权限</th>
+            <th>地区</th>
+            <th>成员数量</th>
+            <th>发布活动数量</th>
+            <th>队长</th>
+            <th>详细地址</th>
+            <th>服务类型</th>
+            <th>状态</th>
             <th>操作</th>
         </tr>
         </thead>
         <tbody>
-        {//volist name="userData" id="vo"}
-        <tr>
-            <td>{//$vo.uid}</td>
-            <td>{//$vo.username}</td>
-            <td>{//$vo.email}</td>
+        {volist name='arrOrg' id='org'}
+        <tr id="{$org.Id}">
+            <td>{$org.Id}</td>
+            <td>{:str_repeat('——',$org.level-1)}{$org.org_name}</td>
+            <td>{$org.regist_auth} </td>
+            <td>
+                {$org.area_id}
+            </td>
+            <td>{$org.members}</td>
+            <td>{$org.release_quan}</td>
+            <td>{$org.captain}</td>
+            <td>{$org.address}</td>
+            <td>{$org.service}</td>
+            <td>{$org.status} </td>
+
             <td>
                 <div class="layui-btn-group">
-                    <button class="layui-btn layui-btn-primary layui-btn-sm">编辑</button>
+                    <button class="layui-btn layui-btn-primary layui-btn-sm" onclick ="editorForum('#{$org.Id}')">编辑</button>
                     <button class="layui-btn layui-btn-primary layui-btn-sm">删除</button>
                 </div>
             </td>
+
         </tr>
-        {// /volist}
+        {/volist}
         </tbody>
     </table>
+    <!--编辑-->
+    <div class="mdui-dialog mdui-typo" id="editorForum">
+        <div class="mdui-dialog-content">
+            <div class="mdui-dialog-title">编辑团队</div>
+            <form id="editForm" class="layui-form layui-form-pane mdui-m-y-1" lay-filter="formTest">
+                <div class="layui-form-item">
+                    <input type="hidden" name="Id" id="editfid">
+                    <label class="layui-form-label">团队名称</label>
+                    <div class="layui-input-block">
+                        <input type="text" lay-verify="required" disabled id="orgname" autocomplete="off" class="layui-input">
+                    </div>
+                </div>
+
+                <div class="layui-form-item">
+                    <label class="layui-form-label">状态</label>
+                    <div class="layui-input-block">
+                        <input type="radio" name="status"  value="1"  title="通过" />
+                        <input type="radio" name="status"  value="0"  title="不通过"/>
+                    </div>
+                </div>
+
+                <div class="layui-form-item">
+                    <label class="layui-form-label">报名权限</label>
+                    <div class="layui-input-block">
+                        <input type="radio" name="regist_auth"  value="1"  title="对外开放" />
+                        <input type="radio" name="regist_auth"  value="0"  title="对内开放"/>
+                    </div>
+                </div>
+                <!--<div class="layui-form-item">
+                    <label class="layui-form-label">控制器名称</label>
+                    <div class="layui-input-block">
+                        <input type="text" name="controller_name" required lay-verify="required" placeholder="请输入控制器名称" autocomplete="off" class="layui-input">
+                    </div>
+                </div>
+                <div class="layui-form-item">
+                    <label class="layui-form-label">方法名称</label>
+                    <div class="layui-input-block">
+                        <input type="text" name="action_name" required lay-verify="required" placeholder="请输入权限方法名称" autocomplete="off" class="layui-input">
+                    </div>
+                </div>-->
+            </form>
+        </div>
+        <div class="mdui-dialog-actions">
+            <button class="mdui-btn mdui-ripple" id="edit">保存</button>
+        </div>
+    </div>
 
 </div>
 
 {/block} {block name="js"}
 <script>
+    var form = '';
+    layui.use('form', function(){
+
+        form = layui.form;
+        form.render('radio');
+    });
     var $$ = mdui.JQ,
-        data = '';;
+        data = '',
+        inst = new mdui.Dialog('#editorForum');
 
     $$('#user').addClass('mdui-collapse-item-open');
-    $$('#setUser').addClass('mdui-list-item-active');
+    $$('#setOrgs').addClass('mdui-list-item-active');
 
     $$('#submit').on('click', function () {
         data = $$('form').serialize();
@@ -60,8 +131,62 @@
                 }
 
             }
-        })
+        });
 
         return false;
-    })
+    });
+    // 编辑
+    function editorForum(id) {
+        var data = $$(id).find('td');
+        var num1 =num2 = '0';
+        $$('#editorForum [name="Id"]').val(data[0].innerText);
+        $$('#orgname').val(data[1].innerText);
+        // $$('#editorForum [name="status"]').val(data[8].innerText);
+        //$$('#editorForum [name="regist_auth"]').val(data[2].innerText);
+        //  $$("[name="+name+"][value="+result.entity[name]+"]").prop('checked', true);
+
+
+
+            if (data[2].innerText=='对外开放')
+                num2 = '1';
+
+            form.val("formTest", { "regist_auth":num2 });
+
+            inst.open();
+        }
+        // 保存
+        $$('#edit').on('click', function () {
+            data = $$('#editForm').serialize();
+            $$.ajax({
+                method: 'post',
+                url: "{:url('orgUpdate')}",
+                data: data,
+                dataType: 'json',
+                success: function (res) {
+                    if (res.code == 0) {
+                        mdui.snackbar(res.message, {
+                            timeout: 2000,
+                            position: 'top',
+                            onClose: function () {
+                                inst.close();
+                            },
+                            onClosed: function () {
+                                location.reload();
+                            }
+                        })
+                    } else {
+                        mdui.snackbar(res.message, {
+                            timeout: 2000,
+                            position: 'top',
+                            onClose: function () {
+                                inst.close();
+                            }
+                        })
+                    }
+
+                }
+            })
+
+            return false;
+        });
 </script> {/block}

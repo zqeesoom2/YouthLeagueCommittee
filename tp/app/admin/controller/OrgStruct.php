@@ -18,7 +18,7 @@ class OrgStruct
      */
     public function index()
     {
-        $arrOrg = make_tree((new org())->listOrg());
+        $arrOrg = make_tree((new org())->likeListOrg(Session::get('privil')));
         View::assign('arrOrg',$arrOrg);
         View::assign('privil',Session::get('privil'));
 
@@ -78,9 +78,7 @@ class OrgStruct
     public function update(Request $request)
     {
         $strAccount = $request->post('org_name');
-        $obj = new \app\mobile\model\Admin();
 
-        $obj->edit($strAccount,Session::get('uid'));
         return  json((new org())->editorg($request->post()));
     }
 

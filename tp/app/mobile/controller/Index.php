@@ -57,17 +57,15 @@ class Index
             $obj = new Org();
             if ( $arrCreate['org_name'] && empty($obj->orgByName($arrCreate['org_name']))) {
 
-                $arrPerOrg = $obj->getPath($arrCreate['service']);
-
-                $arrCreate['path'] = $arrPerOrg->path.$arrCreate['service'].'-';
+                $arrCreate['path'] = $obj->splicingPath($arrCreate['service']);
 
                 $password = md5($arrCreate['password'].Config::get('cus.salt'));
                 $username = $arrCreate['org_name'];
                 unset($arrCreate['password']);
 
-                $objAdmin = (new Admin())->add(['username'=>$username,'password'=>$password,'org_id'=>$arrCreate['path']]);
-
                 $arr = $obj->add($arrCreate);
+
+                $objAdmin = (new Admin())->add(['username'=>$username,'password'=>$password,'org_id'=>$arrCreate['path'].$arr['data']['org_id'].'-']);
 
                 Db::commit();
 

@@ -3,6 +3,7 @@ declare (strict_types = 1);
 
 namespace app\mobile\controller;
 
+use app\mobile\model\Org;
 use think\facade\Session;
 use think\Request;
 use app\mobile\model\Member;
@@ -34,8 +35,12 @@ class Reg
         $arrCreate['username'] = Session::get('userInfo')['username'];
 
         $objM = new Member();
+        $objO = new Org();
 
         if (empty($objM->memberByName($arrCreate['username']))) {
+
+            $arrCreate['group'] = $objO->splicingPath($arrCreate['group']);
+
             $arr = $objM->add($arrCreate);
 
             return  json($arr);

@@ -4,6 +4,7 @@ declare (strict_types = 1);
 namespace app\mobile\model;
 
 use app\mobile\validate\Org as OrgVal;
+use think\facade\Db;
 use think\Model;
 
 /**
@@ -36,11 +37,16 @@ class Org extends Model
         return null;
     }
 
-    function getPath($id) {
-      return self::field('path')->find($id);
+    function splicingPath($id) {
+
+        $arrPerOrg = self::field('path')->find($id);
+
+       return $strPath = $arrPerOrg->path.$id.'-';
     }
 
     function getStatusById($id) {
         return self::field('status')->find($id);
     }
+
+
 }

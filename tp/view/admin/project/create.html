@@ -1,0 +1,182 @@
+{extend name="public/admin_public"} {block name="content"}
+<div class="mdui-m-a-1 mdui-typo mdui-table-fluid">
+
+    <h1 class="mdui-m-l-3">添加志愿者项目</h1>
+    <div class="mdui-dialog-content">
+    <form id="addForm" class="layui-form layui-form-pane mdui-m-y-1">
+        <div class="layui-form-item">
+            <label class="layui-form-label">项目标题</label>
+            <input type="hidden" name="image" id="imageurl" value="">
+            <div class="layui-input-block">
+                <input type="text" name="title" required lay-verify="required" placeholder="请输入文章标题" autocomplete="off" class="layui-input">
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">项目摘要</label>
+            <div class="layui-input-block">
+                <input type="text" name="summary" required lay-verify="required" placeholder="请输入文章摘要" autocomplete="off" class="layui-input">
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">服务类型</label>
+            <div class="layui-input-block">
+                <select name="cid" >
+                    <option value="1">礼义服务</option>
+                    <option value="2">文明创建宣传</option>
+                    <option value="3">健康义诊</option>
+                    <option value="4">爱心助学</option>
+                    <option value="5">心理咨询</option>
+                    <option value="6">疫情防控</option>
+                    <option value="7">应急救援</option>
+                </select>
+            </div>
+        </div>
+
+        <div class="layui-form-item">
+            <label class="layui-form-label">招募人数</label>
+
+            <div class="layui-input-block">
+                <input type="text" name="recruit_num" required lay-verify="required"  autocomplete="off" class="layui-input">
+            </div>
+        </div>
+
+        <div class="layui-form-item">
+            <label class="layui-form-label">招募时间</label>
+
+            <div class="layui-input-block">
+                <input type="text" name="recruit_time" id="recruit_time" required lay-verify="required"  autocomplete="off" class="layui-input">
+            </div>
+        </div>
+
+        <div class="layui-form-item">
+            <label class="layui-form-label">活动时间</label>
+
+            <div class="layui-input-block">
+                <input type="text" name="activity_time" id="activity_time" required lay-verify="required" autocomplete="off" class="layui-input">
+            </div>
+        </div>
+
+        <div class="layui-form-item">
+            <label class="layui-form-label">项目内容</label>
+            <div class="layui-input-block">
+                <textarea name="content" id="artcontent" style="display: none;"></textarea>
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">项目封面</label>
+            <div class="layui-input-block">
+                <button type="button" name="image" class="layui-btn" id="upimage">
+                    <i class="layui-icon">&#xe67c;</i>上传图片
+                </button>
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <div id="img" class="layui-input-block">
+            </div>
+        </div>
+    </form></div>
+    <!--编辑-->
+    <div class="mdui-dialog mdui-typo" id="editorForum">
+        <div class="mdui-dialog-content">
+            <div class="mdui-dialog-title">编辑团队</div>
+            <form id="editForm" class="layui-form layui-form-pane mdui-m-y-1" lay-filter="formTest">
+                <div class="layui-form-item">
+                    <input type="hidden" name="Id" id="editfid">
+                    <label class="layui-form-label">团队名称</label>
+                    <div class="layui-input-block">
+                        <input type="text" lay-verify="required" disabled id="orgname" autocomplete="off" class="layui-input">
+                    </div>
+                </div>
+
+                <div class="layui-form-item">
+                     <label class="layui-form-label">状态</label>
+                     <div class="layui-input-block">
+                         <input type="radio" name="status"  value="1"  title="通过" />
+                        <input type="radio" name="status"  value="0"  title="不通过"/>
+                    </div>
+                </div>
+
+                <div class="layui-form-item">
+                    <label class="layui-form-label">报名权限</label>
+                    <div class="layui-input-block">
+                        <input type="radio" name="regist_auth"  value="1"  title="对外开放" />
+                        <input type="radio" name="regist_auth"  value="0"  title="对内开放"/>
+                    </div>
+                </div>
+                <!--<div class="layui-form-item">
+                    <label class="layui-form-label">控制器名称</label>
+                    <div class="layui-input-block">
+                        <input type="text" name="controller_name" required lay-verify="required" placeholder="请输入控制器名称" autocomplete="off" class="layui-input">
+                    </div>
+                </div>
+                <div class="layui-form-item">
+                    <label class="layui-form-label">方法名称</label>
+                    <div class="layui-input-block">
+                        <input type="text" name="action_name" required lay-verify="required" placeholder="请输入权限方法名称" autocomplete="off" class="layui-input">
+                    </div>
+                </div>-->
+            </form>
+        </div>
+        <div class="mdui-dialog-actions">
+            <button class="mdui-btn mdui-ripple" id="edit">保存</button>
+        </div>
+    </div>
+
+</div>
+
+{/block} {block name="js"}
+<script>
+
+    var $$ = mdui.JQ
+
+    layui.use('layedit', function(){
+        var layedit = layui.layedit;
+        layedit.build('artcontent');
+    });
+
+
+    layui.use('upload', function(){
+        var upload = layui.upload;
+
+
+        var uploadInst = upload.render({
+            elem: '#upimage'
+            ,field:"image"
+            ,url: "{:url('article/upimage')}"
+            ,done: function(res){
+
+                var path = "/storage/"+res.path;
+                var img = "<img src='"+path+"' />";
+                $$("#imageurl").val(res.path);
+                $$("#img").html(img);
+            }
+            ,error: function(){
+
+            }
+        });
+    });
+
+    layui.use('laydate', function(){
+        var laydate = layui.laydate;
+
+        laydate.render({
+            elem: '#recruit_time',range: true
+        });
+    });
+
+    layui.use('laydate', function(){
+        var laydate = layui.laydate;
+
+        laydate.render({
+            elem: '#activity_time',
+            type: 'datetime'
+            ,range: true
+        });
+    });
+
+    $$('#sys').addClass('mdui-collapse-item-open');
+    $$('#addProject').addClass('mdui-list-item-active');
+
+
+
+</script> {/block}

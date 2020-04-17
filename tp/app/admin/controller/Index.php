@@ -3,6 +3,7 @@ declare (strict_types = 1);
 
 namespace app\admin\controller;
 
+use app\mobile\model\Member;
 use think\facade\Session;
 use think\Request;
 use think\facade\View;
@@ -43,9 +44,20 @@ class Index
      *
      * @return \think\Response
      */
-    public function create()
+    public function volunteer()
     {
-        //
+        $objMember = new Member();
+
+
+        $strPri = Session::get('privil');
+
+        $arrVolunteer =  $objMember->list($strPri);
+
+        View::assign([
+            'privil' => $strPri,
+            'arrVolunteer'=>$arrVolunteer
+        ]);
+        return View::fetch();
     }
 
     /**

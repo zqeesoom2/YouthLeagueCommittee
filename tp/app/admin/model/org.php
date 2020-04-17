@@ -3,6 +3,7 @@ declare (strict_types = 1);
 
 namespace app\admin\model;
 
+use think\facade\Db;
 use think\facade\Session;
 use think\Model;
 
@@ -11,8 +12,8 @@ use think\Model;
  */
 class org extends Model
 {
-    function listOrg() {
-        return self::where('path','like',Session::get('privil').'%')->select()->toArray();
+    function likeListOrg($strPath) {
+        return self::where('path','like',$strPath.'%')->select()->toArray();
     }
 
     function getRegistAuthAttr($value){
@@ -29,7 +30,6 @@ class org extends Model
             return '审核中';
     }
 
-    // 修改
     public function editorg($arr)
     {
         try{
@@ -38,6 +38,22 @@ class org extends Model
         }catch(\Exception $e){
             return ["code" =>0, "message" => $e->getMessage()];
         }
+
+    }
+
+    function getAreaIdAttr($val) {
+
+        return (Db::name('area')->find($val))['area'];
+
+    }
+
+    function getServiceAttr($val) {
+
+       $obj = self::field('org_name')->find($val);
+        if ($obj) {
+            return $obj->org_name;
+        }
+
 
     }
 }
