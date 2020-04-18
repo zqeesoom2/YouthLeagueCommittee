@@ -6,7 +6,7 @@
     <form id="addForm" class="layui-form layui-form-pane mdui-m-y-1">
         <div class="layui-form-item">
             <label class="layui-form-label">项目标题</label>
-            <input type="hidden" name="image" id="imageurl" value="">
+
             <div class="layui-input-block">
                 <input type="text" name="title" required lay-verify="required" placeholder="请输入文章标题" autocomplete="off" class="layui-input">
             </div>
@@ -15,28 +15,6 @@
             <label class="layui-form-label">项目摘要</label>
             <div class="layui-input-block">
                 <input type="text" name="summary" required lay-verify="required" placeholder="请输入文章摘要" autocomplete="off" class="layui-input">
-            </div>
-        </div>
-        <div class="layui-form-item">
-            <label class="layui-form-label">服务类型</label>
-            <div class="layui-input-block">
-                <select name="cid" >
-                    <option value="1">礼义服务</option>
-                    <option value="2">文明创建宣传</option>
-                    <option value="3">健康义诊</option>
-                    <option value="4">爱心助学</option>
-                    <option value="5">心理咨询</option>
-                    <option value="6">疫情防控</option>
-                    <option value="7">应急救援</option>
-                </select>
-            </div>
-        </div>
-
-        <div class="layui-form-item">
-            <label class="layui-form-label">招募人数</label>
-
-            <div class="layui-input-block">
-                <input type="text" name="recruit_num" required lay-verify="required"  autocomplete="off" class="layui-input">
             </div>
         </div>
 
@@ -57,70 +35,54 @@
         </div>
 
         <div class="layui-form-item">
+            <label class="layui-form-label">服务类型</label>
+            <div class="layui-input-block">
+                <select name="service" lay-verify="required">
+                    <option value="">请选择</option>
+                    <option value="1">礼义服务</option>
+                    <option value="2">文明创建宣传</option>
+                    <option value="3">健康义诊</option>
+                    <option value="4">爱心助学</option>
+                    <option value="5">心理咨询</option>
+                    <option value="6">疫情防控</option>
+                    <option value="7">应急救援</option>
+                </select>
+            </div>
+        </div>
+
+        <div class="layui-form-item">
+            <label class="layui-form-label">招募人数</label>
+
+            <div class="layui-input-block">
+                <input type="text" name="recruit_num" required lay-verify="required"  autocomplete="off" class="layui-input">
+            </div>
+        </div>
+
+
+        <div class="layui-form-item">
             <label class="layui-form-label">项目内容</label>
             <div class="layui-input-block">
-                <textarea name="content" id="artcontent" style="display: none;"></textarea>
+                <textarea id="artcontent" class="layui-textarea" ></textarea>
             </div>
         </div>
         <div class="layui-form-item">
             <label class="layui-form-label">项目封面</label>
             <div class="layui-input-block">
-                <button type="button" name="image" class="layui-btn" id="upimage">
+                <button type="button"  class="layui-btn" id="upimage">
                     <i class="layui-icon">&#xe67c;</i>上传图片
                 </button>
+                <input type="hidden" name="image" id="imageurl" value="">
             </div>
         </div>
         <div class="layui-form-item">
             <div id="img" class="layui-input-block">
             </div>
         </div>
+        <div class="layui-form-item">
+                <center>
+                <button class="layui-btn"  lay-submit lay-filter="formSubmit">提交志愿项目</button></center>
+        </div>
     </form></div>
-    <!--编辑-->
-    <div class="mdui-dialog mdui-typo" id="editorForum">
-        <div class="mdui-dialog-content">
-            <div class="mdui-dialog-title">编辑团队</div>
-            <form id="editForm" class="layui-form layui-form-pane mdui-m-y-1" lay-filter="formTest">
-                <div class="layui-form-item">
-                    <input type="hidden" name="Id" id="editfid">
-                    <label class="layui-form-label">团队名称</label>
-                    <div class="layui-input-block">
-                        <input type="text" lay-verify="required" disabled id="orgname" autocomplete="off" class="layui-input">
-                    </div>
-                </div>
-
-                <div class="layui-form-item">
-                     <label class="layui-form-label">状态</label>
-                     <div class="layui-input-block">
-                         <input type="radio" name="status"  value="1"  title="通过" />
-                        <input type="radio" name="status"  value="0"  title="不通过"/>
-                    </div>
-                </div>
-
-                <div class="layui-form-item">
-                    <label class="layui-form-label">报名权限</label>
-                    <div class="layui-input-block">
-                        <input type="radio" name="regist_auth"  value="1"  title="对外开放" />
-                        <input type="radio" name="regist_auth"  value="0"  title="对内开放"/>
-                    </div>
-                </div>
-                <!--<div class="layui-form-item">
-                    <label class="layui-form-label">控制器名称</label>
-                    <div class="layui-input-block">
-                        <input type="text" name="controller_name" required lay-verify="required" placeholder="请输入控制器名称" autocomplete="off" class="layui-input">
-                    </div>
-                </div>
-                <div class="layui-form-item">
-                    <label class="layui-form-label">方法名称</label>
-                    <div class="layui-input-block">
-                        <input type="text" name="action_name" required lay-verify="required" placeholder="请输入权限方法名称" autocomplete="off" class="layui-input">
-                    </div>
-                </div>-->
-            </form>
-        </div>
-        <div class="mdui-dialog-actions">
-            <button class="mdui-btn mdui-ripple" id="edit">保存</button>
-        </div>
-    </div>
 
 </div>
 
@@ -129,54 +91,85 @@
 
     var $$ = mdui.JQ
 
-    layui.use('layedit', function(){
-        var layedit = layui.layedit;
-        layedit.build('artcontent');
-    });
+    layui.use(['layedit','form','upload','laydate'], function(){
+         form = layui.form;
 
+        layedit = layui.layedit;
+        layedit.set({
+            uploadImage:{
+                url:"{:url('articleUpimage')}",
+            }, uploadVideo: {
+                url: "{:url('articleUpVideo')}",
+                size: '204800'
+            },
+            tool: [
+                'html','code'
+                , 'strong', 'italic', 'underline', 'del',
+                ,'addhr' //添加水平线
+                ,'|', 'fontFomatt','colorpicker' //段落格式，字体颜色
+                , 'face', '|', 'left', 'center', 'right', '|', 'link', 'unlink'
+                , 'image_alt', 'altEdit', 'video'
+                ,'anchors' //锚点
+                , '|', 'fullScreen'
+            ]
+        })
 
-    layui.use('upload', function(){
+        content = layedit.build('artcontent', {
+            height: 600
+        });
+
         var upload = layui.upload;
-
 
         var uploadInst = upload.render({
             elem: '#upimage'
             ,field:"image"
-            ,url: "{:url('article/upimage')}"
+            ,url: "{:url('articleUpimage/image')}"
             ,done: function(res){
-
-                var path = "/storage/"+res.path;
+                var path = res.data.src;
                 var img = "<img src='"+path+"' />";
-                $$("#imageurl").val(res.path);
+                $$("#imageurl").val(path);
                 $$("#img").html(img);
             }
-            ,error: function(){
-
-            }
         });
-    });
 
-    layui.use('laydate', function(){
-        var laydate = layui.laydate;
+        laydate = layui.laydate;
 
         laydate.render({
             elem: '#recruit_time',range: true
         });
-    });
-
-    layui.use('laydate', function(){
-        var laydate = layui.laydate;
 
         laydate.render({
             elem: '#activity_time',
             type: 'datetime'
             ,range: true
         });
+
+        form.on('submit(formSubmit)', function(data){
+
+            var JsonVal =data.field;
+
+            JsonVal.content = layedit.getContent(content);
+
+            $$.ajax({
+                method: 'POST',
+                url: "{:url('addArticle')}",
+                data: JsonVal,
+                dataType: 'json',
+                success: function (res) {
+                    if (res.code) {
+                        alert('提交成功');
+                    } else {
+                        alert('提交失败');
+                    }
+                }
+            })
+
+            return false;
+        });
+
     });
 
     $$('#sys').addClass('mdui-collapse-item-open');
     $$('#addProject').addClass('mdui-list-item-active');
-
-
 
 </script> {/block}
