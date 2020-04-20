@@ -3,14 +3,14 @@ declare (strict_types = 1);
 
 namespace app\admin\controller;
 
-use app\BaseController;
-use app\mobile\model\Member;
+
+
 use think\Request;
 use think\facade\View;
 use think\facade\Db;
 use think\facade\Config;
 use think\facade\Session;
-class login extends BaseController
+class login
 {
     /**
      * 显示资源列表
@@ -19,6 +19,7 @@ class login extends BaseController
      */
     public function index(Request $request)
     {
+
         $show = '';
         if (!empty($request->post('submit'))) {
              $strSalt =  Config::get('cus.salt');

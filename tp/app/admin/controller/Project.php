@@ -4,12 +4,13 @@ declare (strict_types = 1);
 namespace app\admin\controller;
 
 use app\admin\model\OrgActivity;
+use app\BaseController;
 use app\mobile\model\Org;
 use think\facade\Session;
 use think\Request;
 use think\facade\View;
 
-class Project
+class Project extends BaseController
 {
     /**
      * 显示资源列表

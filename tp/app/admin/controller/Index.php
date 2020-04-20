@@ -3,12 +3,13 @@ declare (strict_types = 1);
 
 namespace app\admin\controller;
 
+use app\BaseController;
 use app\mobile\model\Member;
 use think\facade\Session;
 use think\Request;
 use think\facade\View;
 
-class Index
+class Index extends BaseController
 {
     /**
      * 显示资源列表

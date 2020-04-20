@@ -5,6 +5,7 @@ namespace app;
 
 use think\App;
 use think\exception\ValidateException;
+use think\facade\Session;
 use think\Validate;
 
 /**
@@ -52,9 +53,14 @@ abstract class BaseController
 
     // 初始化
     protected function initialize()
-    {}
+    {
+        if (!Session::has("uid")){
+            return redirect((string) url('login/index'))->send();
+        }
+    }
 
     /**
+     *
      * 验证数据
      * @access protected
      * @param  array        $data     数据

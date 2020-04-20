@@ -4,12 +4,12 @@ declare (strict_types = 1);
 namespace app\admin\controller;
 
 use think\facade\Session;
+use app\BaseController;
 use think\Request;
-use think\facade\Db;
 use think\facade\View;
 use app\admin\model\org;
 
-class OrgStruct
+class OrgStruct extends BaseController
 {
     /**
      * 显示资源列表
