@@ -4,6 +4,7 @@ declare (strict_types = 1);
 namespace app\admin\controller;
 
 use app\admin\model\OrgActivity;
+use app\mobile\model\Org;
 use think\facade\Session;
 use think\Request;
 use think\facade\View;
@@ -17,6 +18,19 @@ class Project
      */
     public function index()
     {
+
+        $arrlist = (new OrgActivity())->page(Session::get('privil'),20);
+
+        $count = $arrlist ->total();
+        $page = $arrlist->render();
+
+       // $arrData =  $arrlist->toArray();
+
+        View::assign(['arrlist'=>$arrlist,
+                'page'=>$page,
+                'count'=>$count
+            ]);
+
         return  View::fetch();
     }
 
@@ -58,21 +72,10 @@ class Project
 
         $data = $request->post();
 
-        $dateRec = $request->post('recruit_time');
-        $dateAct = $request->post('activity_time');
-        list($time_rec_start,$time_rec_end) = explode(' - ',$dateRec);
-
-        list($time_act_start,$time_act_end) = explode(' - ',$dateAct);
-        unset($data['recruit_time']);
-        unset($data['activity_time']);
-
-        $data['recruit_time_start'] = strtotime(date($time_rec_start));
-        $data['recruit_time_end'] = strtotime(date($time_rec_end));
-
-        $data['activity_time_start'] = strtotime(date($time_act_start));
-        $data['activity_time_end'] = strtotime(date($time_act_end));
+        $data = $this->handleData($data);
 
         $data['group_id'] = Session::get('uid');
+
 
         $res = (new OrgActivity())->add($data);
         $code = 0;
@@ -88,9 +91,34 @@ class Project
      * @param  int  $id
      * @return \think\Response
      */
-    public function edit($id)
+    public function edit(Request $request,$id)
     {
-        //
+
+        if ($request->isPost()) {
+
+
+            if(!isset($id)) $id = $request->post('Id');
+
+            $data = $request->post();
+            unset($data['Id']);
+
+            $data = $this->handleData($data);
+
+            (new OrgActivity())->edit($id,$data);
+            return ["code" => 1, "message" => "更新成功"];
+
+            //return ["code" =>0, "message" => $e->getMessage()];
+
+        }else{
+
+            if ($id){
+                $info = (new OrgActivity())->whichOne($id);
+                View::assign('info',$info);
+                return  View::fetch();
+            }
+
+        }
+
     }
 
     /**
@@ -100,9 +128,26 @@ class Project
      * @param  int  $id
      * @return \think\Response
      */
-    public function update(Request $request, $id)
+    public function handleData(&$data)
     {
-        //
+
+        $dateRec = $data['recruit_time'];
+        $dateAct = $data['activity_time'];
+        list($time_rec_start,$time_rec_end) = explode(' - ',$dateRec);
+
+        list($time_act_start,$time_act_end) = explode(' - ',$dateAct);
+        unset($data['recruit_time']);
+        unset($data['activity_time']);
+
+        $data['recruit_time_start'] = strtotime(date($time_rec_start));
+        $data['recruit_time_end'] = strtotime(date($time_rec_end));
+
+        $data['activity_time_start'] = strtotime(date($time_act_start));
+        $data['activity_time_end'] = strtotime(date($time_act_end));
+
+        $data['service_id'] = (new Org())->splicingPath($data['service_id']);
+
+        return $data;
     }
 
     /**

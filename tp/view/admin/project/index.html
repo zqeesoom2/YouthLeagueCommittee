@@ -1,90 +1,68 @@
 {extend name="public/admin_public"} {block name="content"}
 <div class="mdui-m-a-1 mdui-typo mdui-table-fluid">
 
-    <h1 class="mdui-m-l-3">团队组织结构</h1>
+    <h1 class="mdui-m-l-3">活动列表</h1>
     <table class="mdui-table mdui-textfield mdui-table-hoverable">
         <thead>
         <tr>
-            <th>#</th>
-            <th>团队名称</th>
-            <th>报名权限</th>
+            <th style="display: none">#</th>
+            <th>活动标题</th>
+            <th>发起组织</th>
             <th>地区</th>
-            <th>成员数量</th>
-            <th>发布活动数量</th>
-            <th>队长</th>
-            <th>详细地址</th>
+            <th>计划招募人数</th>
             <th>服务类型</th>
+            <th>招募时间</th>
+            <th>活动时间</th>
             <th>状态</th>
             <th>操作</th>
         </tr>
         </thead>
         <tbody>
-        {volist name='arrOrg' id='org'}
-        <tr id="{$org.Id}">
-            <td>{$org.Id}</td>
-            <td>{:str_repeat('——',$org.level-1)}{$org.org_name}</td>
-            <td>{$org.regist_auth} </td>
-            <td>
-                {$org.area_id}
-            </td>
-            <td>{$org.members}</td>
-            <td>{$org.release_quan}</td>
-            <td>{$org.captain}</td>
-            <td>{$org.address}</td>
-            <td>{$org.service}</td>
-            <td>{$org.status} </td>
+        {volist name='arrlist' id='val'}
+        <tr id="{$val.Id}">
+            <td style="display: none">{$val.Id}</td>
+            <td style="overflow:hidden;width:389px;display:block;height:42px;">{$val.title}</td>
+            <td>{$val.group_id}</td>
+            <td>{$val.area}</td>
+            <td>{$val.recruit_num}</td>
+            <td>{$val.service_id}</td>
+            <td>{$val.recruit_time_start} - {$val.recruit_time_end}</td>
+            <td>{$val.activity_time_start} -  {$val.activity_time_end}</td>
+            <td > <a href="javascript:editorForum('#{$val.Id}');">{$val.status}</a> </td>
 
             <td>
                 <div class="layui-btn-group">
-                    <button class="layui-btn layui-btn-primary layui-btn-sm" onclick ="editorForum('#{$org.Id}')">编辑</button>
+                    <button class="layui-btn layui-btn-primary layui-btn-sm"><a href="{:url('editOrgAct',['id'=>$val.Id])}">编辑</a></button>
                     <button class="layui-btn layui-btn-primary layui-btn-sm">删除</button>
                 </div>
             </td>
 
         </tr>
         {/volist}
+        <tr>
+            <td colspan="11"><span style="float:left;line-height:34px;">总计录数:{$count}。</span>{$page|raw}</td>
+        </tr>
         </tbody>
+
     </table>
     <!--编辑-->
     <div class="mdui-dialog mdui-typo" id="editorForum">
         <div class="mdui-dialog-content">
-            <div class="mdui-dialog-title">编辑团队</div>
+            <div class="mdui-dialog-title">编辑状态</div>
             <form id="editForm" class="layui-form layui-form-pane mdui-m-y-1" lay-filter="formTest">
-                <div class="layui-form-item">
-                    <input type="hidden" name="Id" id="editfid">
-                    <label class="layui-form-label">团队名称</label>
-                    <div class="layui-input-block">
-                        <input type="text" lay-verify="required" disabled id="orgname" autocomplete="off" class="layui-input">
-                    </div>
-                </div>
 
+                <input type="hidden" name="Id" id="editfid">
                 <div class="layui-form-item">
                     <label class="layui-form-label">状态</label>
                     <div class="layui-input-block">
-                        <input type="radio" name="status"  value="1"  title="通过" />
-                        <input type="radio" name="status"  value="0"  title="不通过"/>
+                        <input type="radio" name="status"  value="6"  title="通过" />
+                        <input type="radio" name="status"  value="5"  title="审核中" />
+                        <input type="radio" name="status"  value="4"  title="不通过"/>
                     </div>
                 </div>
 
-                <div class="layui-form-item">
-                    <label class="layui-form-label">报名权限</label>
-                    <div class="layui-input-block">
-                        <input type="radio" name="regist_auth"  value="1"  title="对外开放" />
-                        <input type="radio" name="regist_auth"  value="0"  title="对内开放"/>
-                    </div>
-                </div>
-                <!--<div class="layui-form-item">
-                    <label class="layui-form-label">控制器名称</label>
-                    <div class="layui-input-block">
-                        <input type="text" name="controller_name" required lay-verify="required" placeholder="请输入控制器名称" autocomplete="off" class="layui-input">
-                    </div>
-                </div>
-                <div class="layui-form-item">
-                    <label class="layui-form-label">方法名称</label>
-                    <div class="layui-input-block">
-                        <input type="text" name="action_name" required lay-verify="required" placeholder="请输入权限方法名称" autocomplete="off" class="layui-input">
-                    </div>
-                </div>-->
+
+
             </form>
         </div>
         <div class="mdui-dialog-actions">
@@ -106,8 +84,8 @@
         data = '',
         inst = new mdui.Dialog('#editorForum');
 
-    $$('#user').addClass('mdui-collapse-item-open');
-    $$('#setOrgs').addClass('mdui-list-item-active');
+    $$('#sys').addClass('mdui-collapse-item-open');
+    $$('#Project').addClass('mdui-list-item-active');
 
     $$('#submit').on('click', function () {
         data = $$('form').serialize();
@@ -138,19 +116,15 @@
     // 编辑
     function editorForum(id) {
         var data = $$(id).find('td');
-        var num1 =num2 = '0';
+        var num = '6';
         $$('#editorForum [name="Id"]').val(data[0].innerText);
-        $$('#orgname').val(data[1].innerText);
-        // $$('#editorForum [name="status"]').val(data[8].innerText);
-        //$$('#editorForum [name="regist_auth"]').val(data[2].innerText);
-        //  $$("[name="+name+"][value="+result.entity[name]+"]").prop('checked', true);
 
+        switch (data[8].innerText){
+            case '审核不通过' :num = '4';break;
+            case '审核中' : num = '5';break;
+        }
 
-
-            if (data[2].innerText=='对外开放')
-                num2 = '1';
-
-            form.val("formTest", { "regist_auth":num2 });
+            form.val("formTest", { "status":num });
 
             inst.open();
         }
@@ -159,7 +133,7 @@
             data = $$('#editForm').serialize();
             $$.ajax({
                 method: 'post',
-                url: "{:url('orgUpdate')}",
+                url: "{:url('editOrgAct')}",
                 data: data,
                 dataType: 'json',
                 success: function (res) {

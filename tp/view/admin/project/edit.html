@@ -1,20 +1,20 @@
 {extend name="public/admin_public"} {block name="content"}
 <div class="mdui-m-a-1 mdui-typo mdui-table-fluid">
 
-    <h1 class="mdui-m-l-3">添加志愿者项目</h1>
+    <h1 class="mdui-m-l-3">编辑志愿者项目</h1>
     <div class="mdui-dialog-content">
-    <form id="addForm" class="layui-form layui-form-pane mdui-m-y-1">
+    <form id="addForm" class="layui-form layui-form-pane mdui-m-y-1" lay-filter="formTest">
         <div class="layui-form-item">
             <label class="layui-form-label">项目标题</label>
 
             <div class="layui-input-block">
-                <input type="text" name="title" required lay-verify="required" placeholder="请输入文章标题" autocomplete="off" class="layui-input">
+                <input type="text" name="title" required lay-verify="required" value="{$info.title}" autocomplete="off" class="layui-input">
             </div>
         </div>
         <div class="layui-form-item">
             <label class="layui-form-label">项目摘要</label>
             <div class="layui-input-block">
-                <input type="text" name="summary" required lay-verify="required" placeholder="请输入文章摘要" autocomplete="off" class="layui-input">
+                <input type="text" name="summary" required lay-verify="required" value="{$info.summary}" autocomplete="off" class="layui-input">
             </div>
         </div>
 
@@ -22,7 +22,7 @@
             <label class="layui-form-label">招募时间</label>
 
             <div class="layui-input-block">
-                <input type="text" name="recruit_time" id="recruit_time" required lay-verify="required"  autocomplete="off" class="layui-input">
+                <input type="text" name="recruit_time" id="recruit_time" required lay-verify="required"   autocomplete="off" class="layui-input">
             </div>
         </div>
 
@@ -30,7 +30,7 @@
             <label class="layui-form-label">活动时间</label>
 
             <div class="layui-input-block">
-                <input type="text" name="activity_time" id="activity_time" required lay-verify="required" autocomplete="off" class="layui-input">
+                <input type="text" name="activity_time" id="activity_time" required lay-verify="required"  autocomplete="off" class="layui-input">
             </div>
         </div>
 
@@ -54,7 +54,7 @@
             <label class="layui-form-label">招募人数</label>
 
             <div class="layui-input-block">
-                <input type="text" name="recruit_num" required lay-verify="required"  autocomplete="off" class="layui-input">
+                <input type="text" name="recruit_num" required lay-verify="required" value="{$info.recruit_num}"  autocomplete="off" class="layui-input">
             </div>
         </div>
 
@@ -82,11 +82,12 @@
                 <button type="button"  class="layui-btn" id="upimage">
                     <i class="layui-icon">&#xe67c;</i>上传图片
                 </button>
-                <input type="hidden" name="image" id="imageurl" value="">
+                <input type="hidden" name="image" id="imageurl" value="{$info.image}" >
             </div>
         </div>
         <div class="layui-form-item">
-            <div id="img" class="layui-input-block">
+            <div id="img" class="layui-input-block" >
+                <img src="{$info.image}">
             </div>
         </div>
         <div class="layui-form-item">
@@ -146,14 +147,27 @@
         laydate = layui.laydate;
 
         laydate.render({
-            elem: '#recruit_time',range: true
+            elem: '#recruit_time',range: true,
+            value:'{$info.recruit_time_start} - {$info.recruit_time_end}'
         });
 
         laydate.render({
             elem: '#activity_time',
             type: 'datetime'
-            ,range: true
+            ,range: true,
+            value:'{$info.activity_time_start} - {$info.activity_time_end}'
         });
+
+        var serviceid = ('{$info.service_id}');
+        var arr = serviceid.split('-');
+        var service ;
+        for (v in arr){
+            if(arr[v])
+                service = arr[v]
+        }
+        form.val("formTest", {'service_id':service,'area':'{$info.area}'});
+
+        layedit.setContent(content, '{:htmlspecialchars_decode($info.content)}');
 
         form.on('submit(formSubmit)', function(data){
 
@@ -163,7 +177,7 @@
 
             $$.ajax({
                 method: 'POST',
-                url: "{:url('addArticle')}",
+                url: "{:url('editOrgAct',['id'=>$info.Id])}",
                 data: JsonVal,
                 dataType: 'json',
                 success: function (res) {
@@ -181,6 +195,6 @@
     });
 
     $$('#sys').addClass('mdui-collapse-item-open');
-    $$('#addProject').addClass('mdui-list-item-active');
+    $$('#Project').addClass('mdui-list-item-active');
 
 </script> {/block}

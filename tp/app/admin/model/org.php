@@ -54,6 +54,28 @@ class org extends Model
             return $obj->org_name;
         }
 
+    }
 
+    function getServiceByPath($value) {
+        $arr = array_filter(explode('-',$value));
+        $str = $str2 ='';
+        $key = $key2 = 0;
+        foreach ($arr as  $id) {
+            if($key==0)
+                $str.=$id;
+            else
+                $str.=','.$id;
+            $key++;
+        }
+        $arr = self::field('org_name')->where('Id','in',$str)->select()->toArray();
+        foreach ($arr as $item) {
+
+            if ($key2==0)
+                $str2 .= $item['org_name'] ;
+            else
+                $str2.='->'.$item['org_name'];
+            $key2++;
+        }
+        return $str2;
     }
 }

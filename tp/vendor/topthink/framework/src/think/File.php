@@ -182,6 +182,6 @@ class File extends SplFileInfo
             }
         }
 
-        return $this->hashName . '.' . $this->extension();
+        return str_replace('\\','/',$this->hashName). '.' . $this->extension();
     }
 }

@@ -19,6 +19,9 @@ Route::post('orgUpdate','admin/OrgStruct/update')->name('orgUpdate');
 Route::get('out','admin/login/out')->name('out');
 Route::post('articleUpimage/[:flag]','admin/Project/upimg')->name('articleUpimage');
 Route::post('addArticle','admin/Project/addArticle')->name('addArticle');
+
 Route::post('articleUpVideo','admin/Project/upvideo')->name('articleUpVideo');
+
+Route::rule('editOrgAct/[:id]','admin/Project/edit','GET|POST')->name('editOrgAct');
 
 
