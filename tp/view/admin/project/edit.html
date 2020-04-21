@@ -59,6 +59,17 @@
         </div>
 
         <div class="layui-form-item">
+            <label class="layui-form-label">报名权限</label>
+            <div class="layui-input-block">
+                <select name="regist_auth" lay-verify="required">
+                    <option >请选择</option>
+                    <option value="0">内部人员开放</option>
+                    <option value="1">外部人员开放</option>
+                </select>
+            </div>
+        </div>
+
+        <div class="layui-form-item">
             <label class="layui-form-label">地区</label>
             <div class="layui-input-block">
                 <select name="area" lay-verify="required">
@@ -165,7 +176,12 @@
             if(arr[v])
                 service = arr[v]
         }
-        form.val("formTest", {'service_id':service,'area':'{$info.area}'});
+
+        var num_ = 0
+        if ('{$info.regist_auth}' == '对外开放'){
+            num_ =1;
+        }
+        form.val("formTest", {'service_id':service,'area':'{$info.area}','regist_auth':num_});
 
         layedit.setContent(content, '{:htmlspecialchars_decode($info.content)}');
 

@@ -3,6 +3,7 @@ declare (strict_types = 1);
 
 namespace app\mobile\controller;
 
+use app\admin\model\OrgActivity;
 use app\mobile\model\Member;
 use app\mobile\model\Admin;
 use app\mobile\model\Org;
@@ -102,9 +103,11 @@ class Index
      * @param  int  $id
      * @return \think\Response
      */
-    public function read($id)
+    public function read($index)
     {
-        //
+
+        $arrlist = (new OrgActivity())->findPage($index);
+        return json(['result'=>'success','datas'=>$arrlist,'isMore'=>'True']);
     }
 
     /**

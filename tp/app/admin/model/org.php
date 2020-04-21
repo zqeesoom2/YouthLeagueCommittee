@@ -16,12 +16,7 @@ class org extends Model
         return self::where('path','like',$strPath.'%')->select()->toArray();
     }
 
-    function getRegistAuthAttr($value){
-        if ($value==1)
-            return '对外开放';
-        else
-            return '对内开放';
-    }
+
 
     function getStatusAttr($value){
         if ((int)($value))

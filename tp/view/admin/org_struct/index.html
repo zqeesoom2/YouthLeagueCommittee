@@ -7,7 +7,6 @@
         <tr>
             <th>#</th>
             <th>团队名称</th>
-            <th>报名权限</th>
             <th>地区</th>
             <th>成员数量</th>
             <th>发布活动数量</th>
@@ -23,7 +22,6 @@
         <tr id="{$org.Id}">
             <td>{$org.Id}</td>
             <td>{:str_repeat('——',$org.level-1)}{$org.org_name}</td>
-            <td>{$org.regist_auth} </td>
             <td>
                 {$org.area_id}
             </td>
@@ -145,16 +143,10 @@
         //$$('#editorForum [name="regist_auth"]').val(data[2].innerText);
       //  $$("[name="+name+"][value="+result.entity[name]+"]").prop('checked', true);
         {if $privil=='-'}
-            if (data[9].innerText=='审核通过')
+            if (data[8].innerText=='审核通过')
              num1 = '1';
              form.val("formTest", { "status":num1 });
         {/if}
-
-
-        if (data[2].innerText=='对外开放')
-            num2 = '1';
-
-       form.val("formTest", { "regist_auth":num2 });
 
         inst.open();
     }

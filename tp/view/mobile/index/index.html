@@ -3,7 +3,7 @@
 </head>
 
 <body class="" ontouchstart>
-<div class="bc-bg" tabindex="0" data-control="PAGE" id="Page">
+
     <div class="uh bc-head  ubb bc-border header" data-control="HEADER" id="Header_0">
         <div class="ub">
             <h1 class="ut ub-f1 ulev-3 ut-s tx-c" tabindex="0">湘西志愿者服务平台</h1>
@@ -122,20 +122,27 @@
         </div>
     </div>
 
-    <div class="" data-control="CONTENT" id="ScrollContent_Pa34I9">
-        <div class="scrollbox">
-            <div class="box_bounce ub ub-ver ub-pc">
-                <div class="ub-f1">
+    <div class="scrollbox sc-bg" data-control="CONTENT" id="ScrollContent_Pa34I9">
+                <div id="celltemplate" style="display:none">
+                    <li  class="ubb ub bc-border t-bla ub-ac lis uof" data-index="0">
+                        <ul class="ub ub ub-ver">
+                            <li class="">
+                                <div class="lazy lis-icon ub-img" data-original="css/res/appcan_s.png" style="background-image:url(__IMG__/gqt.png)"></div>
+                                <div class="ulev-1 bc-text umar-t"></div>
+                            </li>
+                        </ul>
+                        <ul class="ub-f1 ub ub-pj ub-ac">
+                            <ul class="ub-f1 ub ub-ver marg-l">
+                                <li class="bc-text ub ub-ver uof ut-m line1">#title#</li>
+                                <li class="ulev-1 uof sc-text1 uinn3 line1" style="height:17px;">#summary#</li>
+                                <li class="ulev-2 sc-text1 uinn3">#service_id#</li>
+                            </ul>
+                        </ul>
+                        <ul><li class="zm"></li></ul>
+                    </li>
                 </div>
-                <div class="bounce_status">下拉更新......</div>
-                <div class="bounce_status">松手更新......</div>
-                <div class="bounce_status">更新中......</div>
-                <div class="sc-bg" data-control="MULTILISTVIEW" id="MultiListView_HP7K7q" data-bind=""> </div>
-            </div>
-
-            <div class="sc-bg" data-control="MULTILISTVIEW" id="MultiListView_HP7K7q" data-bind="">
-                <ul>
-                    <li id="1" class="ubb ub bc-border t-bla ub-ac lis uof" data-index="0">
+                <ul id="divscroll">
+                   <!-- <li id="1" class="ubb ub bc-border t-bla ub-ac lis uof" data-index="0">
                         <ul class="ub ub ub-ver">
                             <li class="">
                                 <div class="lazy lis-icon ub-img" data-original="css/res/appcan_s.png" style="background-image:url(__IMG__/gqt.png)"></div>
@@ -183,15 +190,50 @@
                         </ul>
                         <ul><li class="zm"></li></ul>
                     </li>
+
+                    <li id="5" class="ubb ub bc-border t-bla ub-ac lis uof" data-index="3">
+                        <ul class="ub ub ub-ver">
+                            <li class="">
+                                <div class="lazy lis-icon ub-img" data-original="css/res/appcan_s.png" style="background-image:url(__IMG__/gqt.png)"></div>
+                                <div class="ulev-1 bc-text umar-t"></div>
+                            </li>
+                        </ul>
+                        <ul class="ub-f1 ub ub-pj ub-ac">
+                            <ul class="ub-f1 ub ub-ver marg-l">
+                                <li class="bc-text ub ub-ver ut-m line1">临时数据</li>
+                                <li class="ulev-1 sc-text1 uinn3">测试 </li>
+                                <li class="ulev-2 sc-text1 uinn3">测试</li>
+                            </ul>
+                        </ul>
+                        <ul><li class="zm"></li></ul>
+                    </li>
+
+                    <li id="6" class="ubb ub bc-border t-bla ub-ac lis uof" data-index="3">
+                        <ul class="ub ub ub-ver">
+                            <li class="">
+                                <div class="lazy lis-icon ub-img" data-original="css/res/appcan_s.png" style="background-image:url(__IMG__/gqt.png)"></div>
+                                <div class="ulev-1 bc-text umar-t"></div>
+                            </li>
+                        </ul>
+                        <ul class="ub-f1 ub ub-pj ub-ac">
+                            <ul class="ub-f1 ub ub-ver marg-l">
+                                <li class="bc-text ub ub-ver ut-m line1">临时数据</li>
+                                <li class="ulev-1 sc-text1 uinn3">测试 </li>
+                                <li class="ulev-2 sc-text1 uinn3">测试</li>
+                            </ul>
+                        </ul>
+                        <ul><li class="zm"></li></ul>
+                    </li>-->
+
                 </ul>
-            </div>
-        </div>
+
+
     </div>
 
     <div class="tab_pane" data-control="PANE" id="Pane_1">
         <div id="showGoods"></div>
     </div>
-    <div class="tab_pane " data-control="PANE" id="Pane_2" style="margin-top:3em">
+    <div class="tab_pane " data-control="PANE" id="Pane_2" style="margin-top:4em">
         <div class="ub ub-ver uhide" id="me">
             <div class="ub-img1 perBg uh-per1 ub-fh ub ub-ver">
                 <div class="uinn-a1 ub ub-f1">
@@ -373,16 +415,179 @@
 <div class="uf sc-bg ubt sc-border-tab ub-f1 ub" data-control="FOOTER" id="Footer">
     <div class="ub-f1 ub" data-control="TAB" id="Tab"></div>
 </div>
-</div>
+
 <script src="__JS__/appcan.js"></script>
 <script src="__JS__/appcan.control.js"></script>
 <script src="__JS__/appcan.listview.js"></script>
-<script src="__JS__/appcan.scrollbox.js"></script>
 <script src="__JS__/template.import.js"></script>
 <script src="__JS__/appcan.tab.js"></script>
 <script src="__JS__/appcan.slider.js"></script>
 <script src="__JS__/index.js"></script>
+<script src="__JS__/iscroll.js"></script>
 <script>
+    var UseIScrollHelper = {
+        myScroll: null,  //iScroll对象
+        scrollId: 'divscroll',//默认scrollid
+        wrapperId: 'ScrollContent_Pa34I9',//默认wrapperid
+        fillList: null,  //对应的回调函数
+        isMore: false,   //是否可刷新标记
+        isNoData: false, //是否无数据
+        isLoading: false,//是否加载数据中
+        isUsePage: true,  //是否使用分页
+        headAndBottomHeight:90,    //顶部预留高度
+        pageIndex: 0,
+        pageSize: 10,
+        url: '',
+        datas: '',
+        //显示空文本提示
+        checkIsScrollEmptyAndTiShi: function () {
+            if ($("#" + this.scrollId).html().trim() === "") {
+                this.isNoData = true;
+                this.showEmptyTiShi("#" + this.scrollId, "暂无数据");
+                $("#" + this.scrollId).css("min-height", "0px");
+                $("#" + this.scrollId).height("");
+            }
+        },
+        //空列表时显示提示信息
+        showEmptyTiShi: function (target, description) {
+            try  {
+                var tishi = "<div>无数据</div>";
+                $(target).html(tishi);
+            }
+            catch (e) { alert(e); }
+        },
+        //设置ScrollHeight
+        setScrollHeight: function () {
+            var temp_height = 0;
+            temp_height = $("#"+this.wrapperId).height();
+            try {
+                var showHeight = (window.innerHeight || document.documentElement.clientHeight || document.body.clientHeight) - this.headAndBottomHeight;
+                if (temp_height !== showHeight)
+                    temp_height = showHeight;
+            }
+            catch (e) { ; };
+            $("#" + this.wrapperId).height(temp_height);
+            if (!this.isNoData)//有数据
+            {
+                $("#" + this.scrollId).css("min-height", temp_height + 1);
+                $("#" + this.scrollId).height("");
+            } else {//无数据
+                $("#" + this.scrollId).css("min-height", 0);
+                $("#" + this.scrollId).height("");
+            }
+            if (this.myScroll === undefined || this.myScroll === null) this.loadSroll();
+
+            else this.myScroll.refresh(); // 动态添加数据后 刷新iscroll
+        },
+        //清空数据
+        clearData: function () {
+            $("#" + this.scrollId).html("");
+            $("#" + this.scrollId).css("min-height", 0);
+            $("#" + this.scrollId).height("");
+            if (this.myScroll === undefined || this.myScroll === null) this.loadSroll();
+            else this.myScroll.refresh();
+        },
+        //加载Iscroll
+        loadSroll: function () {
+            setTimeout(function (obj) {
+                obj.myScroll = new IScroll("#" + obj.wrapperId, { click: true });
+                obj.myScroll.on('scrollStart', function () {
+                    document.activeElement.blur();
+                });
+                obj.myScroll.on('scrollEnd', function () {
+
+                    if (obj.isMore === false) {
+                        obj.setScrollHeight();
+                        return;
+                    }
+                    if (this.y <= this.maxScrollY) {
+                        if (obj.isMore === false) {
+                            obj.setScrollHeight();
+                            this.refresh();
+                            return;
+                        }
+                        if (obj.getData !== null) {
+                            obj.getData();
+                        }
+                        this.refresh();
+                    } else {
+                        this.refresh();
+                    }
+                });
+            }, 100,this);
+        },
+
+        getData: function () {
+            try {
+                if (this.isLoading) return;
+                if (this.isNoData) return;
+                this.isLoading = true;
+                var obj = this;
+                var url = this.url;
+
+                if (this.isUsePage) {
+                    url = url + "/" + this.pageIndex;
+                }
+                $.ajax({
+                    url: url,
+                    type: "post",
+                    dataType: "json",
+                    data: this.datas,
+                    success: function (p_datas) {
+                      //   nologinDeal(p_datas);
+                        if (p_datas.result === "success") {
+                            if (obj.fillList !== null)
+                                obj.fillList(p_datas.datas);
+                            if (obj.isUsePage) {
+                                if (p_datas.isMore === "True") {
+                                    obj.pageIndex = obj.pageIndex + 1;
+                                    obj.isMore = true;
+                                }
+                                else{
+                                    obj.isMore = false;
+                                }
+                            }
+                        }
+                        obj.checkIsScrollEmptyAndTiShi();
+                      //   hideLoadding();
+                        obj.setScrollHeight();
+                        obj.isLoading = false;
+                    },
+                    fail: function () {
+                        obj.checkIsScrollEmptyAndTiShi();
+                        obj.setScrollHeight();
+                        obj.isLoading = false;
+                    }
+                });
+            }
+            catch (e) {
+                this.checkIsScrollEmptyAndTiShi();
+                this.setScrollHeight();
+                this.isLoading = false;
+            }
+
+        }
+
+    };
+
+    window.onload = function () {
+        mobanhtml = $('#celltemplate').html();
+        UseIScrollHelper.fillList = FillList;
+        UseIScrollHelper.url = "/mobile/readAct";
+        UseIScrollHelper.datas = "";
+        UseIScrollHelper.getData();
+    }
+    function FillList(listdata) {
+        for (var i = 0; i < listdata.length; i++) {
+            var datas = listdata[i];
+
+            var inserthtml = mobanhtml.replace("#title#", datas.title);
+               inserthtml = inserthtml.replace("#summary#", datas.summary);
+               inserthtml = inserthtml.replace("#service_id#", datas.service_id);
+            $('#divscroll').append(inserthtml);
+        }
+    }
+
     var u = JSON.parse(appcan.locStorage.val('userInfo'));
     function tabIndex(index) {
         $('.tab_pane').removeClass('active');
@@ -419,8 +624,6 @@
             tabIndex(2);
             $("#ScrollContent_Pa34I9").addClass('uhide');
         }
-
-
 
     })($);
 </script>

@@ -20,7 +20,7 @@ class Project extends BaseController
     public function index()
     {
 
-        $arrlist = (new OrgActivity())->page(Session::get('privil'),20);
+        $arrlist = (new OrgActivity())->adminPage(['service_id'=>['like',Session::get('privil').'%']],20);
 
         $count = $arrlist ->total();
         $page = $arrlist->render();

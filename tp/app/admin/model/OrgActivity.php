@@ -18,8 +18,15 @@ class OrgActivity extends Model
 
    }
 
-    public function page($where,$num) {
-       return self::field('Id,status,group_id,title,area,recruit_time_start,recruit_time_end,activity_time_start,activity_time_end,recruit_num,service_id')->where('service_id','like',$where.'%')->order('id', 'desc')->paginate($num)->each(function($item, $key){
+    public function adminPage($where,$num) {
+       $arrWhere = [];
+       foreach ($where as $key =>$val) {
+           array_push($arrWhere,[$key,$val[0],$val[1]]);
+       }
+
+       return self::field('Id,regist_auth,status,group_id,title,area,recruit_time_start,recruit_time_end,activity_time_start,activity_time_end,recruit_num,service_id')->where([
+           $arrWhere
+       ])->order('id', 'desc')->paginate($num)->each(function($item, $key){
 
             if ($item->group_id) {
                 $arrAdmin = Db::name('admin')->find($item->group_id);
@@ -41,14 +48,15 @@ class OrgActivity extends Model
                 $item->area =  (Db::name('area')->find($item->area))['area'];
             }
 
-           if ($item->service_id) {
-
-               $item->service_id = (new org())->getServiceByPath($item->service_id);
-
-
-           }
+          /* if ($item->service_id) {
+               $item->service_id = $this->getServiceId($item->service_id);
+           }*/
 
         });
+    }
+
+    public function getServiceIdAttr ($val) {
+        return  (new org())->getServiceByPath($val);
     }
 
     public function timeStatus($recruit_time_start,$recruit_time_end,$activity_time_start,$activity_time_end){
@@ -71,6 +79,14 @@ class OrgActivity extends Model
 
     }
 
+    function getRegistAuthAttr($value){
+
+        if ($value ==1)
+            return '对外开放';
+        else
+            return '对内开放';
+    }
+
     public function getRecruitTimeStartAttr($value){
        return  date('Y-m-d',$value);
     }
@@ -88,5 +104,10 @@ class OrgActivity extends Model
 
     public function whichOne($id){
        return self::find($id);
+    }
+
+    public function findPage ( $index ) {
+
+        return self::where('status',6)->page((int)$index,20)->order('id', 'desc')->select()->toArray();
     }
 }
