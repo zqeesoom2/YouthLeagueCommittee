@@ -92,18 +92,20 @@ class Project extends BaseController
      * @param  int  $id
      * @return \think\Response
      */
-    public function edit(Request $request,$id)
+    public function edit(Request $request,$id=0)
     {
 
         if ($request->isPost()) {
 
-
-            if(!isset($id)) $id = $request->post('Id');
-
             $data = $request->post();
-            unset($data['Id']);
 
-            $data = $this->handleData($data);
+
+            if($request->post('Id')){
+                $id = $request->post('Id');//编辑审核状态
+                unset($data['Id']);
+            }else{
+                $data = $this->handleData($data);
+            }
 
             (new OrgActivity())->edit($id,$data);
             return ["code" => 1, "message" => "更新成功"];

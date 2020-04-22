@@ -7,6 +7,7 @@ use app\admin\model\OrgActivity;
 use app\mobile\model\Member;
 use app\mobile\model\Admin;
 use app\mobile\model\Org;
+use app\mobile\model\OrgActivUid;
 use think\facade\Config;
 use think\facade\Session;
 use think\Request;
@@ -79,22 +80,38 @@ class Index
             Db::rollback();
             return json( ['state'=>1,'message'=>$e->getMessage()]);
         }
+    }
 
 
+    public function enroll(Request $request) {
 
+        $id = (int) $request->get('id');
+        $uid = (int) $request->get('uid');
+        if ( $id && $uid ) {
+            $obj = new OrgActivUid();
+            $arr = $obj->findOne($id,$uid);
+
+            if (empty($arr)) {
+               $objD = $obj->add(['org_act_id'=>$id,'uid'=>$uid]);
+               return json(['code'=>0,'data'=>'']);
+
+            }else{
+                return json(['code'=>1,'data'=>'已报名成功']);
+            }
+        }
 
 
     }
 
-    /**
-     * 保存新建的资源
-     *
-     * @param  \think\Request  $request
-     * @return \think\Response
-     */
-    public function save(Request $request)
+    public function details(Request $request)
     {
-        //
+        $id = $request->get('id');
+
+        if ($id){
+            $info = (new OrgActivity())->whichOne($id,1);
+            View::assign('info',$info);
+            return  View::fetch();
+        }
     }
 
     /**

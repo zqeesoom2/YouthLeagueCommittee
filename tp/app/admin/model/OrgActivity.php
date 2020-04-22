@@ -3,9 +3,10 @@ declare (strict_types = 1);
 
 namespace app\admin\model;
 
+use app\admin\model\org;
 use think\facade\Db;
 use think\Model;
-use app\admin\model\org;
+
 
 /**
  * @mixin think\Model
@@ -39,7 +40,7 @@ class OrgActivity extends Model
             switch ($item->status){
                 case 4 : $item->status = '审核不通过';break;
                 case 6 :
-                    $item->status =  $this->timeStatus($item->recruit_time_start,$item->recruit_time_end,$item->activity_time_start,$item->activity_time_end);
+                    $item->status =  timeStatus($item->recruit_time_start,$item->recruit_time_end,$item->activity_time_start,$item->activity_time_end);
                     break;
                 default: $item->status = '审核中';
             }
@@ -48,36 +49,21 @@ class OrgActivity extends Model
                 $item->area =  (Db::name('area')->find($item->area))['area'];
             }
 
-          /* if ($item->service_id) {
-               $item->service_id = $this->getServiceId($item->service_id);
-           }*/
+           if ($item->service_id) {
+               $item->service_id = (new org())->getServiceByPath($item->service_id);
+           }
 
         });
     }
 
-    public function getServiceIdAttr ($val) {
-        return  (new org())->getServiceByPath($val);
-    }
 
-    public function timeStatus($recruit_time_start,$recruit_time_end,$activity_time_start,$activity_time_end){
-
-       $time = time();
-
-       if ($recruit_time_end > $time) {
-         return '招募中';
-       }else if ($activity_time_start < $time ) {
-            return '进行中';
-       }else{
-           return '已结束';
-       }
-
-    }
 
     public  function edit($id,$data) {
 
        self::where('Id',$id)->update($data);
 
     }
+
 
     function getRegistAuthAttr($value){
 
@@ -102,12 +88,19 @@ class OrgActivity extends Model
     }
 
 
-    public function whichOne($id){
-       return self::find($id);
+    public function whichOne($id,$action = 0 ){
+       if ($action) {
+           return self::find($id)->withAttr('service_id', function($value, $data) {
+               return (new org())->getServiceByPath($value);
+           });
+       }
+        return self::find($id);
     }
 
     public function findPage ( $index ) {
 
-        return self::where('status',6)->page((int)$index,20)->order('id', 'desc')->select()->toArray();
+        return self::where('status',6)->withAttr('service_id', function($value, $data) {
+            return (new org())->getServiceByPath($value);
+        })->page((int)$index,20)->order('id', 'desc')->select()->toArray();
     }
 }

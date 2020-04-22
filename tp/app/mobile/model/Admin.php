@@ -16,7 +16,6 @@ class Admin extends Model
         }catch(\Exception $e){
             return ['state'=>1,'message'=>$e->getMessage()];
         }
-
     }
 
     public function edit($account,$id) {

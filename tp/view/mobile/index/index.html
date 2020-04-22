@@ -132,11 +132,13 @@
                             </li>
                         </ul>
                         <ul class="ub-f1 ub ub-pj ub-ac">
-                            <ul class="ub-f1 ub ub-ver marg-l">
+                           <a class="ub ub-ver" href="/mobile/index/details/?id=#id#">
+                               <ul class="ub-f1 ub ub-ver marg-l">
                                 <li class="bc-text ub ub-ver uof ut-m line1">#title#</li>
-                                <li class="ulev-1 uof sc-text1 uinn3 line1" style="height:17px;">#summary#</li>
+                                <li class="ulev-1 uof sc-text1 uinn3 line1" >#summary#</li>
                                 <li class="ulev-2 sc-text1 uinn3">#service_id#</li>
                             </ul>
+                           </a>
                         </ul>
                         <ul><li class="zm"></li></ul>
                     </li>
@@ -584,6 +586,7 @@
             var inserthtml = mobanhtml.replace("#title#", datas.title);
                inserthtml = inserthtml.replace("#summary#", datas.summary);
                inserthtml = inserthtml.replace("#service_id#", datas.service_id);
+               inserthtml = inserthtml.replace("#id#", datas.Id);
             $('#divscroll').append(inserthtml);
         }
     }
@@ -598,7 +601,7 @@
 
     }
     (function($) {
-        if (typeof(u.org_name)!='undefined') {
+        if (typeof(u)!='undefined' && typeof(u.org_name)!='undefined') {
             $("#avatar").html('<img width="64" style="position:relative;' + 'left: -10px;' + 'top:-10px;" src="'+u.logo_url+'" />');
             $("#me").removeClass('uhide');
             $("#hid,#hid1").remove();
@@ -617,7 +620,6 @@
             $("#avatar").html('<img  src="http://www.07430743.com/uc_server/avatar.php?uid='+u.user_id+'&size=small" />');
             $("#me").removeClass('uhide');
         }
-
 
         var url = window.location.href.split('/');
         if (url[url.length-1]=='me'){

@@ -29,3 +29,38 @@ function upload_img($field , $catalog = 'images'){
         return  $e->getMessage();
     }
 }
+
+function projectStatus ($status,$recruit_time_start,$recruit_time_end,$activity_time_start,$activity_time_end) {
+
+    switch ($status){
+        case 4 : $v = '审核不通过';break;
+        case 6 :
+            $v =  timeStatus($recruit_time_start,$recruit_time_end,$activity_time_start,$activity_time_end);
+            break;
+        default: $v = '审核中';
+    }
+    return $v;
+}
+
+function timeStatus($recruit_time_start,$recruit_time_end,$activity_time_start,$activity_time_end){
+
+    $time = time();
+
+    if(strstr($recruit_time_start,'-'))
+        $recruit_time_start =  strtotime(date($recruit_time_start));
+    if(strstr($recruit_time_end,'-'))
+        $recruit_time_end =  strtotime(date($recruit_time_end));
+    if(strstr($activity_time_start,'-'))
+        $activity_time_start = strtotime(date($activity_time_start));
+    if(strstr($activity_time_end,'-'))
+        $activity_time_end = strtotime(date($activity_time_end));
+
+    if ($recruit_time_end > $time) {
+        return '招募中';
+    }else if ($activity_time_start < $time ) {
+        return '进行中';
+    }else{
+        return '已结束';
+    }
+
+}
