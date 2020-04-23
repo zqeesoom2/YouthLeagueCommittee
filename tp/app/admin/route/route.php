@@ -23,5 +23,8 @@ Route::post('addArticle','admin/Project/addArticle')->name('addArticle');
 Route::post('articleUpVideo','admin/Project/upvideo')->name('articleUpVideo');
 
 Route::rule('editOrgAct/[:id]','admin/Project/edit','GET|POST')->name('editOrgAct');
+Route::get('enrollList','admin/Project/enrollList')->name('enrollList');
+
+Route::get('scoring/:id','admin/Project/scoring');
 
 

@@ -22,7 +22,7 @@ class Project extends BaseController
 
         $arrlist = (new OrgActivity())->adminPage(['service_id'=>['like',Session::get('privil').'%']],20);
 
-        $count = $arrlist ->total();
+        $count = $arrlist->total();
         $page = $arrlist->render();
 
        // $arrData =  $arrlist->toArray();
@@ -151,6 +151,33 @@ class Project extends BaseController
         $data['service_id'] = (new Org())->splicingPath($data['service_id']);
 
         return $data;
+    }
+
+    public  function enrollList(){
+        $list = (new OrgActivity())->enrollList();
+        $count = $list ->total();
+        $page = $list->render();
+        View::assign(['list'=>$list,
+                 'count'=>$count,
+                 'page'=>$page
+        ]);
+       return View::fetch();
+    }
+
+    public function scoring($id) {
+
+        $list = (new OrgActivity())->enrollList($id);
+
+        $count = $list ->total();
+
+        $page = $list->render();
+
+        View::assign(['list'=>$list,
+            'count'=>$count,
+            'page'=>$page
+        ]);
+
+        return View::fetch();
     }
 
     /**

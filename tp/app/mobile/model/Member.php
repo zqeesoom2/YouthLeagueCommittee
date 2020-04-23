@@ -63,7 +63,6 @@ class Member extends Model
 
         return (new org())->getServiceByPath($value);
 
-
     }
 
 }

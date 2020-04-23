@@ -62,11 +62,11 @@
 
        if (typeof(u)!='undefined') {
 
-           if (typeof(u.org_name)=='undefined' && typeof(u.user_id)!='undefined') {
+           if (typeof(u.org_name)=='undefined' && typeof(u.uId)!='undefined') {
                $.ajax({
                    type: "GET",
                    url: "/mobile/index/enroll",
-                   data: {'uid':u.user_id,'id':_id},
+                   data: {'uid':u.uId,'id':_id},
                    success: function(data){
 
                        if (data.code) {

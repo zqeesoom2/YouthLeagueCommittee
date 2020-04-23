@@ -29,13 +29,13 @@ class OrgActivity extends Model
            $arrWhere
        ])->order('id', 'desc')->paginate($num)->each(function($item, $key){
 
-            if ($item->group_id) {
+            /*if ($item->group_id) {
                 $arrAdmin = Db::name('admin')->find($item->group_id);
                 $item->group_id = $arrAdmin['username'];
                 if ($item->group_id=='admin') {
                     $item->group_id = '州团委';
                 }
-            }
+            }*/
 
             switch ($item->status){
                 case 4 : $item->status = '审核不通过';break;
@@ -49,14 +49,21 @@ class OrgActivity extends Model
                 $item->area =  (Db::name('area')->find($item->area))['area'];
             }
 
-           if ($item->service_id) {
-               $item->service_id = (new org())->getServiceByPath($item->service_id);
-           }
-
         });
     }
 
+    function  getGroupIdAttr($value) {
+        $arrAdmin = Db::name('admin')->find($value);
+        $value = $arrAdmin['username'];
+        if ($value=='admin') {
+            $value = '州团委';
+        }
+        return $value;
+    }
 
+   function getServiceIdAttr ($value) {
+      return (new org())->getServiceByPath($value);
+   }
 
     public  function edit($id,$data) {
 
@@ -103,4 +110,38 @@ class OrgActivity extends Model
             return (new org())->getServiceByPath($value);
         })->page((int)$index,20)->order('id', 'desc')->select()->toArray();
     }
+
+    public function incEnroll($id){
+       return self::where('Id',$id)->inc('enroll_num')->update();
+    }
+
+
+    function enrollList ($id=0,$num=20) {
+
+
+       $where = $g = '';
+        $strGc = 'oa.enroll_num,oa.status,oa.Id,oa.recruit_time_start,oa.recruit_time_end,oa.activity_time_start,oa.activity_time_end,group_concat(m.real_name,",") as username ';
+
+        if($id){
+            $where = 'oa.Id='.$id;
+            $g = 'oa.Id';
+            $strGc = 'm.Id,m.real_name,m.length_ser,m.phone';
+        }
+        $obj = self::Db('org_activity')->alias("oa")
+            ->field('oa.title,oa.service_id,oa.group_id,'.$strGc)
+            ->join('org_activ_uid oau','oa.Id=oau.org_act_id')
+            ->join('member m','oau.uid =m.Id')
+            ->where($where);
+
+        if(!$id){
+            $obj = $obj->group('oa.Id');
+        }
+
+        return $obj->withAttr('oa.service_id',function($value,$data){
+            return (new org())->getServiceByPath($value);
+        })->order('oa.Id', 'desc')->paginate($num);
+
+
+    }
+
 }

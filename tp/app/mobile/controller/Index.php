@@ -88,16 +88,25 @@ class Index
         $id = (int) $request->get('id');
         $uid = (int) $request->get('uid');
         if ( $id && $uid ) {
+            $msg = '已报名成功';
             $obj = new OrgActivUid();
             $arr = $obj->findOne($id,$uid);
 
             if (empty($arr)) {
-               $objD = $obj->add(['org_act_id'=>$id,'uid'=>$uid]);
-               return json(['code'=>0,'data'=>'']);
 
-            }else{
-                return json(['code'=>1,'data'=>'已报名成功']);
+               $objD = $obj->add(['org_act_id'=>$id,'uid'=>$uid]);
+               if ($objD){
+
+                   (new OrgActivity())->incEnroll($id);
+
+               }else{
+
+                   $msg = '报名失败';
+               }
+
+
             }
+            return json(['code'=>1,'data'=>$msg]);
         }
 
 

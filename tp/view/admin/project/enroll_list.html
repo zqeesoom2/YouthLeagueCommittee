@@ -7,42 +7,34 @@
         <tr>
             <th style="display: none">#</th>
             <th>活动标题</th>
-            <th>发起组织</th>
-            <th>地区</th>
-            <th>报名权限</th>
-            <th>招募人数</th>
             <th>服务类型</th>
-            <th>招募时间</th>
-            <th>活动时间</th>
+            <th>发起组织</th>
+            <th>报名人数</th>
+            <th>报名成员</th>
             <th>状态</th>
             <th>操作</th>
         </tr>
         </thead>
         <tbody>
-        {volist name='arrlist' id='val'}
-        <tr id="{$val.Id}">
-            <td style="display: none">{$val.Id}</td>
-            <td style="overflow:hidden;width:350px;display:block;height:42px;">{$val.title}</td>
-            <td>{$val.group_id}</td>
-            <td>{$val.area}</td>
-            <th>{$val.regist_auth}</th>
-            <td>{$val.recruit_num}</td>
+        {volist name='list' id='val'}
+        <tr >
+            <td style="display: none"></td>
+            <td style="overflow:hidden;height:42px;">{$val.title}</td>
             <td>{$val.service_id}</td>
-            <td>{$val.recruit_time_start} - {$val.recruit_time_end}</td>
-            <td>{$val.activity_time_start} -  {$val.activity_time_end}</td>
-            <td > <a href="javascript:editorForum('#{$val.Id}');">{$val.status}</a> </td>
-
+            <td>{$val.group_id}</td>
+            <td>{$val.enroll_num}</td>
+            <td>{$val.username}</td>
+            <td>{:projectStatus($val.status,$val.recruit_time_start,$val.recruit_time_end,$val.activity_time_start,$val.activity_time_end)}</td>
             <td>
                 <div class="layui-btn-group">
-                    <button class="layui-btn layui-btn-primary layui-btn-sm"><a href="{:url('editOrgAct',['id'=>$val.Id])}">编辑</a></button>
-                    <button class="layui-btn layui-btn-primary layui-btn-sm">删除</button>
+                    <button class="layui-btn layui-btn-primary layui-btn-sm"><a href="/admin/scoring/{$val.Id}" target="_blank">打分</a></button>
                 </div>
             </td>
 
         </tr>
         {/volist}
         <tr>
-            <td colspan="11"><span style="float:left;line-height:34px;">总计录数:{$count}。</span>{$page|raw}</td>
+            <td colspan="8"><span style="float:left;line-height:34px;">总计录数:{$count}。</span>{$page|raw}</td>
         </tr>
         </tbody>
 
@@ -62,9 +54,6 @@
                         <input type="radio" name="status"  value="4"  title="不通过"/>
                     </div>
                 </div>
-
-
-
             </form>
         </div>
         <div class="mdui-dialog-actions">
@@ -87,7 +76,7 @@
         inst = new mdui.Dialog('#editorForum');
 
     $$('#sys').addClass('mdui-collapse-item-open');
-    $$('#Project').addClass('mdui-list-item-active');
+    $$('#enroll').addClass('mdui-list-item-active');
 
     $$('#submit').on('click', function () {
         data = $$('form').serialize();
@@ -128,6 +117,7 @@
         }
 
             form.val("formTest", { "status":num });
+
             inst.open();
         }
         // 保存
