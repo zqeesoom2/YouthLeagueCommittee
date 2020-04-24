@@ -118,14 +118,13 @@ class OrgActivity extends Model
 
     function enrollList ($id=0,$num=20) {
 
-
        $where = $g = '';
         $strGc = 'oa.enroll_num,oa.status,oa.Id,oa.recruit_time_start,oa.recruit_time_end,oa.activity_time_start,oa.activity_time_end,group_concat(m.real_name,",") as username ';
 
         if($id){
             $where = 'oa.Id='.$id;
             $g = 'oa.Id';
-            $strGc = 'm.Id,m.real_name,m.length_ser,m.phone';
+            $strGc = 'oa.Id,m.Id as uid ,m.real_name,m.length_ser,m.phone,oa.already_did';
         }
         $obj = self::Db('org_activity')->alias("oa")
             ->field('oa.title,oa.service_id,oa.group_id,'.$strGc)
@@ -143,5 +142,7 @@ class OrgActivity extends Model
 
 
     }
+
+
 
 }

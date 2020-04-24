@@ -65,4 +65,17 @@ class Member extends Model
 
     }
 
+    public  function editLengthSer($Id,$data) {
+
+        return self::where('Id',$Id)->update($data);
+    }
+
+    public function getMemberById($id,$field = null){
+
+        if ($field) {
+            return self::field($field)->find($id);
+        }
+        return self::find($id);
+    }
+
 }

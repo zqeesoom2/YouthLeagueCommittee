@@ -26,5 +26,6 @@ Route::rule('editOrgAct/[:id]','admin/Project/edit','GET|POST')->name('editOrgAc
 Route::get('enrollList','admin/Project/enrollList')->name('enrollList');
 
 Route::get('scoring/:id','admin/Project/scoring');
+Route::post('LengthSer','admin/Project/LengthSer')->name('LengthSer');
 
 

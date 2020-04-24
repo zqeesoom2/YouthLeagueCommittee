@@ -245,22 +245,19 @@
                     <div class="ub-f1 umar-at1 umar-l-per1 ub ub-ver">
                         <div class="ub ">
                             <div class="umar-ar3" id="orgname">
-                                {$me.username}
+
                             </div>
                             <div class="sc-bg-alert uc-a1 uinn3 ulev-2 bc-text-head" id="status">
-                                {$me.status}
+
                             </div>
-                        </div>
-                        <div class="ulev-4 t-wh2 umar-t ub-f1">
-                            个性签名
                         </div>
                         <div class="ub ub-ae" id="hid1">
                             <div class="ub ub-ae umar-r-per1">
                                 <div class="ulev-4" >
                                     服务时长
                                 </div>
-                                <div class="ulev0 ufm1 umar-l ufsty">
-                                    {$me.length_ser}
+                                <div class="ulev0 ufm1 umar-l ufsty" id="length_ser">
+
                                 </div>
                             </div>
                             <div class="ub ub-ae">
@@ -277,44 +274,45 @@
                 <div class="ub c-wh-per uinn-a11 ub-ae" id="hid">
                     <div class="ub ub-ver ub-f1 ub-pc ubr b-gra-per">
                         <div class="t-gra5 ulev-4 tx-c ub-f1">
-                            正在参加的项目
+                            参加的服务类型
                         </div>
-                        <div class="ub-ae sc-text-warn ufm1 tx-c">
+                        <div class="ub-ae sc-text-warn ufm1 tx-c" id="group">
                             0
                         </div>
                     </div>
-                    <div class="ub ub-ver ub-f1 ub-pc ubr b-gra-per">
-                        <div class="t-gra5 ulev-4 tx-c ub-f1">
-                            已参加的项目
-                        </div>
-                        <div class="ub-ae t-gra5 ufm1 tx-c">
-                            0
-                        </div>
-                    </div>
-                    <!--<div class="ub ub-ver ub-f1 ub-pc ubr b-gra-per">
-                        <div class="t-gra5 ulev-4 tx-c ub-f1">
+                    <!--  <div class="ub ub-ver ub-f1 ub-pc ubr b-gra-per">
+                         <div class="t-gra5 ulev-4 tx-c ub-f1">
+                              正在参加的项目
+                         </div>
+                         <div class="ub-ae t-gra5 ufm1 tx-c">
+                             0
+                         </div>
+                     </div>
 
-                        </div>
-                        <div class="ub-ae sc-text-warn ufm1 tx-c">
-                            2
-                        </div>
-                    </div>
-                    <div class="ub ub-ver ub-f1 ub-pc ubr b-gra-per">
-                        <div class="t-gra5 ulev-4 tx-c ub-f1">
+                     <div class="ub ub-ver ub-f1 ub-pc ubr b-gra-per">
+                         <div class="t-gra5 ulev-4 tx-c ub-f1">
+                             已参加的项目
+                         </div>
+                         <div class="ub-ae sc-text-warn ufm1 tx-c" >
+                             0
+                         </div>
+                     </div>
+                     <div class="ub ub-ver ub-f1 ub-pc ubr b-gra-per">
+                          <div class="t-gra5 ulev-4 tx-c ub-f1">
 
-                        </div>
-                        <div class="ub-ae t-gra5 ufm1 tx-c">
-                            0
-                        </div>
-                    </div>
-                    <div class="ub ub-ver ub-f1 ub-pc">
-                        <div class="t-gra5 ulev-4 tx-c ub-f1">
+                          </div>
+                          <div class="ub-ae t-gra5 ufm1 tx-c">
+                              0
+                          </div>
+                      </div>
+                      <div class="ub ub-ver ub-f1 ub-pc">
+                          <div class="t-gra5 ulev-4 tx-c ub-f1">
 
-                        </div>
-                        <div class="ub-ae sc-text-warn ufm1 tx-c">
-                            2
-                        </div>
-                    </div>-->
+                          </div>
+                          <div class="ub-ae sc-text-warn ufm1 tx-c">
+                              2
+                          </div>
+                      </div>-->
                 </div>
             </div>
            <!-- <div class="ub-f1 ub ub-ver">
@@ -616,9 +614,26 @@
                 }
             });
 
+
+
         }else{
             $("#avatar").html('<img  src="http://www.07430743.com/uc_server/avatar.php?uid='+u.user_id+'&size=small" />');
             $("#me").removeClass('uhide');
+            if (u.uId){
+                $.ajax({
+                    type: "POST",
+                    url: "/mobile/index/userInfo",
+                    data: {'id':u.uId},
+                    success: function(data){
+                            var res =  JSON.parse(data);
+                            $('#orgname').html(res.username);
+                            $('#status').html(res.status);
+                            $('#length_ser').html(res.length_ser+'小时');
+                            $('#group').html(res.group);
+
+                    }
+                });
+            }
         }
 
         var url = window.location.href.split('/');

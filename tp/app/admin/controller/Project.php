@@ -5,10 +5,12 @@ namespace app\admin\controller;
 
 use app\admin\model\OrgActivity;
 use app\BaseController;
+use app\mobile\model\Member;
 use app\mobile\model\Org;
 use think\facade\Session;
 use think\Request;
 use think\facade\View;
+use think\facade\Db;
 
 class Project extends BaseController
 {
@@ -180,6 +182,40 @@ class Project extends BaseController
         return View::fetch();
     }
 
+    public function LengthSer(Request $request){
+
+        $data = $request->post();
+
+        $data['length_ser'] += $data['old_length_ser'];
+
+        $uid = $data['uid'];
+
+        $Id = $data['Id'];
+
+        unset($data['old_length_ser']);
+        unset($data['Id']);
+        unset($data['uid']);
+
+        Db::startTrans();
+        try{
+
+            $data = (new Member())->editLengthSer($uid,$data);
+
+            if($data){
+                $obj =  OrgActivity::field('already_did')->find($Id);
+                $obj->already_did .= $uid.',';
+                $obj->save();
+            }
+
+            Db::commit();
+            json(['message'=>'打分成功','code'=>0]);
+        } catch (\Exception $e) {
+            json(['message'=>'打分失败','code'=>1]);
+            Db::rollback();
+        }
+
+
+    }
     /**
      * 删除指定资源
      *

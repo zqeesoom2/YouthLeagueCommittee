@@ -24,8 +24,8 @@ class Index
      */
     public function index()
     {
-
-        $arrM = (new Member() )->memberByName(Session::get('userInfo')['username']);
+        $arrM = '';
+        //$arrM = (new Member() )->memberByName(Session::get('userInfo')['username']);
 
         View::assign('me',$arrM);
         return View::fetch();
@@ -87,7 +87,20 @@ class Index
 
         $id = (int) $request->get('id');
         $uid = (int) $request->get('uid');
+        $group =  $request->get('group');
+
         if ( $id && $uid ) {
+
+            $arrS = (new Member())->getMemberById($uid,'status,group');
+
+            if ($arrS->status=='待审核'){
+                return json(['code'=>1,'data'=>'账号待审核不能报名']);
+            }
+
+            if ($arrS->group!=$group){
+                return json(['code'=>1,'data'=>'账号服务类型错误']);
+            }
+
             $msg = '已报名成功';
             $obj = new OrgActivUid();
             $arr = $obj->findOne($id,$uid);
@@ -136,15 +149,12 @@ class Index
         return json(['result'=>'success','datas'=>$arrlist,'isMore'=>'True']);
     }
 
-    /**
-     * 显示编辑资源表单页.
-     *
-     * @param  int  $id
-     * @return \think\Response
-     */
-    public function edit($id)
+
+    public function userInfo(Request $request)
     {
-        //
+        $id = $request->post('id');
+        if($id)
+        return (new Member())->getMemberById($id)->toJson();
     }
 
     /**
@@ -171,6 +181,7 @@ class Index
     }
 
     public function getStatus(Request $request) {
+
         $id = $request->request('id');
 
         if($id){
