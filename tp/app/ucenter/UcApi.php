@@ -2,7 +2,7 @@
 namespace app\ucenter;//必须加上命名空间否则在前台脚本调用UcApi::**方法时会出现Class 'Home\Controller\UcApi' not found
 
 $tp = dirname(dirname(dirname(__FILE__)));
-require_once $tp.'/public/config.inc.php';
+require_once $tp.'/config/config.inc.php';
 require_once $tp.'/public/uc_client/client.php';
 //load('extend');
 
