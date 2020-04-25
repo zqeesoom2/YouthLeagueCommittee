@@ -10,7 +10,7 @@ use think\facade\View;
 use think\facade\Db;
 use think\facade\Config;
 use think\facade\Session;
-class login
+class Login
 {
     /**
      * 显示资源列表
