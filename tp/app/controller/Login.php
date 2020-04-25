@@ -11,7 +11,7 @@ use app\ucenter\UcApi;
 use think\facade\View;
 use think\facade\Session;
 
-class login
+class Login
 {
     use PublicController;
     //登录首页
