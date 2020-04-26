@@ -24,12 +24,12 @@ define('API_RETURN_SUCCEED', '1');
 define('API_RETURN_FAILED', '-1');
 define('API_RETURN_FORBIDDEN', '-2');
 
-define('DISCUZ_ROOT', '../');
+define('DISCUZ_ROOT', '../../config');
 
 //note 普通的 http 通知方式
 //url =http://fhvxeg.natappfree.cc/api/uc.php?code=ad21es5EZ0lMMBYSbA4gQq%2FBLtIr0zbK8%2FkBKU3MbwJvIUmxZ83FMVoxPjC0NNvK8p9KM6rNw2g
 if(!defined('IN_UC')) {
-	error_reporting(0);
+	//error_reporting(0);
     ini_set("magic_quotes_runtime",0);
 	
 	defined('MAGIC_QUOTES_GPC') || define('MAGIC_QUOTES_GPC', get_magic_quotes_gpc());

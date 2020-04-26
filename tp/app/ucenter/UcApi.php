@@ -3,7 +3,7 @@ namespace app\ucenter;//必须加上命名空间否则在前台脚本调用UcApi
 
 $tp = dirname(dirname(dirname(__FILE__)));
 require_once $tp.'/config/config.inc.php';
-require_once $tp.'/public/uc_client/client.php';
+require_once $tp.'/config/uc_client/client.php';
 //load('extend');
 
 

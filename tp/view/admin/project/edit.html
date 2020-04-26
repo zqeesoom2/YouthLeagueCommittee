@@ -169,18 +169,25 @@
             value:'{$info.activity_time_start} - {$info.activity_time_end}'
         });
 
-        var serviceid = ('{$info.service_id}');
+        /*var serviceid = ('{$info.service_id}');
         var arr = serviceid.split('-');
         var service ;
         for (v in arr){
             if(arr[v])
                 service = arr[v]
-        }
+        }*/
+        var service;
+        $$('select[name=service_id]').children().each(function(index,item){
+                if ( $$(this).text() =='{$info.service_id}') {
+                    service =index
+                }
+        });
 
         var num_ = 0
         if ('{$info.regist_auth}' == '对外开放'){
             num_ =1;
         }
+
         form.val("formTest", {'service_id':service,'area':'{$info.area}','regist_auth':num_});
 
         layedit.setContent(content, '{:htmlspecialchars_decode($info.content)}');
