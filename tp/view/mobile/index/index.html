@@ -144,11 +144,11 @@
                             </ul>
                            </a>
                         </ul>
-                        <ul><li class="zm"></li></ul>
+                        <ul><li class="#class#"></li></ul>
                     </li>
                 </div>
                 <ul id="divscroll">
-                   <!-- <li id="1" class="ubb ub bc-border t-bla ub-ac lis uof" data-index="0">
+                   <!--<li id="1" class="ubb ub bc-border t-bla ub-ac lis uof" data-index="0">
                         <ul class="ub ub ub-ver">
                             <li class="">
                                 <div class="lazy lis-icon ub-img" data-original="css/res/appcan_s.png" style="background-image:url(__IMG__/gqt.png)"></div>
@@ -589,11 +589,29 @@
                inserthtml = inserthtml.replace("#summary#", datas.summary);
                inserthtml = inserthtml.replace("#service_id#", datas.service_id);
                inserthtml = inserthtml.replace("#id#", datas.Id);
+
+            //activity_time_end: "2020-05-02 18:00"
+           // activity_time_start: "2020-04-25 08:00"
+            var ats = new Date(datas.activity_time_start).valueOf();
+            var ate = new Date(datas.activity_time_end).valueOf();
+            var rts = new Date(datas.recruit_time_start).valueOf();
+            var rte = new Date(datas.recruit_time_end).valueOf();
+            var _t = new Date().valueOf();
+
+            if ( _t > ats && _t <= ate) {
+                inserthtml = inserthtml.replace("#class#", 'jxz');
+            }else if(_t > rts && _t <= rte) {
+                inserthtml = inserthtml.replace("#class#", 'zm');
+            }
+            else{
+
+            }
+
             $('#divscroll').append(inserthtml);
         }
     }
 
-    var u = JSON.parse(appcan.locStorage.val('userInfo'));
+
     function tabIndex(index) {
         $('.tab_pane').removeClass('active');
         $($('.tab_pane')[index]).addClass('active');
@@ -603,41 +621,43 @@
 
     }
     (function($) {
-        if (typeof(u)!='undefined' && typeof(u.org_name)!='undefined') {
-            $("#avatar").html('<img width="64" style="position:relative;' + 'left: -10px;' + 'top:-10px;" src="'+u.logo_url+'" />');
+
+        if (_u !=null && typeof(_u.org_name)!='undefined') {
+            $("#avatar").html('<img width="64" style="position:relative;' + 'left: -10px;' + 'top:-10px;" src="'+_u.logo_url+'" />');
             $("#me").removeClass('uhide');
             $("#hid,#hid1").remove();
-            $("#status").html(u.status);
-            $("#orgname").html(u.org_name);
+            $("#status").html(_u.status);
+            $("#orgname").html(_u.org_name);
             $.ajax({
                 type: "POST",
                 url: "/mobile/index/getStatus",
-                data: {'id':u.org_id},
+                data: {'id':_u.org_id},
                 success: function(data){
                     $("#status").html(data);
                 }
             });
-
-
-
         }else{
-            $("#avatar").html('<img  src="http://www.07430743.com/uc_server/avatar.php?uid='+u.user_id+'&size=small" />');
-            $("#me").removeClass('uhide');
-            if (u.uId){
-                $.ajax({
-                    type: "POST",
-                    url: "/mobile/index/userInfo",
-                    data: {'id':u.uId},
-                    success: function(data){
+
+            if (_u!=null) {
+                $("#me").removeClass('uhide');
+                $("#avatar").html('<img  src="http://www.07430743.com/uc_server/avatar.php?uid='+_u.user_id+'&size=middle" />');
+                if (_u.uId){
+                    $.ajax({
+                        type: "POST",
+                        url: "/mobile/index/userInfo",
+                        data: {'id':_u.uId},
+                        success: function(data){
                             var res =  JSON.parse(data);
                             $('#orgname').html(res.username);
                             $('#status').html(res.status);
                             $('#length_ser').html(res.length_ser+'小时');
                             $('#group').html(res.group);
-
-                    }
-                });
+                        }
+                    });
+                }
             }
+
+
         }
 
         var url = window.location.href.split('/');
