@@ -193,4 +193,9 @@ class Index
             }
         }
     }
+
+    public function project () {
+
+        return View::fetch();
+    }
 }

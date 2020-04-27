@@ -35,7 +35,7 @@
             <td>
                 <div class="layui-btn-group">
                     <button class="layui-btn layui-btn-primary layui-btn-sm"><a href="{:url('editOrgAct',['id'=>$val.Id])}">编辑</a></button>
-                    <button class="layui-btn layui-btn-primary layui-btn-sm">删除</button>
+                    <button class="layui-btn layui-btn-primary layui-btn-sm" onclick="Ondel({$val.Id})" id="confirm1">删除</button>
                 </div>
             </td>
 
@@ -165,4 +165,30 @@
 
             return false;
         });
+
+    function Ondel(id){
+        mdui.confirm('确定删除吗?','',function(){
+                $$.ajax({
+                    method: 'post',
+                    url: "{:url('delOrgAct')}",
+                    data: {'id':id},
+                    dataType: 'json',
+                    success: function (res) {
+                        if (res.code == 0) {
+                            mdui.snackbar(res.message, {
+                                timeout: 2000,
+                                position: 'top',
+                                onClose: function () {
+                                    inst.close();
+                                },
+                                onClosed: function () {
+                                    location.reload();
+                                }
+                            });
+                        }
+                    }
+                })
+        }
+        ,'',{'confirmText':'确定','cancelText':'取消'});
+    }
 </script> {/block}

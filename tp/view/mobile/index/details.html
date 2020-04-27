@@ -23,7 +23,7 @@
                 </div>
                 <div class="ubb bc-border uinn-a1 c-wh ulev0" style="text-align:center;"><b>{$info.title}</b></div>
                 <div class="ubb ubt bc-border umar-at1 uinn-a1 c-wh">
-                    <div class=" line-hei ulev-1 t-gra-4e">状态:{:projectStatus($info.status,$info.recruit_time_start,$info.recruit_time_end,$info.activity_time_start,$info.activity_time_end)}</div>
+                    <div class=" line-hei ulev-1 t-gra-4e">状态:<?php $ps = projectStatus($info['status'],$info['recruit_time_start'],$info['recruit_time_end'],$info['activity_time_start'],$info['activity_time_end']);?>{$ps}</div>
                 </div>
                 <div class="ub ub-ver ubt ubb bc-border umar-at1 uinn-a2 c-wh">
                     <div class="ub  bc-border uinn-det3 ub-ac">
@@ -31,7 +31,6 @@
                     </div>
                     <div class="ub  uinn-det3 ub-ac">
                         <div class="t-gra-4e ulev-1 ub-f1">活动时间:{$info.activity_time_start} - {$info.activity_time_end}</div>
-
                     </div>
                 </div>
 
@@ -45,20 +44,17 @@
             </div>
         </div>
     </div>
+    {if $ps=="招募中" }
     <div class="uf sc-bg ubt sc-border-tab ub ub-ac" data-control="FOOTER" id="Footer">
         <div class="button ub-f1 ub ub-ac bc-text-head ub-pc bc-btn" id="button" >我要报名</div>
     </div>
+    {/if}
 </div>
 {include file="public/footer"}
 <script>
-
-
-
     appcan.button("#button", "ani-act", function() {
 
-
         var _id = {$info.Id};
-
 
        if (_u!=null) {
 
@@ -97,7 +93,6 @@
            }
 
        }else{
-
            appcan.window.alert({
                title : "提示",
                content : "请登陆账号报名"

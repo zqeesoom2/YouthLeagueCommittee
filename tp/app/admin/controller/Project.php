@@ -224,6 +224,14 @@ class Project extends BaseController
      */
     public function delete($id)
     {
-        //
+
+        if ($id) {
+            $res = (new OrgActivity())->del($id);
+        }
+
+       if ($res) {
+            return json(['code'=>0,'message'=>'删除成功']);
+       }
+
     }
 }

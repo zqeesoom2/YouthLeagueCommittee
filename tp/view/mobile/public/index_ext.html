@@ -1,0 +1,551 @@
+{include file="public/head"}
+<link rel="stylesheet" href="__CSS__/index.css">
+<style>#divscroll{display: block;}</style>
+</head>
+
+<body class="" ontouchstart>
+<div class="uh bc-head  ubb bc-border header" data-control="HEADER" id="Header_0">
+    {block name="Header_0"}
+        <div class="ub">
+            <h1 class="ut ub-f1 ulev-3 ut-s tx-c" tabindex="0">湘西志愿者服务平台</h1>
+        </div>
+    {/block}
+</div>
+<div class="uh ub ub-f1 ub-pc ub-ac uhide header bc-head" data-control="HEADERBOX" id="Header_1" style="position:relative;">
+    {block name="Header_1"}
+        <div class="uinput ub bc-border uba ub-f1 umar-l umar-r" data-control="SEARCH" id="Search">
+            <div class="uinn fa fa-search sc-text"></div>
+            <input placeholder="请输入关键词" type="search" class="ub-f1 ub ub-pc ub-ac" data-control-scope="Search">
+        </div>
+        <div class="ub ub-ac ub-pc ub-img1 umar-r" data-control="" id="fa-search">
+            <div class="fa  fa-1g  ub-img1 fa-search" data-control-icon=""></div>
+        </div>
+
+    {/block}
+</div>
+
+<div class="uh bc-head  ubb bc-border uhide header" data-control="HEADER" id="Header_2">
+    {block name="Header_2"}
+    <div class="ub">
+        <div class="nav-btn" id="nav-left">
+            <div class="fa fa-1g ub-img1"></div>
+        </div>
+        <h1 class="ut ub-f1 ulev-3 ut-s tx-c" tabindex="0">我的账户</h1>
+        <div class="nav-btn" id="nav-right">
+            <!--<div class="ub-img1 icon-setting ulev2"></div>-->
+        </div>
+    </div>
+    {/block}
+</div>
+<div class="uh ub ub-pc ub-ac uhide header bc-head" data-control="HEADERBOX" id="Header_3">
+    {block name="Header_3"}
+    <div class="ub-f1 ub-ac ub-pc uinn">
+        <div class="ub uc-a1  b-wh uba1 tx-c">
+            <input type="radio" name="rdi1" class="uhide" value="" checked="true">
+            <div onClick="appcan.elementFor(event)" class="uinn-a15 ub-f1 rdi ubb-pic ulev-4 t-blu2 bc-head" style="margin-left:.2em">
+                招募中
+            </div>
+            <input type="radio" name="rdi1" class="uhide" value="">
+            <div onClick="appcan.elementFor(event)" class="uinn-a15 c-blu ub-f1 rdi ulev-4 t-wh ubb-pic b-wh bc-head">
+                进行中
+            </div>
+            <input type="radio" name="rdi1" class="uhide" value="">
+            <div onClick="appcan.elementFor(event)" class="uinn-a15 c-blu ub-f1 rdi ulev-4 t-wh bc-head" style="margin-right:.2em">
+                已完成
+            </div>
+        </div>
+    </div>
+    {/block}
+</div>
+<div class="tab_pane active" data-control="PANE" id="Pane_0">
+    {block name="Pane_0"}
+    <div class="ub ub-ver ub-fv">
+        <!--top-->
+        <div class="ub-fh" style="z-index:100;">
+            <div class="uinn-a1">
+
+            </div>
+        </div>
+        <div id='' class='ub-fh t-bla uof' style="margin-top:1.2em;">
+            <div id='slider' class='slider'></div>
+
+        </div>
+        <!--content-->
+        <div class="ub ub-ver">
+            <div class="ub ub-ver">
+                <div class="ub" style="width:100%">
+                    <div class="ub-f1 ub ub-ver ub-ac ubr ubb" style="width:33%;padding-bottom: 0.6em;">
+                        <div class="uwh-ele2 uc-a-ele1 c-wh ub ub-ac ub-pc">
+                            <div class="btn_wh1 ub-img eleIcon1"></div>
+                        </div>
+                        <div class="umar-at1 t-gra7 tx-c ulev-2">
+                            最新动态
+                        </div>
+                    </div>
+                    <div class="ub-f1 ub ub-ac ub-ver ubr ubb" style="width:33%" id="signIn">
+                        <a href="{:url('moblielogin')}">
+                            <div class="uwh-ele2 uc-a-ele1 c-wh ub ub-ac ub-pc">
+                                <div class="btn_wh1 ub-img eleIcon2"></div>
+                            </div>
+                            <div class="umar-at1 t-gra7 tx-c ulev-2" >
+                                志愿者登陆
+                            </div>
+                        </a>
+                    </div>
+                    <div class="ub-f1 ub ub-ac ub-ver ubb" style="width:33%">
+                        <a href="/mobile/index/orgReg">
+                            <div class="uwh-ele2 uc-a-ele1 c-wh ub ub-ac ub-pc">
+                                <div class="btn_wh1 ub-img eleIcon3"></div>
+                            </div>
+                            <div class="umar-at1 t-gra7 tx-c ulev-2">
+                                志愿团体注册
+                            </div>
+                        </a>
+                    </div>
+
+                </div>
+                <div class="ub" style="width:100%;border-bottom:10px solid #eee;">
+
+                    <div class="ub-f1 ub ub-ver ub-ac ubr ubb" style="width:33%;padding-bottom: 0.6em;">
+                        <a href="javascript:tabIndex(1);">
+                            <div class="uwh-ele2 uc-a-ele1 c-wh ub ub-ac ub-pc">
+                                <div class="btn_wh1 ub-img eleIcon4"></div>
+                            </div>
+                            <div class="umar-at1 t-gra7 tx-c ulev-2">
+                                志愿项目
+                            </div>
+                        </a>
+                    </div>
+                    <div class="ub-f1 ub ub-ac ub-ver ubr ubb" style="width:33%">
+                        <div class="uwh-ele2 uc-a-ele1 c-wh ub ub-ac ub-pc">
+                            <div class="btn_wh1 ub-img "></div>
+                        </div>
+                        <div class="umar-at1 t-gra7 tx-c ulev-2">
+                            <!-- <a href="https://share.0743sh.com/wap/login/register?url=https%3A%2F%2Fshare.0743sh.com%2F">志愿者注册</a>-->
+                        </div>
+                    </div>
+                    <div class="ub-f1 ub ub-ac ub-ver ubb" style="width:33%">
+                        <div class="uwh-ele2 uc-a-ele1 c-wh ub ub-ac ub-pc">
+                            <div class="btn_wh1 ub-img "></div>
+                        </div>
+                        <div class="umar-at1 t-gra7 tx-c ulev-2">
+                            &nbsp;&nbsp;&nbsp;&nbsp;
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+    {/block}
+</div>
+
+<div class="scrollbox sc-bg" data-control="CONTENT" id="ScrollContent_Pa34I9">
+    {block name="ScrollContent_Pa34I9"}
+    <div id="celltemplate" style="display:none">
+        <li  class="ubb ub bc-border t-bla ub-ac lis uof" data-index="0">
+            <ul class="ub ub ub-ver">
+                <li class="">
+                    <div class="lazy lis-icon ub-img" data-original="css/res/appcan_s.png" style="background-image:url(__IMG__/gqt.png)"></div>
+                    <div class="ulev-1 bc-text umar-t"></div>
+                </li>
+            </ul>
+            <ul class="ub-f1 ub ub-pj ub-ac">
+                <a class="ub ub-ver" href="/mobile/index/details/?id=#id#">
+                    <ul class="ub-f1 ub ub-ver marg-l">
+                        <li class="bc-text ub ub-ver uof ut-m line1">#title#</li>
+                        <li class="ulev-1 uof sc-text1 uinn3 line1" >#summary#</li>
+                        <li class="ulev-2 sc-text1 uinn3">#service_id#</li>
+                    </ul>
+                </a>
+            </ul>
+            <ul><li class="#class#"></li></ul>
+        </li>
+    </div>
+    <ul id="divscroll">
+
+
+    </ul>
+    {/block}
+</div>
+
+<div class="tab_pane" data-control="PANE" id="Pane_1">
+    {block name="Pane_1"}  <div id="showGoods"></div>{/block}
+</div>
+
+<div class="tab_pane " data-control="PANE" id="Pane_2" style="margin-top:4em">
+    {block name="Pane_2"}
+    <div class="ub ub-ver uhide" id="me">
+        <div class="ub-img1 perBg uh-per1 ub-fh ub ub-ver">
+            <div class="uinn-a1 ub ub-f1">
+                <div class="uwh-per2 uc-a-per1 bc-bg ub ub-ac ub-pc uinn-a16">
+                    <div class="ub-fh ub-fv  ub-img setImg1 uc-a-per2" id="avatar"> </div>
+                </div>
+                <div class="ub-f1 umar-at1 umar-l-per1 ub ub-ver">
+                    <div class="ub ">
+                        <div class="umar-ar3" id="orgname">
+
+                        </div>
+                        <div class="sc-bg-alert uc-a1 uinn3 ulev-2 bc-text-head" id="status">
+
+                        </div>
+                    </div>
+                    <div class="ub ub-ae" id="hid1">
+                        <div class="ub ub-ae umar-r-per1">
+                            <div class="ulev-4" >
+                                服务时长
+                            </div>
+                            <div class="ulev0 ufm1 umar-l ufsty" id="length_ser">
+
+                            </div>
+                        </div>
+                        <div class="ub ub-ae">
+                            <div class="ulev-4">
+                                服务星级
+                            </div>
+                            <div class="ulev0 ufm1 umar-l ufsty sc-text-warn">
+                                0
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="ub c-wh-per uinn-a11 ub-ae" id="hid">
+                <div class="ub ub-ver ub-f1 ub-pc ubr b-gra-per">
+                    <div class="t-gra5 ulev-4 tx-c ub-f1">
+                        参加的服务类型
+                    </div>
+                    <div class="ub-ae sc-text-warn ufm1 tx-c" id="group">
+                        0
+                    </div>
+                </div>
+                <!--  <div class="ub ub-ver ub-f1 ub-pc ubr b-gra-per">
+                     <div class="t-gra5 ulev-4 tx-c ub-f1">
+                          正在参加的项目
+                     </div>
+                     <div class="ub-ae t-gra5 ufm1 tx-c">
+                         0
+                     </div>
+                 </div>
+
+                 <div class="ub ub-ver ub-f1 ub-pc ubr b-gra-per">
+                     <div class="t-gra5 ulev-4 tx-c ub-f1">
+                         已参加的项目
+                     </div>
+                     <div class="ub-ae sc-text-warn ufm1 tx-c" >
+                         0
+                     </div>
+                 </div>
+                 <div class="ub ub-ver ub-f1 ub-pc ubr b-gra-per">
+                      <div class="t-gra5 ulev-4 tx-c ub-f1">
+
+                      </div>
+                      <div class="ub-ae t-gra5 ufm1 tx-c">
+                          0
+                      </div>
+                  </div>
+                  <div class="ub ub-ver ub-f1 ub-pc">
+                      <div class="t-gra5 ulev-4 tx-c ub-f1">
+
+                      </div>
+                      <div class="ub-ae sc-text-warn ufm1 tx-c">
+                          2
+                      </div>
+                  </div>-->
+            </div>
+        </div>
+        <!-- <div class="ub-f1 ub ub-ver">
+             <div id="indexCon_2-listview1"  class="ubt bc-border c-wh">
+
+             </div>
+             <div id="indexCon_2-listview2"  class="ubt bc-border c-wh umar-at1">
+
+             </div>
+             <div id="indexCon_2-listview3"  class="ubt bc-border c-wh umar-at1">
+
+             </div>
+             <div id="indexCon_2-listview4"  class="ubt bc-border c-wh umar-at1">
+
+             </div>
+
+         </div>-->
+    </div>
+    {/block}
+</div>
+
+
+</div>
+<div class="uf sc-bg ubt sc-border-tab ub-f1 ub" data-control="FOOTER" id="Footer">
+    <div class="ub-f1 ub" data-control="TAB" id="Tab"></div>
+</div>
+
+<script src="__JS__/appcan.js"></script>
+<script src="__JS__/appcan.control.js"></script>
+<script src="__JS__/appcan.listview.js"></script>
+<script src="__JS__/template.import.js"></script>
+<script src="__JS__/appcan.tab.js"></script>
+<script src="__JS__/appcan.slider.js"></script>
+<script src="__JS__/index.js"></script>
+<script src="__JS__/iscroll.js"></script>
+<script>
+
+    function nologinDeal(){
+        $('#divscroll').append('<div id="loading">正在加载中。。。</div>');
+    }
+
+    function hideLoadding() {
+        $('#loading').remove();
+    }
+
+    var UseIScrollHelper = {
+        myScroll: null,  //iScroll对象
+        scrollId: 'divscroll',//默认scrollid
+        wrapperId: 'ScrollContent_Pa34I9',//默认wrapperid
+        fillList: null,  //对应的回调函数
+        isMore: false,   //是否可刷新标记
+        isNoData: false, //是否无数据
+        isLoading: false,//是否加载数据中
+        isUsePage: true,  //是否使用分页
+        headAndBottomHeight:90,    //顶部预留高度
+        pageIndex: 1,
+        pageSize: 10,
+        url: '',
+        datas: '',
+        //显示空文本提示
+        checkIsScrollEmptyAndTiShi: function () {
+            if ($("#" + this.scrollId).html().trim() === "") {
+                this.isNoData = true;
+                this.showEmptyTiShi("#" + this.scrollId, "暂无数据");
+                $("#" + this.scrollId).css("min-height", "0px");
+                $("#" + this.scrollId).height("");
+            }
+        },
+        //空列表时显示提示信息
+        showEmptyTiShi: function (target, description) {
+            try  {
+                var tishi = "<div>无数据</div>";
+                $(target).html(tishi);
+            }
+            catch (e) { alert(e); }
+        },
+        //设置ScrollHeight
+        setScrollHeight: function () {
+            var temp_height = 0;
+            temp_height = $("#"+this.wrapperId).height();
+            try {
+                var showHeight = (window.innerHeight || document.documentElement.clientHeight || document.body.clientHeight) - this.headAndBottomHeight;
+                if (temp_height !== showHeight)
+                    temp_height = showHeight;
+            }
+            catch (e) { ; };
+            $("#" + this.wrapperId).height(temp_height);
+            if (!this.isNoData)//有数据
+            {
+                $("#" + this.scrollId).css("min-height", temp_height + 1);
+                $("#" + this.scrollId).height("");
+            } else {//无数据
+                $("#" + this.scrollId).css("min-height", 0);
+                $("#" + this.scrollId).height("");
+            }
+            if (this.myScroll === undefined || this.myScroll === null) this.loadSroll();
+
+            else this.myScroll.refresh(); // 动态添加数据后 刷新iscroll
+        },
+        //清空数据
+        clearData: function () {
+            $("#" + this.scrollId).html("");
+            $("#" + this.scrollId).css("min-height", 0);
+            $("#" + this.scrollId).height("");
+            if (this.myScroll === undefined || this.myScroll === null) this.loadSroll();
+            else this.myScroll.refresh();
+        },
+        //加载Iscroll
+        loadSroll: function () {
+            setTimeout(function (obj) {
+                obj.myScroll = new IScroll("#" + obj.wrapperId, { click: true });
+
+                obj.myScroll.on('scrollStart', function () {
+
+
+                    document.activeElement.blur();
+                });
+                obj.myScroll.on('scrollEnd', function () {
+
+                    if (obj.isMore === false) {
+                        obj.setScrollHeight();
+                        return;
+                    }
+                    if (this.y <= this.maxScrollY) {
+                        if (obj.isMore === false) {
+                            obj.setScrollHeight();
+                            this.refresh();
+                            return;
+                        }
+                        if (obj.getData !== null) {
+                            obj.getData();
+                        }
+                        this.refresh();
+                    } else {
+                        this.refresh();
+                    }
+                });
+            }, 1000,this);
+        },
+
+        getData: function () {
+            try {
+                if (this.isLoading) return;
+                if (this.isNoData) return;
+                this.isLoading = true;
+                var obj = this;
+                var url = this.url;
+
+                if (this.isUsePage) {
+                    url = url + "/" + this.pageIndex;
+                }
+                nologinDeal();
+                $.ajax({
+                    url: url,
+                    type: "post",
+                    dataType: "json",
+                    data: this.datas,
+                    success: function (p_datas) {
+
+                        if (p_datas.result === "success") {
+                            if (obj.fillList !== null)
+                                obj.fillList(p_datas.datas);
+                            if (obj.isUsePage) {
+                                if (p_datas.isMore === "True") {
+                                    obj.pageIndex = obj.pageIndex + 1;
+                                    obj.isMore = true;
+                                }
+                                else{
+                                    obj.isMore = false;
+                                }
+                            }
+                        }
+                        obj.checkIsScrollEmptyAndTiShi();
+                        hideLoadding();
+                        obj.setScrollHeight();
+                        obj.isLoading = false;
+                    },
+                    fail: function () {
+                        obj.checkIsScrollEmptyAndTiShi();
+                        obj.setScrollHeight();
+                        obj.isLoading = false;
+                        hideLoadding();
+                    }
+                });
+            }
+            catch (e) {
+                this.checkIsScrollEmptyAndTiShi();
+                this.setScrollHeight();
+                this.isLoading = false;
+            }
+
+        }
+
+    };
+
+    window.onload = function () {
+        mobanhtml = $('#celltemplate').html();
+        UseIScrollHelper.fillList = FillList;
+        UseIScrollHelper.url = "/mobile/readAct";
+        UseIScrollHelper.datas = "";
+        UseIScrollHelper.getData();
+        UseIScrollHelper.loadSroll();
+    }
+    function FillList(listdata) {
+        var l =listdata.length;
+
+        if(!l)
+            return alert('暂无数据');
+
+        for (var i = 0; i < l ; i++) {
+            var datas = listdata[i];
+
+            var inserthtml = mobanhtml.replace("#title#", datas.title);
+            inserthtml = inserthtml.replace("#summary#", datas.summary);
+            inserthtml = inserthtml.replace("#service_id#", datas.service_id);
+            inserthtml = inserthtml.replace("#id#", datas.Id);
+
+            //activity_time_end: "2020-05-02 18:00"
+            // activity_time_start: "2020-04-25 08:00"
+            var ats = new Date(datas.activity_time_start).valueOf();
+            var ate = new Date(datas.activity_time_end).valueOf();
+            var rts = new Date(datas.recruit_time_start).valueOf();
+            var rte = new Date(datas.recruit_time_end).valueOf();
+            var _t = new Date().valueOf();
+
+            if ( _t > ats && _t <= ate) {
+                inserthtml = inserthtml.replace("#class#", 'jxz');
+            }else if(_t > rts && _t <= rte) {
+                inserthtml = inserthtml.replace("#class#", 'zm');
+            }
+            else{
+
+            }
+
+            $('#divscroll').append(inserthtml);
+        }
+    }
+
+
+    function tabIndex(index) {
+        $('.tab_pane').removeClass('active');
+        $($('.tab_pane')[index]).addClass('active');
+        $('.header').addClass('uhide');
+        $($('.header')[index]).removeClass('uhide');
+        tabview_Tab.moveTo(index);
+
+    }
+    (function($) {
+
+        if (_u !=null && typeof(_u.org_name)!='undefined') {
+            $("#avatar").html('<img width="64" style="position:relative;' + 'left: -10px;' + 'top:-10px;" src="'+_u.logo_url+'" />');
+            $("#me").removeClass('uhide');
+            $("#hid,#hid1").remove();
+            $("#status").html(_u.status);
+            $("#orgname").html(_u.org_name);
+            $.ajax({
+                type: "POST",
+                url: "/mobile/index/getStatus",
+                data: {'id':_u.org_id},
+                success: function(data){
+                    $("#status").html(data);
+                }
+            });
+        }else{
+
+            if (_u!=null) {
+                $("#me").removeClass('uhide');
+                $("#avatar").html('<img  src="http://www.07430743.com/uc_server/avatar.php?uid='+_u.user_id+'&size=middle" />');
+                if (_u.uId){
+                    $.ajax({
+                        type: "POST",
+                        url: "/mobile/index/userInfo",
+                        data: {'id':_u.uId},
+                        success: function(data){
+                            var res =  JSON.parse(data);
+                            $('#orgname').html(res.username);
+                            $('#status').html(res.status);
+                            $('#length_ser').html(res.length_ser+'小时');
+                            $('#group').html(res.group);
+                        }
+                    });
+                }
+            }
+
+
+        }
+
+        var url = window.location.href.split('/');
+        if (url[url.length-1]=='me'){
+            tabIndex(2);
+            $("#ScrollContent_Pa34I9").addClass('uhide');
+        }
+
+    })($);
+</script>
+</body>
+</html>

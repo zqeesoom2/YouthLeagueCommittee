@@ -28,4 +28,5 @@ Route::get('enrollList','admin/Project/enrollList')->name('enrollList');
 Route::get('scoring/:id','admin/Project/scoring');
 Route::post('LengthSer','admin/Project/LengthSer')->name('LengthSer');
 
+Route::post('delOrgAct','admin/Project/delete')->name('delOrgAct');
 
