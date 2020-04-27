@@ -6,14 +6,14 @@ namespace app\admin\model;
 use app\admin\model\org;
 use think\facade\Db;
 use think\Model;
-use think\model\concern\softDelete;
+use think\model\concern\SoftDelete;
 
 /**
  * @mixin think\Model
  */
 class OrgActivity extends Model
 {
-    use softDelete;
+    use SoftDelete;
 
     protected $deleteTime= 'delete_time';
 
