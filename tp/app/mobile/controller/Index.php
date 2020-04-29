@@ -3,6 +3,7 @@ declare (strict_types = 1);
 
 namespace app\mobile\controller;
 
+use app\admin\model\Froum;
 use app\admin\model\OrgActivity;
 use app\mobile\model\Member;
 use app\mobile\model\Admin;
@@ -33,7 +34,6 @@ class Index
 
     public function login()
     {
-
         return View::fetch();
     }
 
@@ -136,6 +136,16 @@ class Index
         }
     }
 
+    public function content (Request $request){
+
+        $id = $request->get('id');
+        if ($id){
+            $info = (new Froum())->getOne($id,1);
+            View::assign('info',$info);
+            return  View::fetch();
+        }
+    }
+
     /**
      * 显示指定的资源
      *
@@ -157,16 +167,14 @@ class Index
         return (new Member())->getMemberById($id)->toJson();
     }
 
-    /**
-     * 保存更新的资源
-     *
-     * @param  \think\Request  $request
-     * @param  int  $id
-     * @return \think\Response
-     */
-    public function update(Request $request, $id)
+    public function news(Request $request,$index=0)
     {
-        //
+        if ($request->isPost()) {
+            $arrlist = (new Froum())->findPage($index);
+            return json(['result'=>'success','datas'=>$arrlist,'isMore'=>'True']);
+        }
+
+       return View::fetch();
     }
 
     /**
@@ -195,7 +203,6 @@ class Index
     }
 
     public function project () {
-
         return View::fetch();
     }
 }

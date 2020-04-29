@@ -30,3 +30,8 @@ Route::post('LengthSer','admin/Project/LengthSer')->name('LengthSer');
 
 Route::post('delOrgAct','admin/Project/delete')->name('delOrgAct');
 
+
+Route::rule('addFroum','admin/Froum/create','GET|POST')->name('addFroum');
+Route::get('froum/[:id]','admin/Froum/index')->name('froum');
+Route::rule('editFroum/[:id]','admin/Froum/editFroum','GET|POST')->name('editFroum');
+Route::post('delFroum','admin/Froum/delete')->name('delFroum');

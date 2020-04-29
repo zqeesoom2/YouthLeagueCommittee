@@ -148,7 +148,7 @@ class OrgActivity extends Model
     }
 
     public function del($id) {
-       return OrgActivity::find($id)->delete();
+       return self::find($id)->delete();
     }
 
 }

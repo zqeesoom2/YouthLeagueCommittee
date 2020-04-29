@@ -1,0 +1,44 @@
+{include file="public/head"}
+<link rel="stylesheet" href="__CSS__/content.css">
+</head>
+<body class="" ontouchstart>
+<div class="bc-bg" tabindex="0" data-control="PAGE" id="Page">
+    <div class="uh bc-head  ubb bc-border" data-control="HEADER" id="Header">
+        <div class="ub">
+            <div class="nav-btn" id="nav-left">
+                <div class="fa fa-1g ub-img1 fa-angle-left fa-2x bc-text-head"></div>
+            </div>
+            <h1 class="ut ub-f1 ulev-3 ut-s tx-c" tabindex="0">湘西志愿者服务平台</h1>
+            <div class="nav-btn" id="nav-right">
+                <div class="fa  fa-1g  ub-img1"></div>
+            </div>
+        </div>
+    </div>
+    <div class="" data-control="CONTENT" id="ScrollContent">
+        <div class="scrollbox">
+
+            <div class="ub ub-ver ub-fv">
+                <div class="ub ub-ver uh-det1 ub-fh detban" >
+                        <img src="{$info.image}" width="100%">
+                </div>
+                <div class="ubb bc-border uinn-a1 c-wh ulev0" style="text-align:center;">
+                    <b class="title">{$info.title}</b>
+                </div>
+                <div class="ubb ubt bc-border umar-at1 uinn-a1 c-wh">
+                    <div class=" line-hei ulev-1 t-gra-4e">来源:{$info.group_id}</div>
+                </div>
+                <div class="ub ubb ubt bc-border umar-at1 uinn-det2 c-wh ub-ac">
+                    <div class="t-gra-4e ulev-1 ub-f1">发布时间：{$info.create_time}</div>
+                </div>
+
+                <div class=" ubt bc-border umar-at1 uinn-a1 c-wh">
+                    <div class=" line-hei ulev-1 t-gra-4e">详细内容：{:htmlspecialchars_decode($info.content)}</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+{include file="public/footer"}
+</body>
+</html>

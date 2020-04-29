@@ -1,0 +1,140 @@
+{extend name="public/admin_public"} {block name="content"}
+<div class="mdui-m-a-1 mdui-typo mdui-table-fluid">
+
+    <h1 class="mdui-m-l-3">编辑新闻</h1>
+    <div class="mdui-dialog-content">
+    <form id="addForm" class="layui-form layui-form-pane mdui-m-y-1" lay-filter="formTest">
+        <div class="layui-form-item">
+            <label class="layui-form-label">新闻标题</label>
+
+            <div class="layui-input-block">
+                <input type="text" name="title" required lay-verify="required" value="{$info.title}" autocomplete="off" class="layui-input">
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">新闻摘要</label>
+            <div class="layui-input-block">
+                <input type="text" name="summary" required lay-verify="required" value="{$info.summary}" autocomplete="off" class="layui-input">
+            </div>
+        </div>
+
+        <div class="layui-form-item">
+            <label class="layui-form-label">新闻内容</label>
+            <div class="layui-input-block">
+                <textarea id="artcontent" class="layui-textarea" ></textarea>
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">新闻封面</label>
+            <div class="layui-input-block">
+                <button type="button"  class="layui-btn" id="upimage">
+                    <i class="layui-icon">&#xe67c;</i>上传图片
+                </button>
+                <input type="hidden" name="image" id="imageurl" value="{$info.image}" >
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <div id="img" class="layui-input-block" >
+                <img src="{$info.image}">
+            </div>
+        </div>
+        <div class="layui-form-item">
+                <center>
+                <button class="layui-btn"  lay-submit lay-filter="formSubmit">提&nbsp;&nbsp;&nbsp;交</button></center>
+        </div>
+    </form></div>
+
+</div>
+
+{/block} {block name="js"}
+<script>
+
+    var $$ = mdui.JQ
+
+    layui.use(['layedit','form','upload','laydate'], function(){
+         form = layui.form;
+
+        layedit = layui.layedit;
+        layedit.set({
+            uploadImage:{
+                url:"{:url('articleUpimage')}",
+            }, uploadVideo: {
+                url: "{:url('articleUpVideo')}",
+                size: '204800'
+            },
+            tool: [
+                'html','code'
+                , 'strong', 'italic', 'underline', 'del',
+                ,'addhr' //添加水平线
+                ,'|', 'fontFomatt','colorpicker' //段落格式，字体颜色
+                , 'face', '|', 'left', 'center', 'right', '|', 'link', 'unlink'
+                , 'image_alt', 'altEdit', 'video'
+                ,'anchors' //锚点
+                , '|', 'fullScreen'
+            ]
+        })
+
+        content = layedit.build('artcontent', {
+            height: 600
+        });
+
+        var upload = layui.upload;
+
+        var uploadInst = upload.render({
+            elem: '#upimage'
+            ,field:"image"
+            ,url: "{:url('articleUpimage/image')}"
+            ,done: function(res){
+                var path = res.data.src;
+                var img = "<img src='"+path+"' />";
+                $$("#imageurl").val(path);
+                $$("#img").html(img);
+            }
+        });
+
+        laydate = layui.laydate;
+
+        laydate.render({
+            elem: '#recruit_time',range: true,
+            value:'{$info.recruit_time_start} - {$info.recruit_time_end}'
+        });
+
+        laydate.render({
+            elem: '#activity_time',
+            type: 'datetime'
+            ,range: true,
+            value:'{$info.activity_time_start} - {$info.activity_time_end}'
+        });
+
+
+        layedit.setContent(content, '{:htmlspecialchars_decode($info.content)}');
+
+        form.on('submit(formSubmit)', function(data){
+
+            var JsonVal =data.field;
+
+            JsonVal.content = layedit.getContent(content);
+
+            $$.ajax({
+                method: 'POST',
+                url: "{:url('editFroum',['id'=>$info.Id])}",
+                data: JsonVal,
+                dataType: 'json',
+                success: function (res) {
+                    if (res.code) {
+                        alert('提交成功');
+                    } else {
+                        alert('提交失败');
+                    }
+                }
+            })
+
+            return false;
+        });
+
+    });
+
+    $$('#froum').addClass('mdui-collapse-item-open');
+    $$('#froumList').addClass('mdui-list-item-active');
+
+</script> {/block}
