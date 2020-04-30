@@ -110,6 +110,7 @@
             $("#" + this.scrollId).css("min-height", 0);
             $("#" + this.scrollId).height("");
         }
+	
         if (this.myScroll === undefined || this.myScroll === null) this.loadSroll();
 		 
         else this.myScroll.refresh(); // 动态添加数据后 刷新iscroll
@@ -135,6 +136,7 @@
                     obj.setScrollHeight();
                     return;
                 }
+				console.log(this.y);
                 if (this.y <= this.maxScrollY) {
                     if (obj.isMore === false) {
                         obj.setScrollHeight();

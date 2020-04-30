@@ -303,13 +303,26 @@
         UseIScrollHelper.url = "/mobile/readAct";
         UseIScrollHelper.datas = "";
         UseIScrollHelper.getData();
-        UseIScrollHelper.loadSroll();
     }
+
+    /*window.onscroll = function () {
+        var fh = getScrollHeight() - $("#Footer").height();
+
+        console.log(getScrollHeight()+'-'+$("#Footer").height()+'='+fh)
+        //监听事件内容
+        if(fh <= getWindowHeight() + getDocumentTop()){
+            //当滚动条到底时,这里是触发内容
+            //异步请求数据,局部刷新dom
+            UseIScrollHelper.getData();
+        }
+        //console.log('fh:'+fh)
+        console.log('getWindowHeight+getDocumentTop:'+(getWindowHeight() + getDocumentTop()))
+    }*/
     function FillList(listdata) {
         var l =listdata.length;
 
-        if(!l)
-            return alert('暂无数据');
+        /*if(!l)
+            return alert('暂无数据');*/
 
         for (var i = 0; i < l ; i++) {
             var datas = listdata[i];
