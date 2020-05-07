@@ -11,7 +11,7 @@ trait PublicController{
     }
 
     public function autologin() {
-        halt(Cookie::get());
+
         if (Cookie::has('vszu_dc7c_auth')) {
             //discuz $_config['security']['authkey'] = 'ce1f2cLQg1D6J6xn';
             $key=md5('ce1f2cLQg1D6J6xn'.Cookie::get('vszu_dc7c_saltkey'));//获取在本应用的配置文件config.php中的解密钥匙
