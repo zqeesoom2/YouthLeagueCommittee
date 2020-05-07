@@ -20,8 +20,8 @@
         <tbody>
         {volist name='arrOrg' id='org'}
         <tr id="{$org.Id}">
-            <td>{$org.Id}</td>
-            <td>{:str_repeat('——',$org.level-1)}{$org.org_name}</td>
+            <td>{if $org.parent_id==0}{$org.Id}{/if}</td>
+            <td {if $org.parent_id==0} style="font-weight: 600;" {/if} >{:str_repeat('——',$org.level-1)}{$org.org_name}</td>
             <td>
                 {$org.area_id}
             </td>

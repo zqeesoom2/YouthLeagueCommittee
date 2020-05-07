@@ -14,13 +14,12 @@ class Org extends Validate
      * @var array
      */	
 	protected $rule = ['org_name'=>['require'],
-        'regist_auth'=>['require'],
+
         'area_id'=>['require'],
         'introduction'=>['require'],
         'address'=>['require'],
         'captain'=>['require'],
         'captain_tell'=>['require'],
-
         'service'=>['require']
     ];
     
@@ -31,7 +30,7 @@ class Org extends Validate
      * @var array
      */	
     protected $message = ['org_name.require' =>'团体名称不能为空',
-        'regist_auth.require' =>'报名权限不能为空',
+
         'area_id.require' =>'区域名不能为空',
         'introduction.require' =>'介绍不能为空',
         'address.require' =>'地址不能为空',

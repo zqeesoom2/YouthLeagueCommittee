@@ -5,6 +5,7 @@ namespace app\controller;
 use app\BaseController;
 use app\PublicController;
 use think\facade\Config;
+use think\facade\Cookie;
 use think\facade\Db;
 use think\Request;
 use app\ucenter\UcApi;
@@ -17,7 +18,10 @@ class Login
     //登录首页
     public function index() {
 
-        if (!empty($_SESSION)){
+
+
+        if (Cookie::has('vszu_dc7c_visitedfid')){
+            halt(Cookie::get());
             $this->assign("jumpUrl", __APP__);
             $this->success('登录成功');
         }else{

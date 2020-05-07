@@ -13,8 +13,10 @@ use think\Model;
 class Org extends Model
 {
     function add ($data){
+
         $validate =new OrgVal();
         $res = $validate->check($data);
+
         if (!$res) {
             $error = $validate ->getError();
             return ['state'=>1,'error'=>$error];
@@ -23,6 +25,7 @@ class Org extends Model
         try{
 
             $objOrg = self::create($data);
+
             return ['state'=>0,'data'=>['logo_url'=>$objOrg->logo_url,'status'=>'审核中','org_name'=>$data['org_name'],'org_id'=>$objOrg->id]];
         }catch(\Exception $e){
             return ['state'=>1,'message'=>$e->getMessage()];

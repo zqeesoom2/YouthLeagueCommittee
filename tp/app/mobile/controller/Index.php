@@ -40,6 +40,13 @@ class Index
     public function orgReg(){
         return View::fetch();
     }
+
+    function loginOut(Request $request) {
+
+        if ($request->isPost())
+            Session::delete('userInfo');
+        return json(['status'=>0]);
+    }
     /**
      * 显示创建资源表单页.
      *
@@ -54,9 +61,11 @@ class Index
         }
 
         $arrCreate = $request->post();
+
         try{
             Db::startTrans();
             $obj = new Org();
+
             if ( $arrCreate['org_name'] && empty($obj->orgByName($arrCreate['org_name']))) {
 
                 $arrCreate['path'] = $obj->splicingPath($arrCreate['service']);
@@ -66,6 +75,7 @@ class Index
                 unset($arrCreate['password']);
 
                 $arr = $obj->add($arrCreate);
+
 
                 $objAdmin = (new Admin())->add(['username'=>$username,'password'=>$password,'org_id'=>$arrCreate['path'].$arr['data']['org_id'].'-']);
 
