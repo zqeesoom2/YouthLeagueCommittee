@@ -22,7 +22,7 @@ class Project extends BaseController
     public function index()
     {
 
-        $arrlist = (new OrgActivity())->adminPage(['service_id'=>['like',Session::get('privil').'%']],20);
+        $arrlist = (new OrgActivity())->adminPage(['privil'=>['like',Session::get('privil').'%']],20);
 
         $count = $arrlist->total();
         $page = $arrlist->render();
@@ -44,7 +44,8 @@ class Project extends BaseController
      */
     public function create()
     {
-        View::assign('list','');
+        View::assign(['list'=>'','service_id'=>Session::get('service'),'privil'=>Session::get('privil')]);
+
         return View::fetch();
     }
 
@@ -80,10 +81,16 @@ class Project extends BaseController
         $data['group_id'] = Session::get('uid');
 
 
+
         $res = (new OrgActivity())->add($data);
         $code = 0;
-        if ($res->id)
+        if ($res->id){
             $code = 1;
+            $ordId = Session::get('ordId');
+            if ($ordId)
+               (new Org())->incReleaseQuan($ordId,'inc');
+        }
+
 
         return json(['code'=>$code]);
 
@@ -118,7 +125,7 @@ class Project extends BaseController
 
             if ($id){
                 $info = (new OrgActivity())->whichOne($id);
-                View::assign('info',$info);
+                View::assign(['info'=>$info,'service_id'=>Session::get('service')]);
                 return  View::fetch();
             }
 
@@ -229,6 +236,9 @@ class Project extends BaseController
         }
 
        if ($res) {
+           $ordId = Session::get('ordId');
+           if ($ordId)
+               (new Org())->incReleaseQuan($ordId,'dec');
             return json(['code'=>0,'message'=>'删除成功']);
        }
     }

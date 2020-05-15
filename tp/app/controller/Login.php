@@ -61,7 +61,7 @@ class Login
 
                 if ($arrUser){//登陆成功！
 
-                    $arrU['uId'] =$arrUser['Id'];
+                    $arrU['uId'] =$arrUser['id'];
 
                     return json(['state'=>0,'data'=>$arrU]);
                 }else{//激活

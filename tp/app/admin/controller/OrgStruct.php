@@ -18,7 +18,11 @@ class OrgStruct extends BaseController
      */
     public function index()
     {
-        $arrOrg = make_tree((new org())->likeListOrg(Session::get('privil')));
+        $n = Session::get('service') ? Session::get('service') : 0 ;
+
+
+        $arrOrg = make_tree((new org())->likeListOrg(Session::get('privil')),$n);
+
         View::assign('arrOrg',$arrOrg);
         View::assign('privil',Session::get('privil'));
 

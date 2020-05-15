@@ -32,7 +32,12 @@ class Login
 
              if ($arrUser){
 
-                 Session::set('privil',$arrUser['org_id']);
+                 Session::set('privil',$arrUser['privil']);
+
+                 $arr = array_filter(explode('-',$arrUser['privil']));
+
+                 Session::set('service',array_shift($arr));
+                 Session::set('ordId',$arrUser['org_id']);
 
                  Session::set('uid',$arrUser['Id']);
 
@@ -85,6 +90,8 @@ class Login
 
         Session::delete('privil');
         Session::delete('uid');
+        Session::delete('service');
+        Session::delete('ordId');
        return redirect((string) url('login/index'));
     }
 

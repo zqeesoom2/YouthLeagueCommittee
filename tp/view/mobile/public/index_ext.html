@@ -30,8 +30,8 @@
             <div class="fa fa-1g ub-img1"></div>
         </div>
         <h1 class="ut ub-f1 ulev-3 ut-s tx-c" tabindex="0">我的账户</h1>
-        <div class="nav-btn" id="nav-right">
-            <!--<div class="ub-img1 icon-setting ulev2"></div>-->
+        <div class="nav-btn loginOut"  id="nav-right">
+            <div class="fa ub-img1 fa-sign-out a-1g  ulev2"></div>
         </div>
     </div>
     {/block}
@@ -162,8 +162,10 @@
             <ul><li class="#class#"></li></ul>
         </li>
     </div>
+    <!--<ul id="org_templte" style="display:none">
+      <li class="ubb ub bc-border bc-text ub-ac lis"  data-index="0"><div class="checkbox2 umar-r #umar-l#"><input type="checkbox" class="uabs ub-con"></div><div class="lv_title ub-f1 marg-l ub ub-ver ut-m line1">#org_name#</div></li>
+    </ul>-->
     <ul id="divscroll">
-
 
     </ul>
     {/block}
@@ -176,7 +178,7 @@
 <div class="tab_pane " data-control="PANE" id="Pane_2" style="margin-top:4em">
     {block name="Pane_2"}
     <div class="ub ub-ver uhide" id="me">
-        <div class="ub-img1 perBg uh-per1 ub-fh ub ub-ver">
+        <div class="ub-img1 perBg ub-fh ub ub-ver">
             <div class="uinn-a1 ub ub-f1">
                 <div class="uwh-per2 uc-a-per1 bc-bg ub ub-ac ub-pc uinn-a16">
                     <div class="ub-fh ub-fv  ub-img setImg1 uc-a-per2" id="avatar"> </div>
@@ -213,12 +215,10 @@
             <div class="ub c-wh-per uinn-a11 ub-ae" id="hid">
                 <div class="ub ub-ver ub-f1 ub-pc ubr b-gra-per">
                     <div class="t-gra5 ulev-4 tx-c ub-f1">
-                        参加的服务类型
-                    </div>
-                    <div class="ub-ae sc-text-warn ufm1 tx-c" id="group">
-                        0
+                        参加的服务类型(最多只能选四个)
                     </div>
                 </div>
+
                 <!--  <div class="ub ub-ver ub-f1 ub-pc ubr b-gra-per">
                      <div class="t-gra5 ulev-4 tx-c ub-f1">
                           正在参加的项目
@@ -254,6 +254,36 @@
                   </div>-->
             </div>
         </div>
+        <div class="ub" data-control="BOX" id="Box_ImXwIJ">
+                <div class="ub ub-f1 ub-ver" data-control="BOX" data-bind="">
+                    <ul id="group">
+                        <li class="ubb ub bc-border bc-text ub-ac lis" id="1" data-index="0"><div class="checkbox2 umar-r"><input type="checkbox" class="uabs ub-con"></div><div class="lv_title ub-f1 marg-l ub ub-ver ut-m line1">礼义服务</div></li>
+
+                        <li class="ubb ub bc-border bc-text ub-ac lis" id="2" data-index="1"><div class="checkbox2 umar-r"><input type="checkbox" class="uabs ub-con"></div><div class="lv_title ub-f1 marg-l ub ub-ver ut-m line1">文明创建宣传</div></li>
+
+                        <li class="ubb ub bc-border bc-text ub-ac lis" id="3" data-index="2"><div class="checkbox2 umar-r"><input type="checkbox" class="uabs ub-con"></div><div class="lv_title ub-f1 marg-l ub ub-ver ut-m line1">健康义诊</div></li>
+
+                        <li class="ubb ub bc-border bc-text ub-ac lis" id="4" data-index="3"><div class="checkbox2 umar-r"><input type="checkbox" class="uabs ub-con"></div><div class="lv_title ub-f1 marg-l ub ub-ver ut-m line1">爱心助学</div></li>
+
+                        <li class="ubb ub bc-border bc-text ub-ac lis" id="5" data-index="4"><div class="checkbox2 umar-r"><input type="checkbox" class="uabs ub-con"></div><div class="lv_title ub-f1 marg-l ub ub-ver ut-m line1">心理咨询</div></li>
+
+                        <li class="ubb ub bc-border bc-text ub-ac lis" id="6" data-index="5"><div class="checkbox2 umar-r"><input type="checkbox" class="uabs ub-con"></div><div class="lv_title ub-f1 marg-l ub ub-ver ut-m line1">疫情防控</div></li>
+
+                        <li class="ubb ub bc-border bc-text ub-ac lis" id="7" data-index="6"><div class="checkbox2 umar-r"><input type="checkbox" class="uabs ub-con"></div><div class="lv_title ub-f1 marg-l ub ub-ver ut-m line1">应急救援</div></li>
+                    </ul>
+
+                    <input type="button" value="提交" id="save" class="save">
+
+                </div>
+        </div>
+        <div class="ub" data-control="BOX" id="org_">
+            <div class="ub ub-f1 ub-ver" data-control="BOX" data-bind="">
+                <ul id="org_ul">
+                </ul>
+
+                <input type="button" value="提交" id="save_org" class="save">
+            </div>
+        </div>
         <div class="ub-f1 ub ub-ver">
             <!-- <div id="indexCon_2-listview1"  class="ubt bc-border c-wh">
 
@@ -263,10 +293,10 @@
              </div>
              <div id="indexCon_2-listview3"  class="ubt bc-border c-wh umar-at1">
 
-             </div>-->
+             </div>
              <div id="indexCon_2-listview4"  class="ubt bc-border c-wh umar-at1">
                  <div class="button ub ub-ac bc-text-head ub-pc bc-btn" id="loginOut">退&nbsp;&nbsp;&nbsp;出</div>
-             </div>
+             </div>-->
 
          </div>
     </div>
@@ -288,6 +318,8 @@
 <script src="__JS__/index.js"></script>
 <script src="__JS__/iscroll.js"></script>
 {block name="js"}
+<script src="__JS__/service.js">
+</script>
 <script>
 
     function nologinDeal(){
@@ -304,6 +336,7 @@
         UseIScrollHelper.datas = "";
         UseIScrollHelper.getData();
     }
+
 
     /*window.onscroll = function () {
         var fh = getScrollHeight() - $("#Footer").height();
@@ -366,7 +399,7 @@
     }
     (function($) {
 
-        if (_u !=null && typeof(_u.org_name)!='undefined') {
+        if (_u !=null && typeof(_u.org_name)!='undefined') {alert(2);
             $("#avatar").html('<img width="64" style="position:relative;' + 'left: -10px;' + 'top:-10px;" src="'+_u.logo_url+'" />');
             $("#me").removeClass('uhide');
             $("#hid,#hid1").remove();
@@ -395,7 +428,19 @@
                             $('#orgname').html(res.username);
                             $('#status').html(res.status);
                             $('#length_ser').html(res.length_ser+'小时');
-                            $('#group').html(res.group);
+                            checkItems(res.service,true);
+
+                           /* $li = $('#org_templte').html();
+                            var l = res.group.length;
+
+                            for (var i=0;i<l;i++){
+                                var ll = res.group[i].length;
+                                for (var j = 0; j<ll  ;j++){
+                                    var inserthtml = $li.replace("#org_name#", res.group[i][j].org_name);
+                                    inserthtml = inserthtml.replace("#umar-l#",'umar-l'+res.group[i][j].level);
+                                    $('#org_ul').append(inserthtml);
+                                }
+                            }*/
                         }
                     });
                 }
@@ -409,6 +454,36 @@
             tabIndex(2);
             $("#ScrollContent_Pa34I9").addClass('uhide');
         }
+
+        $('#save').click(function(){
+
+            if (confirm("你确定选择这个服务吗，选择后不能更改？")) {
+                arrOrg = checkItems();
+                if(!arrOrg){
+                    return alert('只能选四个服务');
+                }
+                var l = arrOrg.length;
+                if(l)
+                    $.ajax({
+                        type: "POST",
+                        url: "/mobile/index/editService",
+                        data: {'id':_u.uId,'service':arrOrg},
+                        success: function(data){
+
+                            alert(data.msg);
+                            var ul =  $("#group").children();
+                            for (var i =0;i<l;i++) {
+                                $li = $(ul[arrOrg[i]-1]);
+                                $checkbox = $li.find('input[type=checkbox]');
+                                $checkbox.attr('disabled','disabled');
+                            }
+
+                        }
+                    });
+
+            }
+
+        });
 
     })($);
 </script>

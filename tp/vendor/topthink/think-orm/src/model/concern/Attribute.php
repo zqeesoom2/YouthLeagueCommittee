@@ -378,6 +378,7 @@ trait Attribute
 
         // 设置数据对象属性
         $this->data[$name] = $value;
+
     }
 
     /**

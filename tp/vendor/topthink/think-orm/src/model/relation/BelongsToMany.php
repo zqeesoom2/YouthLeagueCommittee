@@ -553,6 +553,7 @@ class BelongsToMany extends Relation
                 // 保存关联表数据
                 $model = new $this->model;
                 $id    = $model->insertGetId($data);
+
             }
         } elseif (is_numeric($data) || is_string($data)) {
             // 根据关联表主键直接写入中间表
@@ -567,6 +568,7 @@ class BelongsToMany extends Relation
             $pivot[$this->localKey] = $this->parent->getKey();
 
             $ids = (array) $id;
+
             foreach ($ids as $id) {
                 $pivot[$this->foreignKey] = $id;
                 $this->pivot->replace()
@@ -574,6 +576,7 @@ class BelongsToMany extends Relation
                     ->data([])
                     ->save($pivot);
                 $result[] = $this->newPivot($pivot);
+
             }
 
             if (count($result) == 1) {

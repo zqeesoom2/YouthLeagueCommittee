@@ -51,5 +51,18 @@ class Org extends Model
         return self::field('status')->find($id);
     }
 
+    //$action = inc | dec
+    function incReleaseQuan($id,$action){
+
+        $nRows =self::where('Id',$id)->{$action}('release_quan')->update();
+        return $nRows;
+
+    }
+
+
+    function getOrgByPath($arr){
+        return self::where('path','like',$arr,'OR')->select()->toArray();
+    }
+
 
 }

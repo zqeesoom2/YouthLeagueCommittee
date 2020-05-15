@@ -40,9 +40,11 @@
                 <i class="mdui-collapse-item-arrow mdui-icon material-icons">keyboard_arrow_down</i>
             </div>
             <ul class="mdui-collapse-item-body mdui-list mdui-list-dense">
+                {if session('service')}
                 <a href="{:url('addProject')}">
                     <li class="mdui-list-item mdui-ripple" id="addProject">添加志愿项目</li>
                 </a>
+                {/if}
                 <a href="{:url('Project')}">
                     <li class="mdui-list-item mdui-ripple" id="Project">查看志愿项目</li>
                 </a>

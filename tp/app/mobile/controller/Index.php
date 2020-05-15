@@ -9,6 +9,7 @@ use app\mobile\model\Member;
 use app\mobile\model\Admin;
 use app\mobile\model\Org;
 use app\mobile\model\OrgActivUid;
+use think\Exception;
 use think\facade\Config;
 use think\facade\Session;
 use think\Request;
@@ -69,6 +70,7 @@ class Index
             if ( $arrCreate['org_name'] && empty($obj->orgByName($arrCreate['org_name']))) {
 
                 $arrCreate['path'] = $obj->splicingPath($arrCreate['service']);
+                $arrCreate['parent_id'] = $arrCreate['service'];
 
                 $password = md5($arrCreate['password'].Config::get('cus.salt'));
                 $username = $arrCreate['org_name'];
@@ -76,8 +78,10 @@ class Index
 
                 $arr = $obj->add($arrCreate);
 
+               //
+                // $objAdmin = (new Admin())->add(['username'=>$username,'password'=>$password,'org_id'=>$arrCreate['path'].$arr['data']['org_id'].'-']);
+                $objAdmin = (new Admin())->add(['username'=>$username,'password'=>$password,'privil'=>$arrCreate['path'],'org_id'=>$arr['data']['org_id']]);
 
-                $objAdmin = (new Admin())->add(['username'=>$username,'password'=>$password,'org_id'=>$arrCreate['path'].$arr['data']['org_id'].'-']);
 
                 Db::commit();
 
@@ -98,18 +102,30 @@ class Index
         $id = (int) $request->get('id');
         $uid = (int) $request->get('uid');
         $group =  $request->get('group');
-
+        $f = true;
         if ( $id && $uid ) {
 
-            $arrS = (new Member())->getMemberById($uid,'status,group');
+            $arrS = (new Member())->getMemberById($uid,'',true);
+            foreach ($arrS->service->toArray() as $val){
+               if($val['org_name']==$group){
+                   $f = false;
+                   continue;
+               }
+
+            }
+
+            if($f)
+               return json(['code'=>1,'data'=>'账号服务类型不匹配']);
 
             if ($arrS->status=='待审核'){
                 return json(['code'=>1,'data'=>'账号待审核不能报名']);
             }
 
-            if ($arrS->group!=$group){
+
+
+           /* if ($arrS->group!=$group){
                 return json(['code'=>1,'data'=>'账号服务类型错误']);
-            }
+            }*/
 
             $msg = '已报名成功';
             $obj = new OrgActivUid();
@@ -172,9 +188,68 @@ class Index
 
     public function userInfo(Request $request)
     {
+
+
         $id = $request->post('id');
-        if($id)
-        return (new Member())->getMemberById($id)->toJson();
+
+        if($id){
+
+           return json_encode((new Member())->getMemberById($id,false,true));
+           /* $member =  (new Member())->getMemberById($id,false,true);
+
+            $arr = $member->service->toArray();
+
+            foreach ($arr as $key => $val){
+
+                $arr[$key] = '-'.$val['Id'].'%';
+                $arrId[$key] = $val['Id'];
+
+            }
+
+            $obj = new Org();
+
+            $arrGroup = $obj->getOrgByPath($arr);
+
+
+
+            foreach ($arrGroup as $val){
+
+                if(in_array($val['service'],$arrId))
+                  $arrG[]= make_tree($arrGroup,$val['service'],1);
+            }
+
+            return json_encode(['member'=>$member,'group'=>$arrG]);*/
+        }
+
+
+    }
+
+    public function partTeam(Request $request,$id=0) {
+
+
+
+        if ($request->isPost()) {
+           ;
+        }else{
+
+            if($id){
+
+                $arr[0] = '-'.$id.'%';
+
+                $obj = new Org();
+
+                $arrGroup = $obj->getOrgByPath($arr);
+
+                $arrG= make_tree($arrGroup,$id,1);
+
+                View::assign('group',$arrG);
+
+                return  View::fetch();
+            }
+        }
+
+
+
     }
 
     public function news(Request $request,$index=0)
@@ -187,15 +262,25 @@ class Index
        return View::fetch();
     }
 
-    /**
-     * 删除指定资源
-     *
-     * @param  int  $id
-     * @return \think\Response
-     */
-    public function delete($id)
+
+    public function editService(Request $request)
     {
-        //
+        if ( $request->isPost() ) {
+            $arr = $request->post();
+            $member = new Member();
+            $msg = '更新成功';
+            foreach ($arr['service'] as $val) {
+                try{
+                    $member = $member->find($arr['id']);
+                    $member->service()->attach($val);
+                }catch (\Exception $e){
+                   $msg =  $e->getMessage();
+                }
+
+            }
+
+            return json(['result'=>'success','msg'=>$msg]);
+        }
     }
 
     public function getStatus(Request $request) {

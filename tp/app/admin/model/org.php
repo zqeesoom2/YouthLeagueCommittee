@@ -13,7 +13,7 @@ use think\Model;
 class org extends Model
 {
     function likeListOrg($strPath) {
-        return self::where('path','like',$strPath.'%')->select()->toArray();
+        return self::where('path','like',$strPath.'%')->field('Id,org_name,address,status,release_quan,area_id,members,captain,path,service,captain_tell')->select()->toArray();
     }
 
 
@@ -42,16 +42,25 @@ class org extends Model
 
     }
 
-    function getServiceAttr($val) {
+    /*function getServiceAttr($val) {
 
        $obj = self::field('org_name')->find($val);
         if ($obj) {
             return $obj->org_name;
         }
 
-    }
+    }*/
 
     function getServiceByPath($value) {
+
+        if ($value) {
+            $arr = self::field('org_name')->find($value);
+
+            return $arr['org_name'];
+        }
+    }
+    function getServiceByPath2($value) {
+
         $arr = array_filter(explode('-',$value));
         $str = $str2 ='';
         $key = $key2 = 0;
@@ -72,5 +81,6 @@ class org extends Model
             $key2++;
         }
         return $str2;
+
     }
 }

@@ -4,15 +4,20 @@
 function make_tree($data,$parent_id = 0,$level = 1)
 {
     static $newData = [];
-    foreach ($data as $d) {
-        if ($d["parent_id"] == $parent_id) {
+
+    foreach ($data as $k => $d) {
+
+        if ($d["service"] == $parent_id ) {
+
             $d["level"] = $level;
             $newData[] = $d;
             make_tree($data,$d["Id"],$level+1);
         }
     }
+
     return $newData;
 }
+
 
 function upload_img($field , $catalog = 'images'){
 

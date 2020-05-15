@@ -65,9 +65,10 @@ class OrgActivity extends Model
         return $value;
     }
 
-   function getServiceIdAttr ($value) {
+  /* 因为编辑需要传id，所以注释
+  function getServiceIdAttr ($value) {
       return (new org())->getServiceByPath($value);
-   }
+   }*/
 
     public  function edit($id,$data) {
 

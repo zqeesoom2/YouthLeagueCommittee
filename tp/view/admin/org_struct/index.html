@@ -9,10 +9,10 @@
             <th>团队名称</th>
             <th>地区</th>
             <th>成员数量</th>
-            <th>发布活动数量</th>
+            <th>活动数量</th>
             <th>队长</th>
             <th>详细地址</th>
-            <th>服务类型</th>
+            <th>联系电话</th>
             <th>状态</th>
             {if $privil=='-'}<th>操作</th>{/if}
         </tr>
@@ -20,8 +20,8 @@
         <tbody>
         {volist name='arrOrg' id='org'}
         <tr id="{$org.Id}">
-            <td>{if $org.parent_id==0}{$org.Id}{/if}</td>
-            <td {if $org.parent_id==0} style="font-weight: 600;" {/if} >{:str_repeat('——',$org.level-1)}{$org.org_name}</td>
+            <td>{if $org.service==0}{$org.Id}{/if}</td>
+            <td {if $org.service==0} style="font-weight: 600;" {/if} >{:str_repeat('——',$org.level-1)}{$org.org_name}</td>
             <td>
                 {$org.area_id}
             </td>
@@ -29,8 +29,8 @@
             <td>{$org.release_quan}</td>
             <td>{$org.captain}</td>
             <td>{$org.address}</td>
-            <td>{$org.service}</td>
-            <td>{$org.status} </td>
+            <td>{$org.captain_tell}</td>
+            <td>{if $org.service!=0}{$org.status}{/if} </td>
             {if $privil=='-'}
             <td>
                 <div class="layui-btn-group">

@@ -34,7 +34,7 @@
             </div>
         </div>
 
-        <div class="layui-form-item">
+        <!--<div class="layui-form-item">
             <label class="layui-form-label">服务类型</label>
             <div class="layui-input-block">
                 <select name="service_id" lay-verify="required">
@@ -48,7 +48,7 @@
                     <option value="7">应急救援</option>
                 </select>
             </div>
-        </div>
+        </div>-->
 
         <div class="layui-form-item">
             <label class="layui-form-label">招募人数</label>
@@ -176,19 +176,21 @@
             if(arr[v])
                 service = arr[v]
         }*/
-        var service;
+
+      /* var service;
         $$('select[name=service_id]').children().each(function(index,item){
                 if ( $$(this).text() =='{$info.service_id}') {
                     service =index
                 }
-        });
+        });*/
 
         var num_ = 0
         if ('{$info.regist_auth}' == '对外开放'){
             num_ =1;
         }
 
-        form.val("formTest", {'service_id':service,'area':'{$info.area}','regist_auth':num_});
+       // form.val("formTest", {'service_id':service,'area':'{$info.area}','regist_auth':num_});
+        form.val("formTest", {'area':'{$info.area}','regist_auth':num_});
 
         layedit.setContent(content, '{:htmlspecialchars_decode($info.content)}');
 
@@ -197,6 +199,8 @@
             var JsonVal =data.field;
 
             JsonVal.content = layedit.getContent(content);
+            JsonVal.service_id = '{$info.service_id}';
+            JsonVal.privil = '{$info.privil}';
 
             $$.ajax({
                 method: 'POST',

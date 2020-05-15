@@ -34,7 +34,7 @@
             </div>
         </div>
 
-        <div class="layui-form-item">
+        <!--<div class="layui-form-item">
             <label class="layui-form-label">服务类型</label>
             <div class="layui-input-block">
                 <select name="service_id" lay-verify="required">
@@ -48,7 +48,7 @@
                     <option value="7">应急救援</option>
                 </select>
             </div>
-        </div>
+        </div>-->
 
         <div class="layui-form-item">
             <label class="layui-form-label">招募人数</label>
@@ -171,6 +171,9 @@
             var JsonVal =data.field;
 
             JsonVal.content = layedit.getContent(content);
+            {if $service_id} JsonVal.service_id = {$service_id};{/if}
+            JsonVal.privil = '{$privil}';
+
 
             $$.ajax({
                 method: 'POST',

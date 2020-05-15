@@ -19,6 +19,7 @@ class Index extends BaseController
     public function index(Request $request)
     {
 
+
         $serverinfo =[
             "操作系统"    =>PHP_OS,
             "运行环境"    =>($request->server())["SERVER_SOFTWARE"],
@@ -48,7 +49,6 @@ class Index extends BaseController
     public function volunteer()
     {
         $objMember = new Member();
-
 
         $strPri = Session::get('privil');
 

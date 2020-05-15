@@ -15,7 +15,7 @@
             <th>出生日期</th>
             <th>性别</th>
             <th>政治面貌</th>
-            <th>服务类型</th>
+          <!--  <th>服务类型</th>-->
             <th>证件类型</th>
             <th>证件号码</th>
             <th>最高学历</th>
@@ -27,8 +27,8 @@
         </thead>
         <tbody>
         {volist name='arrVolunteer' id='volu'}
-        <tr id="{$volu.Id}">
-            <td>{$volu.Id}</td>
+        <tr id="{$volu.id}">
+            <td>{$volu.id}</td>
             <td style="display:none">{$volu.username}</td>
             <td>{$volu.real_name}</td>
             <td>{$volu.phone}</td>
@@ -38,7 +38,7 @@
             <td>{$volu.brith}</td>
             <td>{$volu.gender}</td>
             <td>{$volu.political_affil}</td>
-            <td>{$volu.group}</td>
+            <!--<td>{$volu.group}</td>-->
             <td>{$volu.card_type}</td>
             <td>{$volu.card}</td>
             <td>{$volu.education}</td>
@@ -47,7 +47,7 @@
             <td>{$volu.status}</td>
             <td>
                 <div class="layui-btn-group">
-                    <button class="layui-btn layui-btn-primary layui-btn-sm" onclick ="editorForum('#{$volu.Id}')">编辑</button>
+                    <button class="layui-btn layui-btn-primary layui-btn-sm" onclick ="editorForum('#{$volu.id}')">编辑</button>
                     <button class="layui-btn layui-btn-primary layui-btn-sm">删除</button>
                 </div>
             </td>
@@ -59,13 +59,13 @@
     <!--编辑-->
     <div class="mdui-dialog mdui-typo" id="editorForum">
         <div class="mdui-dialog-content">
-            <div class="mdui-dialog-title">编辑团队</div>
+            <div class="mdui-dialog-title">编辑成员</div>
             <form id="editForm" class="layui-form layui-form-pane mdui-m-y-1" lay-filter="formTest">
                 <div class="layui-form-item">
-                    <input type="hidden" name="Id" id="editfid">
-                    <label class="layui-form-label">团队名称</label>
+                    <input type="hidden" name="id" id="editfid">
+                    <label class="layui-form-label">成员姓名</label>
                     <div class="layui-input-block">
-                        <input type="text" name="org_name" required lay-verify="required" placeholder="请输入权限名称" autocomplete="off" class="layui-input">
+                        <input type="text" readonly="readonly" required lay-verify="required" autocomplete="off" class="layui-input">
                     </div>
                 </div>
                 {if $privil=='-'}
@@ -77,25 +77,25 @@
                     </div>
                 </div>
                 {/if}
-                <div class="layui-form-item">
-                    <label class="layui-form-label">报名权限</label>
-                    <div class="layui-input-block">
-                        <input type="radio" name="regist_auth"  value="1"  title="对外开放" />
-                        <input type="radio" name="regist_auth"  value="0"  title="对内开放"/>
-                    </div>
-                </div>
                 <!--<div class="layui-form-item">
-                    <label class="layui-form-label">控制器名称</label>
-                    <div class="layui-input-block">
-                        <input type="text" name="controller_name" required lay-verify="required" placeholder="请输入控制器名称" autocomplete="off" class="layui-input">
-                    </div>
-                </div>
-                <div class="layui-form-item">
-                    <label class="layui-form-label">方法名称</label>
-                    <div class="layui-input-block">
-                        <input type="text" name="action_name" required lay-verify="required" placeholder="请输入权限方法名称" autocomplete="off" class="layui-input">
-                    </div>
-                </div>-->
+                   <label class="layui-form-label">报名权限</label>
+                   <div class="layui-input-block">
+                       <input type="radio" name="regist_auth"  value="1"  title="对外开放" />
+                       <input type="radio" name="regist_auth"  value="0"  title="对内开放"/>
+                   </div>
+               </div>
+              <div class="layui-form-item">
+                   <label class="layui-form-label">控制器名称</label>
+                   <div class="layui-input-block">
+                       <input type="text" name="controller_name" required lay-verify="required" placeholder="请输入控制器名称" autocomplete="off" class="layui-input">
+                   </div>
+               </div>
+               <div class="layui-form-item">
+                   <label class="layui-form-label">方法名称</label>
+                   <div class="layui-input-block">
+                       <input type="text" name="action_name" required lay-verify="required" placeholder="请输入权限方法名称" autocomplete="off" class="layui-input">
+                   </div>
+               </div>-->
             </form>
         </div>
         <div class="mdui-dialog-actions">
@@ -150,8 +150,8 @@
     function editorForum(id) {
         var data = $$(id).find('td');
         var num1 =num2 = '0';
-        $$('#editorForum [name="Id"]').val(data[0].innerText);
-        $$('#editorForum [name="org_name"]').val(data[1].innerText);
+        $$('#editorForum [name="id"]').val(data[0].innerText);
+       // $$('#editorForum [name="org_name"]').val(data[1].innerText);
         // $$('#editorForum [name="status"]').val(data[8].innerText);
         //$$('#editorForum [name="regist_auth"]').val(data[2].innerText);
         //  $$("[name="+name+"][value="+result.entity[name]+"]").prop('checked', true);

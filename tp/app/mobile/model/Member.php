@@ -12,22 +12,34 @@ use app\mobile\validate\Member as MemberVal;
  */
 class Member extends Model
 {
-    function add ($data){
+    function add ($data,$arrGid = null){
         $validate =new MemberVal();
-        $res = (new MemberVal())->check($data);
+        $res = $validate->check($data);
         if (!$res) {
             $error = $validate ->getError();
             return ['state'=>1,'error'=>$error];
         }
 
         try{
-            self::create($data);
+           // $member = self::create($data);
+            //halt(self::find($member['Id']));
+
+           // self::find($member->id)->service()->saveAll($arrGid);
+
+            //halt(MemberOrg::class);
+            self::create($data)->service()->saveAll($arrGid);
+
             return ['state'=>0,'status'=>'审核中'];
         }catch(\Exception $e){
             return ['state'=>1,'message'=>$e->getMessage()];
         }
 
 
+    }
+
+    function service() {
+
+        return $this->belongsToMany(org::class,MemberOrg::class,'org_Id','member_Id');
     }
 
     function memberList() {
@@ -70,12 +82,19 @@ class Member extends Model
         return self::where('Id',$Id)->update($data);
     }
 
-    public function getMemberById($id,$field = null){
+    public function getMemberById($id,$field = null,$get_serivce=false){
 
         if ($field) {
-            return self::field($field)->find($id);
+            $member =  self::field($field)->find($id);
         }
-        return self::find($id);
+
+        if($get_serivce){
+            $member =self::find($id);
+            $member->service;
+        }
+
+        return $member;
     }
+
 
 }
