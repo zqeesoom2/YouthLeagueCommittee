@@ -10,5 +10,19 @@ use think\Model\Pivot;
  */
 class MemberOrg extends Pivot
 {
-    //
+    public function getInfoByMemberId($id){
+        return self::where('member_Id',$id)->select()->toArray();
+    }
+
+    public function delReturnId($id){
+
+        $obj = self::find($id);
+
+        self::destroy($id);
+
+        return $obj['org_Id'];
+
+    }
+
+
 }

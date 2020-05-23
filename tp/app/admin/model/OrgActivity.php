@@ -4,6 +4,7 @@ declare (strict_types = 1);
 namespace app\admin\model;
 
 use app\admin\model\org;
+use app\mobile\model\Admin;
 use think\facade\Db;
 use think\Model;
 use think\model\concern\SoftDelete;
@@ -106,7 +107,39 @@ class OrgActivity extends Model
                return (new org())->getServiceByPath($value);
            });
        }
-        return self::find($id);
+        return self::find($id)->withAttr('group_id', function($value, $data) {
+            return Db::name('admin')->field('username')->find($value);
+        });
+    }
+
+    public function whereLike(string $field) {
+
+        $arr =  (new \app\mobile\model\Org())->orgByName($field);
+        if (is_array($arr)) {
+            if ($arr['Id']<8) {
+                return self::where('title','like','%'.$field.'%')->whereOr(['service_id'=>$arr['Id'],'status'=>6])->withAttr('service_id', function($value, $data) {
+                    return (new org())->getServiceByPath($value);
+                })->paginate(8);
+            }else{
+
+               $arrAdmin = (new Admin())->where('username',$arr['org_name'])->find()->toArray();
+
+              return self::where('title','like','%'.$field.'%')->whereOr(['group_id'=>$arrAdmin['Id'],'status'=>6])->withAttr('service_id', function($value, $data) {
+                  return (new org())->getServiceByPath($value);
+              })->paginate(8);
+            }
+
+        }else{
+              return self::where('title','like','%'.$field.'%')->where('status',6)
+                  ->withAttr('service_id', function($value, $data) {
+                  return (new org())->getServiceByPath($value);
+              })->paginate(8);
+        }
+
+
+
+
+
     }
 
     public function findPage ( $index ) {
@@ -124,26 +157,27 @@ class OrgActivity extends Model
     function enrollList ($id=0,$num=20) {
 
        $where = $g = '';
-        $strGc = 'oa.enroll_num,oa.status,oa.Id,oa.recruit_time_start,oa.recruit_time_end,oa.activity_time_start,oa.activity_time_end,group_concat(m.real_name,",") as username ';
+        $strGc = 'oa.enroll_num,oa.recruit_num,oa.status,oa.Id,oa.recruit_time_start,oa.recruit_time_end,oa.activity_time_start,oa.activity_time_end,group_concat(m.real_name,",") as username ';
 
         if($id){
             $where = 'oa.Id='.$id;
             $g = 'oa.Id';
-            $strGc = 'oa.Id,m.Id as uid ,m.real_name,m.length_ser,m.phone,oa.already_did';
+            $strGc = 'oa.Id,m.id as uid ,m.real_name,m.length_ser,m.phone,oa.already_did';
         }
         $obj = self::Db('org_activity')->alias("oa")
             ->field('oa.title,oa.service_id,oa.group_id,'.$strGc)
             ->join('org_activ_uid oau','oa.Id=oau.org_act_id')
-            ->join('member m','oau.uid =m.Id')
+            ->join('member m','oau.uid =m.id')
             ->where($where);
 
         if(!$id){
             $obj = $obj->group('oa.Id');
         }
 
-        return $obj->withAttr('oa.service_id',function($value,$data){
+        return $obj->order('oa.Id', 'desc')->withAttr('service_id',function($value,$data){
+
             return (new org())->getServiceByPath($value);
-        })->order('oa.Id', 'desc')->paginate($num);
+        })->paginate($num);
 
 
     }

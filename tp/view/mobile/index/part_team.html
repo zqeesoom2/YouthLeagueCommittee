@@ -4,7 +4,7 @@
     <div class="nav-btn" id="nav-left">
         <div class="fa fa-1g ub-img1 fa-angle-left fa-2x bc-text-head"></div>
     </div>
-    <h1 class="ut ub-f1 ulev-3 ut-s tx-c" tabindex="0">加入团队</h1>
+    <h1 class="ut ub-f1 ulev-3 ut-s tx-c" tabindex="0">{if $exitTeam} 退出团队 {else} 加入团队 {/if}</h1>
     <div class="nav-btn" id="nav-right">
         <!--<div class="ub-img1 icon-setting ulev2"></div>-->
     </div>
@@ -17,21 +17,18 @@
 {block name="Pane_1"}{/block}
 {block name="Pane_2"}
 <div class="ub ub-ver" id="me">
-    <div class="ub-img1 perBg ub-fh ub ub-ver">
-        <div class="ub c-wh-per uinn-a11 ub-ae" id="hid">
-            <div class="ub ub-ver ub-f1 ub-pc ubr b-gra-per">
-                <div class="t-gra5 ulev-4 tx-c ub-f1">
-                    加入团队
-                </div>
-            </div>
-        </div>
-    </div>
     <div class="ub" data-control="BOX" id="Box_ImXwIJ">
 
             <div class="ub ub-f1 ub-ver" data-control="BOX" data-bind="">
                 <ul id="org_ul">
                     {volist  name='group'  id='v'}
-                    <li class="ubb ub bc-border bc-text ub-ac lis"  data-index="0"><div class="checkbox2 umar-r umar-l{$v['level']}"><input type="checkbox" id="{$v['Id']}" class="uabs ub-con"></div><div class="lv_title ub-f1 marg-l ub ub-ver ut-m line1">{$v['org_name']}</div></li>
+
+                    <li class="ubb ub bc-border bc-text ub-ac lis" level="{$v['level']}" id="{$v['Id']}"><div class="checkbox2 umar-r umar-l{$v['level']}">
+
+                        <input type="checkbox"   {volist  name='arrOid'  id='val'} {if $val['org_Id']==$v['Id']} id="{$val['id']}"  {$f = 1} checked=true {if !$exitTeam} disabled=disabled {/if} {/if}  {/volist} class="uabs ub-con">
+
+                    </div><div class="lv_title ub-f1 marg-l ub ub-ver ut-m line1">{$v['org_name']}</div></li>
+
                     {/volist}
                 </ul>
 
@@ -40,10 +37,18 @@
 
     </div>
 
-    <div class="ub-f1 ub ub-ver">
+    <div class="ub-img1 perBg ub-fh ub ub-ver">
+        <div class="ub c-wh-per uinn-a11 ub-ae" id="hid">
+            <div class="ub ub-ver ub-f1 ub-pc ubr b-gra-per">
+                <div class="t-gra5 ulev-4 tx-c ub-f1">
 
+                    {if $f && !$exitTeam}<a href="/mobile/Index/partTeam/id/{$serviceId}/exitTeam/1">我要退出团队</a>{/if}
 
+                </div>
+            </div>
+        </div>
     </div>
+
 </div>
 {/block}
 {block name="js"}
@@ -51,33 +56,54 @@
 
     (function($) {
         $('#Pane_2').removeClass('tab_pane');
-        $('#save').click(function(){
+        $('#save_org').click(function(){
 
-                arrOrg = checkItems();
-                if(!arrOrg){
-                    return alert('只能选四个服务');
+            var ul =  $("#org_ul").children();
+
+            var i = 0, ll, len = ul.length,$li, $checkbox,arrOrg;
+
+            {if $exitTeam}
+             arrOrg={reduce:[]};
+            {else}
+              arrOrg={plus:[]};
+            {/if}
+
+            for (; i < len; i++) {
+
+                $li = $(ul[i]);
+                $checkbox = $li.find('input[type=checkbox]');
+                if ($checkbox.get(0).checked && !$checkbox.is(":disabled")){
+                    ;
+
+                    {if !$exitTeam}  arrOrg.plus.push($li.get(0).id);{/if}
+                }else{
+                        ;
+                        {if $exitTeam}  arrOrg.reduce.push($checkbox.get(0).id);{/if}
+
                 }
-                var l = arrOrg.length;
-                if(l)
+
+            }
+
+             {if $exitTeam}
+                     ll = arrOrg.reduce.length;
+              {else}
+                     ll=arrOrg.plus.length;
+              {/if}
+
+                if( ll && _u.uId ){
                     $.ajax({
                         type: "POST",
-                        url: "/mobile/index/editService",
+                        url: "/mobile/index/partTeam",
                         data: {'id':_u.uId,'service':arrOrg},
                         success: function(data){
 
                             alert(data.msg);
-                            var ul =  $("#group").children();
-                            for (var i =0;i<l;i++) {
-                                $li = $(ul[arrOrg[i]-1]);
-                                $checkbox = $li.find('input[type=checkbox]');
-                                $checkbox.attr('disabled','disabled');
-                            }
+                            window.location.replace(window.location.href);
+
 
                         }
                     });
-
-
-
+                }
         });
 
     })($);

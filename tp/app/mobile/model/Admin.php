@@ -12,7 +12,6 @@ class Admin extends Model
 {
     public function add($arr) {
         try{
-            var_dump($arr);exit;
             return self::create($arr);
         }catch(\Exception $e){
             return ['state'=>1,'message'=>$e->getMessage()];

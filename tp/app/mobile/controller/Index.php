@@ -7,6 +7,7 @@ use app\admin\model\Froum;
 use app\admin\model\OrgActivity;
 use app\mobile\model\Member;
 use app\mobile\model\Admin;
+use app\mobile\model\MemberOrg;
 use app\mobile\model\Org;
 use app\mobile\model\OrgActivUid;
 use think\Exception;
@@ -48,6 +49,14 @@ class Index
             Session::delete('userInfo');
         return json(['status'=>0]);
     }
+
+    function search($key){
+
+        $arr = (new OrgActivity())->whereLike($key);
+        View::assign('list',$arr);
+
+       return View::fetch();
+    }
     /**
      * 显示创建资源表单页.
      *
@@ -69,8 +78,17 @@ class Index
 
             if ( $arrCreate['org_name'] && empty($obj->orgByName($arrCreate['org_name']))) {
 
-                $arrCreate['path'] = $obj->splicingPath($arrCreate['service']);
-                $arrCreate['parent_id'] = $arrCreate['service'];
+                if($arrCreate['service'])
+                    $arrCreate['path'] = '-'.$arrCreate['service'];
+
+                for($i=1;$i<4;$i++){
+                    $key = "service$i";
+                    if ($arrCreate[$key]){
+                        $arrCreate['path'] .= '-'.$arrCreate[$key];
+                        $arrCreate['service'] = $arrCreate[$key];
+                    }
+
+                }
 
                 $password = md5($arrCreate['password'].Config::get('cus.salt'));
                 $username = $arrCreate['org_name'];
@@ -78,9 +96,8 @@ class Index
 
                 $arr = $obj->add($arrCreate);
 
-               //
-                // $objAdmin = (new Admin())->add(['username'=>$username,'password'=>$password,'org_id'=>$arrCreate['path'].$arr['data']['org_id'].'-']);
-                $objAdmin = (new Admin())->add(['username'=>$username,'password'=>$password,'privil'=>$arrCreate['path'],'org_id'=>$arr['data']['org_id']]);
+
+                (new Admin())->add(['username'=>$username,'password'=>$password,'privil'=>$arrCreate['path'],'org_id'=>$arr['data']['org_id']]);
 
 
                 Db::commit();
@@ -90,7 +107,7 @@ class Index
 
             return json( ['state'=>1,'message'=>'团队名已存在']);
 
-        } catch (\Exception $e) {
+       } catch (\Exception $e) {
             Db::rollback();
             return json( ['state'=>1,'message'=>$e->getMessage()]);
         }
@@ -102,32 +119,39 @@ class Index
         $id = (int) $request->get('id');
         $uid = (int) $request->get('uid');
         $group =  $request->get('group');
+        $service = $request->get('service');
         $f = true;
+        $f2 = true;
+
         if ( $id && $uid ) {
 
             $arrS = (new Member())->getMemberById($uid,'',true);
+
             foreach ($arrS->service->toArray() as $val){
-               if($val['org_name']==$group){
+               if( $val['org_name']==$service  ){
                    $f = false;
-                   continue;
                }
+                if( $val['org_name']== $group ){
+                    $f2 = false;
+                }
 
             }
 
             if($f)
                return json(['code'=>1,'data'=>'账号服务类型不匹配']);
 
+            if($f2)
+                return json(['code'=>1,'data'=>'账号组织类型不匹配']);
+
             if ($arrS->status=='待审核'){
                 return json(['code'=>1,'data'=>'账号待审核不能报名']);
             }
-
-
 
            /* if ($arrS->group!=$group){
                 return json(['code'=>1,'data'=>'账号服务类型错误']);
             }*/
 
-            $msg = '已报名成功';
+            $msg = '报名失败';
             $obj = new OrgActivUid();
             $arr = $obj->findOne($id,$uid);
 
@@ -137,10 +161,8 @@ class Index
                if ($objD){
 
                    (new OrgActivity())->incEnroll($id);
+                   $msg = '已报名成功';
 
-               }else{
-
-                   $msg = '报名失败';
                }
 
 
@@ -157,6 +179,7 @@ class Index
 
         if ($id){
             $info = (new OrgActivity())->whichOne($id,1);
+
             View::assign('info',$info);
             return  View::fetch();
         }
@@ -224,15 +247,52 @@ class Index
 
     }
 
-    public function partTeam(Request $request,$id=0) {
-
-
+    public function partTeam(Request $request,$id=0,$exitTeam=0) {
 
         if ($request->isPost()) {
-           ;
+
+            $arr = $request->post();
+
+            $member = new Member();
+            $org = new Org();
+            $mo = new MemberOrg();
+
+            $msg = '更新成功';
+
+            if (isset($arr['service']['plus']) )
+                foreach ($arr['service']['plus'] as $val) {
+                    try{
+
+                        $member = $member->find($arr['id']);
+
+                        $member->service()->attach($val);
+
+                        $org->incMembers($val,'inc');
+
+
+
+                    }catch (\Exception $e){
+                        $msg =  $e->getMessage();
+                    }
+                }
+
+            if (isset($arr['service']['reduce']) )
+                foreach ( $arr['service']['reduce'] as $val) {
+
+                    try{
+                        $org->incMembers($mo->delReturnId($val),'dec');
+
+                    }catch (\Exception $e){
+                        $msg .=  $e->getMessage();
+                    }
+
+                }
+
+            return json(['result'=>'success','msg'=>$msg]);
+
         }else{
 
-            if($id){
+            if($id)
 
                 $arr[0] = '-'.$id.'%';
 
@@ -242,13 +302,21 @@ class Index
 
                 $arrG= make_tree($arrGroup,$id,1);
 
-                View::assign('group',$arrG);
+                $arrUser = session::get('userInfo');
 
-                return  View::fetch();
+                if ($arrUser) {
+
+                   $arrOid = (new MemberOrg())->getInfoByMemberId($arrUser['uId']);
+
+                   View::assign(['group'=>$arrG,'arrOid'=>$arrOid,'serviceId'=>$id,'exitTeam'=>$exitTeam,'f'=>null]);
+
+                   return  View::fetch();
+                }else{
+                    return redirect((string)url('moblielogin'));
+                }
+
+
             }
-        }
-
-
 
     }
 
@@ -299,5 +367,11 @@ class Index
 
     public function project () {
         return View::fetch();
+    }
+
+    public function getOrg($service_id) {
+       if ((int)$service_id) {
+          return json_encode((new Org())->orgByService($service_id)->toArray());
+       }
     }
 }

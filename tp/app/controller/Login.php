@@ -18,8 +18,6 @@ class Login
     //登录首页
     public function index() {
 
-
-
         if (Cookie::has('vszu_dc7c_visitedfid')){
             halt(Cookie::get());
             $this->assign("jumpUrl", __APP__);
@@ -33,6 +31,27 @@ class Login
 
     //检查登录
     public function checklogin(Request $request) {
+        /*$strSalt =  Config::get('cus.salt');
+        $password = md5($request->param('password').$strSalt);
+
+        $arrUser = Db::name('member')->where([
+            'username'=>$_POST['username'],
+            'password'=>$password
+        ])->find();
+
+        if ($arrUser){//登陆成功！
+
+            $arrU['uId'] =$arrUser['id'];
+            Session::set("userInfo",$arrU);
+
+            return json(['state'=>0,'data'=>$arrU]);
+        }else{//激活
+
+            $arrU['password'] = $password;
+            return json(['state'=>0,'data'=>$arrU]);
+        }*/
+
+
 //
 //        $check = $request->checkToken('__token__');
 //        if(!$check){
@@ -49,7 +68,6 @@ class Login
                     'username'=>$login['username'],
                     'user_id'=> $login['uid']
                 ];
-                Session::set("userInfo",$arrU);
 
                 $strSalt =  Config::get('cus.salt');
                 $password = md5($request->param('password').$strSalt);
@@ -62,6 +80,7 @@ class Login
                 if ($arrUser){//登陆成功！
 
                     $arrU['uId'] =$arrUser['id'];
+                    Session::set("userInfo",$arrU);
 
                     return json(['state'=>0,'data'=>$arrU]);
                 }else{//激活

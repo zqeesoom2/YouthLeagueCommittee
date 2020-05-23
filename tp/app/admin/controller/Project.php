@@ -157,12 +157,13 @@ class Project extends BaseController
         $data['activity_time_start'] = strtotime(date($time_act_start));
         $data['activity_time_end'] = strtotime(date($time_act_end));
 
-        $data['service_id'] = (new Org())->splicingPath($data['service_id']);
+        //$data['service_id'] = (new Org())->splicingPath($data['service_id']);
 
         return $data;
     }
 
     public  function enrollList(){
+
         $list = (new OrgActivity())->enrollList();
         $count = $list ->total();
         $page = $list->render();

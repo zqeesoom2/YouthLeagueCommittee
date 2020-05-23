@@ -15,7 +15,7 @@
     {block name="Header_1"}
         <div class="uinput ub bc-border uba ub-f1 umar-l umar-r" data-control="SEARCH" id="Search">
             <div class="uinn fa fa-search sc-text"></div>
-            <input placeholder="请输入关键词" type="search" class="ub-f1 ub ub-pc ub-ac" data-control-scope="Search">
+            <input placeholder="请输入关键词" type="search" class="ub-f1 ub ub-pc ub-ac" id="Search_1" data-control-scope="Search">
         </div>
         <div class="ub ub-ac ub-pc ub-img1 umar-r" data-control="" id="fa-search">
             <div class="fa  fa-1g  ub-img1 fa-search" data-control-icon=""></div>
@@ -94,7 +94,7 @@
                         </a>
                     </div>
                     <div class="ub-f1 ub ub-ac ub-ver ubb" style="width:33%">
-                        <a href="/mobile/index/orgReg">
+                        <a href="/mobile/index/orgReg" id="orgReg">
                             <div class="uwh-ele2 uc-a-ele1 c-wh ub ub-ac ub-pc">
                                 <div class="btn_wh1 ub-img eleIcon3"></div>
                             </div>
@@ -276,14 +276,7 @@
 
                 </div>
         </div>
-        <div class="ub" data-control="BOX" id="org_">
-            <div class="ub ub-f1 ub-ver" data-control="BOX" data-bind="">
-                <ul id="org_ul">
-                </ul>
 
-                <input type="button" value="提交" id="save_org" class="save">
-            </div>
-        </div>
         <div class="ub-f1 ub ub-ver">
             <!-- <div id="indexCon_2-listview1"  class="ubt bc-border c-wh">
 
@@ -338,6 +331,7 @@
     }
 
 
+
     /*window.onscroll = function () {
         var fh = getScrollHeight() - $("#Footer").height();
 
@@ -375,13 +369,23 @@
             var rte = new Date(datas.recruit_time_end).valueOf();
             var _t = new Date().valueOf();
 
-            if ( _t > ats && _t <= ate) {
+
+
+            /*if ( _t > ats && _t <= ate) {
                 inserthtml = inserthtml.replace("#class#", 'jxz');
             }else if(_t > rts && _t <= rte) {
                 inserthtml = inserthtml.replace("#class#", 'zm');
             }
             else{
 
+            }*/
+
+            if (rte > _t) {
+                inserthtml = inserthtml.replace("#class#", 'zm');
+            }else if (ats > _t && ate > _t) {
+                inserthtml = inserthtml.replace("#class#", 'jxz');
+            }else{
+                inserthtml = inserthtml.replace("#class#", 'js');
             }
 
             $('#divscroll').append(inserthtml);
@@ -395,16 +399,16 @@
         $('.header').addClass('uhide');
         $($('.header')[index]).removeClass('uhide');
         tabview_Tab.moveTo(index);
-
     }
     (function($) {
 
-        if (_u !=null && typeof(_u.org_name)!='undefined') {alert(2);
+        if (_u !=null && typeof(_u.org_id)!='undefined') {
             $("#avatar").html('<img width="64" style="position:relative;' + 'left: -10px;' + 'top:-10px;" src="'+_u.logo_url+'" />');
             $("#me").removeClass('uhide');
             $("#hid,#hid1").remove();
             $("#status").html(_u.status);
             $("#orgname").html(_u.org_name);
+            $("#Box_ImXwIJ").addClass('uhide');
             $.ajax({
                 type: "POST",
                 url: "/mobile/index/getStatus",
@@ -443,9 +447,40 @@
                             }*/
                         }
                     });
+
                 }
+                $("#orgReg").attr('href','#');
             }
 
+            $('#save').click(function(){
+
+                if (confirm("你确定选择这个服务吗，选择后不能更改？")) {
+                    arrOrg = checkItems();
+                    if(!arrOrg){
+                        return alert('只能选四个服务');
+                    }
+                    var l = arrOrg.length;
+                    if(l)
+                        $.ajax({
+                            type: "POST",
+                            url: "/mobile/index/editService",
+                            data: {'id':_u.uId,'service':arrOrg},
+                            success: function(data){
+
+                                alert(data.msg);
+                                var ul =  $("#group").children();
+                                for (var i =0;i<l;i++) {
+                                    $li = $(ul[arrOrg[i]-1]);
+                                    $checkbox = $li.find('input[type=checkbox]');
+                                    $checkbox.attr('disabled','disabled');
+                                }
+
+                            }
+                        });
+
+                }
+
+            });
 
         }
 
@@ -455,35 +490,11 @@
             $("#ScrollContent_Pa34I9").addClass('uhide');
         }
 
-        $('#save').click(function(){
-
-            if (confirm("你确定选择这个服务吗，选择后不能更改？")) {
-                arrOrg = checkItems();
-                if(!arrOrg){
-                    return alert('只能选四个服务');
-                }
-                var l = arrOrg.length;
-                if(l)
-                    $.ajax({
-                        type: "POST",
-                        url: "/mobile/index/editService",
-                        data: {'id':_u.uId,'service':arrOrg},
-                        success: function(data){
-
-                            alert(data.msg);
-                            var ul =  $("#group").children();
-                            for (var i =0;i<l;i++) {
-                                $li = $(ul[arrOrg[i]-1]);
-                                $checkbox = $li.find('input[type=checkbox]');
-                                $checkbox.attr('disabled','disabled');
-                            }
-
-                        }
-                    });
-
-            }
-
+        appcan.button("#fa-search", "btn-act",function() {
+            if ($("#Search_1").val())
+            window.location.href="/mobile/index/search/key/"+$("#Search_1").val();
         });
+
 
     })($);
 </script>

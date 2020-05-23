@@ -54,7 +54,14 @@ class Org extends Model
     //$action = inc | dec
     function incReleaseQuan($id,$action){
 
-        $nRows =self::where('Id',$id)->{$action}('release_quan')->update();
+        $nRows =self::where('id',$id)->{$action}('release_quan')->update();
+        return $nRows;
+
+    }
+
+    function incMembers($id,$action){
+
+        $nRows =self::where('id',$id)->{$action}('members')->update();
         return $nRows;
 
     }
@@ -64,5 +71,7 @@ class Org extends Model
         return self::where('path','like',$arr,'OR')->select()->toArray();
     }
 
-
+    function orgByService($service_id) {
+        return self::where('service',$service_id)->select();
+    }
 }

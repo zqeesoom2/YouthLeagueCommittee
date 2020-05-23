@@ -1,4 +1,5 @@
 {extend name="public/admin_public"} {block name="content"}
+<style>  .pagination{display:-webkit-box;width:90%;}.pagination li{padding:5px;}</style>
 <div class="mdui-m-a-1 mdui-typo mdui-table-fluid">
 
     <h1 class="mdui-m-l-3">志愿者管理</h1>
@@ -6,7 +7,6 @@
         <thead>
         <tr>
             <th>#</th>
-            <th style="display:none">用户名</th>
             <th>真实姓名</th>
             <th>电话号码</th>
             <th>详细地址</th>
@@ -29,7 +29,6 @@
         {volist name='arrVolunteer' id='volu'}
         <tr id="{$volu.id}">
             <td>{$volu.id}</td>
-            <td style="display:none">{$volu.username}</td>
             <td>{$volu.real_name}</td>
             <td>{$volu.phone}</td>
             <td>{$volu.address}</td>
@@ -56,6 +55,8 @@
         {/volist}
         </tbody>
     </table>
+
+    <span style="float:left;line-height:34px;padding-left:10px;">总计录数:{$count}。</span>{$arrVolunteer|raw}
     <!--编辑-->
     <div class="mdui-dialog mdui-typo" id="editorForum">
         <div class="mdui-dialog-content">
@@ -65,18 +66,18 @@
                     <input type="hidden" name="id" id="editfid">
                     <label class="layui-form-label">成员姓名</label>
                     <div class="layui-input-block">
-                        <input type="text" readonly="readonly" required lay-verify="required" autocomplete="off" class="layui-input">
+                        <input id="real_name" name="real_name" type="text" readonly="readonly" required lay-verify="required" autocomplete="off" class="layui-input">
                     </div>
                 </div>
-                {if $privil=='-'}
+
                 <div class="layui-form-item">
-                    <label class="layui-form-label">状态</label>
+                    <label class="layui-form-label">账号状态</label>
                     <div class="layui-input-block">
                         <input type="radio" name="status"  value="1"  title="审核通过" />
                         <input type="radio" name="status"  value="0"  title="审核未通过"/>
                     </div>
                 </div>
-                {/if}
+
                 <!--<div class="layui-form-item">
                    <label class="layui-form-label">报名权限</label>
                    <div class="layui-input-block">
@@ -120,50 +121,24 @@
     $$('#user').addClass('mdui-collapse-item-open');
     $$('#setAuth').addClass('mdui-list-item-active');
 
-    $$('#submit').on('click', function () {
-        data = $$('form').serialize();
-
-        $$.ajax({
-            method: 'post',
-            url: '',
-            data: data,
-            dataType: 'json',
-            success: function (res) {
-                if (res.code == 0) {
-                    mdui.snackbar(res.message, {
-                        timeout: 2000,
-                        position: 'top'
-                    })
-                } else {
-                    mdui.snackbar(res.message, {
-                        timeout: 2000,
-                        position: 'top'
-                    })
-                }
-
-            }
-        });
-
-        return false;
-    });
     // 编辑
     function editorForum(id) {
         var data = $$(id).find('td');
         var num1 =num2 = '0';
         $$('#editorForum [name="id"]').val(data[0].innerText);
-       // $$('#editorForum [name="org_name"]').val(data[1].innerText);
+       $$('#real_name').val(data[1].innerText);
         // $$('#editorForum [name="status"]').val(data[8].innerText);
         //$$('#editorForum [name="regist_auth"]').val(data[2].innerText);
         //  $$("[name="+name+"][value="+result.entity[name]+"]").prop('checked', true);
         {if $privil=='-'}
         $$('#editorForum [name="status"][value]').prop('checked', true);
-        if (data[8].innerText=='审核通过')
+        if (data[7].innerText=='审核通过')
             num1 = '1';
         form.val("formTest", { "status":num1 });
         {/if}
             $$('#editorForum [name="regist_auth"][value]').prop('checked', true);
 
-            if (data[2].innerText=='对外开放')
+            if (data[1].innerText=='对外开放')
                 num2 = '1';
 
             form.val("formTest", { "regist_auth":num2 });
@@ -175,10 +150,11 @@
             data = $$('#editForm').serialize();
             $$.ajax({
                 method: 'post',
-                url: "{:url('orgUpdate')}",
+                url: "/admin/index/editAccout",
                 data: data,
                 dataType: 'json',
                 success: function (res) {
+
                     if (res.code == 0) {
                         mdui.snackbar(res.message, {
                             timeout: 2000,

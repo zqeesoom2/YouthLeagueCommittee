@@ -48,15 +48,20 @@ class Index extends BaseController
      */
     public function volunteer()
     {
+        $count = 0;
         $objMember = new Member();
 
         $strPri = Session::get('privil');
 
         $arrVolunteer =  $objMember->list($strPri);
 
+        if ($arrVolunteer)
+         $count = $arrVolunteer->total();
+
         View::assign([
             'privil' => $strPri,
-            'arrVolunteer'=>$arrVolunteer
+            'arrVolunteer'=>$arrVolunteer,
+            'count'=>$count
         ]);
         return View::fetch();
     }
@@ -89,9 +94,19 @@ class Index extends BaseController
      * @param  int  $id
      * @return \think\Response
      */
-    public function edit($id)
+    public function editAccout(Request $request)
     {
-        //
+        $post = $request->post();
+
+        $msg = '提交失败';
+        $code = 1;
+
+       if ( (new Member())->editLengthSer($post['id'],['status'=>$post['status']]) ){
+           $msg = '提交成功';
+           $code = 0;
+       }
+
+       return  json(['code'=>$code,'message'=>$msg]);
     }
 
     /**

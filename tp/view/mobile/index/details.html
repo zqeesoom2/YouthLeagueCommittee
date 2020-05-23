@@ -38,6 +38,11 @@
                     <div class="t-gra-4e ulev-1 ub-f1">服务类型：{$info.service_id}</div>
                 </div>
 
+                <div class="ub ubb ubt bc-border umar-at1 uinn-det2 c-wh ub-ac">
+                    <div class="t-gra-4e ulev-1 ub-f1">团队组织：{$info.group_id}</div>
+                </div>
+
+
                 <div class=" ubt bc-border umar-at1 uinn-a1 c-wh">
                     <div class=" line-hei ulev-1 t-gra-4e">详细内容：{:htmlspecialchars_decode($info.content)}</div>
                 </div>
@@ -62,7 +67,7 @@
                $.ajax({
                    type: "GET",
                    url: "/mobile/index/enroll",
-                   data: { 'uid':_u.uId,'id':_id,'group':'{$info.service_id}' },
+                   data: { 'uid':_u.uId,'id':_id,'service':'{$info.service_id}','group':'{$info.group_id}' },
                    success: function(data){
 
                        if (data.code) {

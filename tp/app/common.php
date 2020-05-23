@@ -62,11 +62,16 @@ function timeStatus($recruit_time_start,$recruit_time_end,$activity_time_start,$
 
     if ($recruit_time_end > $time) {
         return '招募中';
-    }else if ($activity_time_start < $time ) {
+    }else if ($activity_time_start > $time && $activity_time_end > $time) {
         return '进行中';
     }else{
         return '已结束';
     }
 
+
+}
+
+function filter_pri($value) {
+   return array_filter(explode('-',$value));
 }
 

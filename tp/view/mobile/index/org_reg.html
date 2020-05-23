@@ -81,19 +81,59 @@
                         </div>
                         <div class="icon">
                         </div>
-                        <select selectedindex="0" data-control-scope="service" data-bind="value:service">
+                        <select selectedindex="0" onchange="_group(this.value,1,this)" data-control-scope="service" data-bind="value:service">
                             <option >请选择</option>
-                            <option value="0">礼义服务</option>
-                            <option value="1">文明创建宣传</option>
-                            <option value="2">健康义诊</option>
-                            <option value="3">爱心助学</option>
-                            <option value="4">心理咨询</option>
-                            <option value="5">疫情防控</option>
-                            <option value="6">应急救援</option>
+                            <option value="1">礼义服务</option>
+                            <option value="2">文明创建宣传</option>
+                            <option value="3">健康义诊</option>
+                            <option value="4">爱心助学</option>
+                            <option value="5">心理咨询</option>
+                            <option value="6">疫情防控</option>
+                            <option value="7">应急救援</option>
                         </select>
                     </div>
                 </div>
-                
+                </br>
+                <div class="ub uhide" data-control="BOX" id="_group1">
+                    <div data-control="TEXT" >一级团队组织：</div>
+                    <div class="select uba bc-border bc-text" data-control="SELECT" id="service1">
+                        <div class="text"></div>
+                        <div class="icon">
+                        </div>
+                       <select selectedindex="0"  onchange="_group(this.value,2,this)" id="group1" data-control-scope="service1" data-bind="value:service1">
+
+                        </select>
+
+                    </div>
+                </div>
+
+                </br>
+
+                <div class="ub uhide" data-control="BOX" id="_group2">
+                    <div data-control="TEXT" >二级团队组织：</div>
+                    <div class="select uba bc-border bc-text" data-control="SELECT" id="service2">
+                        <div class="text"></div>
+                        <div class="icon">
+                        </div>
+                        <select selectedindex="0" onchange="_group(this.value,3,this)" id="group2" data-control-scope="service2" data-bind="value:service2">
+
+                        </select>
+                    </div>
+                </div>
+                </br>
+
+                <div class="ub uhide" data-control="BOX" id="_group3">
+                    <div data-control="TEXT" >三级团队组织：</div>
+                    <div class="select uba bc-border bc-text" data-control="SELECT" id="service3">
+                        <div class="text"></div>
+                        <div class="icon">
+                        </div>
+                        <select selectedindex="0" onchange="_group(this.value,4,this)" id="group3" data-control-scope="service3" data-bind="value:service3">
+
+                        </select>
+                    </div>
+                </div>
+
                 <div class="" data-control="BOX" id="Box_NFO7kA">
                 </div>
                 <div class="ub" data-control="BOX" id="Box_0JKaON">
@@ -132,6 +172,22 @@
        {include file="public/footer"}
         <script src="__JS__/orgreg.js"></script>
         <script>
+            function _setlistview(id,arr) {
+//console.log(arr.length);
+                $select = "<option value='0'>请选择</option>";
+
+                for (var i =0 ; i< arr.length; i++) {
+                    $select += '<option value="'+arr[i]['Id']+'">'+arr[i]['org_name']+'</option>';
+                }
+
+                $('#'+id).html($select);
+                $('#_'+id).removeClass('uhide');
+
+                return true;
+
+            }
+
+
            function up() {
                file = document.getElementById("logo_url2");
                var form = new FormData();
@@ -153,6 +209,32 @@
                    }
                });
            }
+
+
+
+           function _group(val,index,_this){
+
+               if(val) {
+                   $.ajax({
+                       type: "POST",
+                       url: 'getorg',
+                       data: {'service_id':val},
+                       success: function(data){
+
+                          var res =  JSON.parse(data);
+                            if (res.length) {
+                                if (_setlistview('group'+index,res))
+                                    appcan.select($("#service"+index), function(ele, value) {});
+
+
+                            }
+
+                       }
+                   });
+               }
+
+           }
+
         </script>
     </body>
 

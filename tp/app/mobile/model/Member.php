@@ -68,7 +68,23 @@ class Member extends Model
     }
 
     public function list($pri){
-        return self::where('group','like',$pri.'%')->select()->toArray();
+
+        if ($pri=='-') {
+            return self::where('group','like',$pri.'%')->order('id', 'desc')->paginate(20);
+        }else{
+
+            $arr = filter_pri($pri);
+
+            return self::Db('member')->alias("m")
+                ->field('m.id,m.real_name,m.phone,m.address,m.email,m.nation,m.brith,m.gender,m.political_affil,m.card_type,m.card,m.education,m.pract,m.length_ser,m.status')
+                ->join('member_org mo','m.id=mo.member_Id')
+                ->where('mo.org_Id','in',$arr)->group('m.id')
+                ->order('id', 'desc')->paginate(20);
+        }
+
+
+
+
     }
 
     public function getGroupAttr($value) {
@@ -79,7 +95,7 @@ class Member extends Model
 
     public  function editLengthSer($Id,$data) {
 
-        return self::where('Id',$Id)->update($data);
+        return self::where('id',$Id)->update($data);
     }
 
     public function getMemberById($id,$field = null,$get_serivce=false){
