@@ -3,7 +3,7 @@ declare (strict_types = 1);
 
 namespace app\mobile\model;
 
-use think\Model\Pivot;
+use think\model\Pivot;
 
 /**
  * @mixin think\Model
