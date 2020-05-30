@@ -25,14 +25,14 @@
 
                     <li class="ubb ub bc-border bc-text ub-ac lis" level="{$v['level']}" id="{$v['Id']}"><div class="checkbox2 umar-r umar-l{$v['level']}">
 
-                        <input type="checkbox"   {volist  name='arrOid'  id='val'} {if $val['org_Id']==$v['Id']} id="{$val['id']}"  {$f = 1} checked=true {if !$exitTeam} disabled=disabled {/if} {/if}  {/volist} class="uabs ub-con">
+                        <input type="checkbox"   {volist  name='arrOid'  id='val'} {if $val['org_Id']==$v['Id']} id="{$val['id']}"  {$f = 1} checked=true {if !$exitTeam} disabled=disabled {/if}   {/if}  {/volist} class="uabs ub-con">
 
                     </div><div class="lv_title ub-f1 marg-l ub ub-ver ut-m line1">{$v['org_name']}</div></li>
 
                     {/volist}
                 </ul>
 
-                <input type="button" value="提交" id="save_org" class="save">
+                {if !empty($group)}  <input type="button" value="提交" id="save_org" class="save">{else}<center>没有团队数据。</center>{/if}
             </div>
 
     </div>
@@ -42,7 +42,9 @@
             <div class="ub ub-ver ub-f1 ub-pc ubr b-gra-per">
                 <div class="t-gra5 ulev-4 tx-c ub-f1">
 
-                    {if $f && !$exitTeam}<a href="/mobile/Index/partTeam/id/{$serviceId}/exitTeam/1">我要退出团队</a>{/if}
+                    {if $f && !$exitTeam}
+                         <a href="javascript:exitTeam('/mobile/Index/partTeam/id/{$serviceId}/exitTeam/1')" >我要退出团队</a>
+                    {/if}
 
                 </div>
             </div>
@@ -53,59 +55,77 @@
 {/block}
 {block name="js"}
 <script>
+    var ul =  $("#org_ul").children(),len = ul.length, i = 0, ll,$li, $checkbox,arrOrg;
 
-    (function($) {
-        $('#Pane_2').removeClass('tab_pane');
-        $('#save_org').click(function(){
 
-            var ul =  $("#org_ul").children();
 
-            var i = 0, ll, len = ul.length,$li, $checkbox,arrOrg;
 
-            {if $exitTeam}
-             arrOrg={reduce:[]};
-            {else}
-              arrOrg={plus:[]};
-            {/if}
+    function exitTeam(url){
+        history.replaceState({page:2}, "forward 2", "?page=2");
+        window.location.href = url;
+    }
 
-            for (; i < len; i++) {
+    {if $exitTeam}
+    for (; i < len; i++) {
+        $li = $(ul[i]);
+        $checkbox = $li.find('input[type=checkbox]');
+        if (!$checkbox.get(0).checked){
+            $checkbox.attr("disabled",true);
 
-                $li = $(ul[i]);
-                $checkbox = $li.find('input[type=checkbox]');
-                if ($checkbox.get(0).checked && !$checkbox.is(":disabled")){
-                    ;
+        }
 
-                    {if !$exitTeam}  arrOrg.plus.push($li.get(0).id);{/if}
-                }else{
-                        ;
-                        {if $exitTeam}  arrOrg.reduce.push($checkbox.get(0).id);{/if}
+    }
 
-                }
+    {/if}
 
-            }
 
-             {if $exitTeam}
+ (function(){
+     $('#Pane_2').removeClass('tab_pane');
+     $('#save_org').click(function(){
+         i = 0;
+         {if $exitTeam}
+         arrOrg={reduce:[]};
+         {else}
+         arrOrg={plus:[]};
+         {/if}
+
+             for (; i < len; i++) {
+
+                 $li = $(ul[i]);
+                 $checkbox = $li.find('input[type=checkbox]');
+                 if ($checkbox.get(0).checked && !$checkbox.is(":disabled")){
+                     ;
+
+                     {if !$exitTeam}  arrOrg.plus.push($li.get(0).id);{/if}
+                     }else{
+                         ;
+                         {if $exitTeam}  arrOrg.reduce.push($checkbox.get(0).id);{/if}
+
+                         }
+
+                     }
+
+                     {if $exitTeam}
                      ll = arrOrg.reduce.length;
-              {else}
+                     {else}
                      ll=arrOrg.plus.length;
-              {/if}
+                     {/if}
 
-                if( ll && _u.uId ){
-                    $.ajax({
-                        type: "POST",
-                        url: "/mobile/index/partTeam",
-                        data: {'id':_u.uId,'service':arrOrg},
-                        success: function(data){
+                         if( ll && _u.uId ){
+                             $.ajax({
+                                 type: "POST",
+                                 url: "/mobile/index/partTeam",
+                                 data: {'id':_u.uId,'service':arrOrg},
+                                 success: function(data){
+                                     appcan.window.openToast(data.msg, 3000);
+                                     window.location.replace(window.location.href);
+                                 }
+                             });
+                         }
+                     });
+    })($)
 
-                            alert(data.msg);
-                            window.location.replace(window.location.href);
 
 
-                        }
-                    });
-                }
-        });
-
-    })($);
 </script>
 {/block}

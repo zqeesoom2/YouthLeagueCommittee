@@ -112,9 +112,9 @@ class OrgActivity extends Model
         });
     }
 
-    public function whereLike(string $field) {
+    public function whereLike(string $field,int $index = 0) {
 
-        $arr =  (new \app\mobile\model\Org())->orgByName($field);
+       $arr =  (new \app\mobile\model\Org())->orgByName($field);
         if (is_array($arr)) {
             if ($arr['Id']<8) {
                 return self::where('title','like','%'.$field.'%')->whereOr(['service_id'=>$arr['Id'],'status'=>6])->withAttr('service_id', function($value, $data) {
@@ -135,10 +135,6 @@ class OrgActivity extends Model
                   return (new org())->getServiceByPath($value);
               })->paginate(8);
         }
-
-
-
-
 
     }
 

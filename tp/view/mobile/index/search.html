@@ -4,15 +4,19 @@
     <div class="nav-btn" id="nav-left">
         <div class="fa fa-1g ub-img1 fa-angle-left fa-2x bc-text-head"></div>
     </div>
-    <h1 class="ut ub-f1 ulev-3 ut-s tx-c" tabindex="0">查找项目</h1>
+    <h1 class="ut ub-f1 ulev-3 ut-s tx-c" tabindex="0">查找结果</h1>
     <div class="nav-btn" id="nav-right">
         <!--<div class="ub-img1 icon-setting ulev2"></div>-->
     </div>
 </div>
 {/block}
+{block name="Header_1"}{/block}
 {block name="Header_2"}{/block}
 {block name="Pane_0"}{/block}
 {block name="ScrollContent_Pa34I9"}
+<style>
+    #divscroll{margin-top: 3.2em;}
+</style>
 <ul id="divscroll">
 
     {volist name="list" id='s'}
@@ -43,11 +47,11 @@
 {block name="js"}
 <script>
     (function($) {
-        $('#Header_1').removeClass('uhide').attr('style','margin-top:3.2em;position:relative;margin-bottom:0.3em');
+       // $('#Header_1').removeClass('uhide').attr('style','margin-top:3.2em;position:relative;margin-bottom:0.3em');
 
         UseIScrollHelper.setScrollHeight();
 
-        appcan.button("#fa-search", "btn-act",function() {
+        appcan.button("#fa-search", "btn-act",function() {alert(123)
             if ($("#Search_1").val())
                 window.location.href="/mobile/index/search/key/"+$("#Search_1").val();
         });

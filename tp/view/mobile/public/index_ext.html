@@ -86,7 +86,7 @@
                     <div class="ub-f1 ub ub-ac ub-ver ubr ubb" style="width:33%" id="signIn">
                         <a href="{:url('moblielogin')}">
                             <div class="uwh-ele2 uc-a-ele1 c-wh ub ub-ac ub-pc">
-                                <div class="btn_wh1 ub-img eleIcon2"></div>
+                                <div class="btn_wh1 ub-img eleIcon2" ></div>
                             </div>
                             <div class="umar-at1 t-gra7 tx-c ulev-2" >
                                 志愿者登陆
@@ -94,9 +94,9 @@
                         </a>
                     </div>
                     <div class="ub-f1 ub ub-ac ub-ver ubb" style="width:33%">
-                        <a href="/mobile/index/orgReg" id="orgReg">
+                        <a href="javascript:single_click('/mobile/index/orgReg')" id="orgReg">
                             <div class="uwh-ele2 uc-a-ele1 c-wh ub ub-ac ub-pc">
-                                <div class="btn_wh1 ub-img eleIcon3"></div>
+                                <div class="btn_wh1 ub-img eleIcon3" style="margin-left:1em;"></div>
                             </div>
                             <div class="umar-at1 t-gra7 tx-c ulev-2">
                                 志愿团体注册
@@ -315,6 +315,14 @@
 </script>
 <script>
 
+    function single_click(url){
+
+        if (_u!=null) {
+            return appcan.window.openToast('已注册的志愿者账号不能注册团队', 3000);
+        }
+        window.location.href = url;
+    }
+
     function nologinDeal(){
         $('#divscroll').append('<div id="loading">正在加载中。。。</div>');
     }
@@ -393,17 +401,14 @@
     }
 
 
-    function tabIndex(index) {
-        $('.tab_pane').removeClass('active');
-        $($('.tab_pane')[index]).addClass('active');
-        $('.header').addClass('uhide');
-        $($('.header')[index]).removeClass('uhide');
-        tabview_Tab.moveTo(index);
-    }
+
     (function($) {
 
         if (_u !=null && typeof(_u.org_id)!='undefined') {
-            $("#avatar").html('<img width="64" style="position:relative;' + 'left: -10px;' + 'top:-10px;" src="'+_u.logo_url+'" />');
+            if(!_u.logo_url)
+                _u.logo_url='/static/images/gqt.png';
+
+            $("#avatar").attr('style','background-image:url('+_u.logo_url+')');
             $("#me").removeClass('uhide');
             $("#hid,#hid1").remove();
             $("#status").html(_u.status);
@@ -414,6 +419,10 @@
                 url: "/mobile/index/getStatus",
                 data: {'id':_u.org_id},
                 success: function(data){
+
+                    if (data=='审核中')
+                        data = '团队注册成功,'+data;
+
                     $("#status").html(data);
                 }
             });
@@ -421,7 +430,7 @@
 
             if (_u!=null) {
                 $("#me").removeClass('uhide');
-                $("#avatar").html('<img width=120 src="http://www.07430743.com/uc_server/avatar.php?uid='+_u.user_id+'&size=middle" />');
+                $("#avatar").attr('style','background-image:url(http://www.07430743.com/uc_server/avatar.php?uid='+_u.user_id+'&size=middle)');
                 if (_u.uId){
                     $.ajax({
                         type: "POST",
@@ -449,7 +458,7 @@
                     });
 
                 }
-                $("#orgReg").attr('href','#');
+
             }
 
             $('#save').click(function(){
@@ -466,14 +475,14 @@
                             url: "/mobile/index/editService",
                             data: {'id':_u.uId,'service':arrOrg},
                             success: function(data){
-
-                                alert(data.msg);
+                                appcan.window.openToast(data.msg, 2000);
                                 var ul =  $("#group").children();
                                 for (var i =0;i<l;i++) {
                                     $li = $(ul[arrOrg[i]-1]);
                                     $checkbox = $li.find('input[type=checkbox]');
                                     $checkbox.attr('disabled','disabled');
                                 }
+                                window.location.reload();
 
                             }
                         });
@@ -493,6 +502,7 @@
         appcan.button("#fa-search", "btn-act",function() {
             if ($("#Search_1").val())
             window.location.href="/mobile/index/search/key/"+$("#Search_1").val();
+            history.replaceState({page:'search'}, 'search', '?page=search');
         });
 
 

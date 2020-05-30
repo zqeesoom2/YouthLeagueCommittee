@@ -41,8 +41,8 @@
                 </div>
                 <div class="ub" data-control="BOX" id="Box_FQtUaY">
                     <div data-control="TEXT" class="" id="Text_ZS0zjT">简介：</div>
-                    <div class="uinput ub bc-border uba" data-control="INPUT" id="introduction">
-                        <input placeholder="" type="text" class="ub-f1" data-control-scope="introduction" data-bind="value:introduction">
+                    <div class="uinput ub bc-border uba" data-control="TEXTAREA" id="introduction">
+                        <textarea placeholder=""  class="ub-f1" data-control-scope="introduction" data-bind="value:introduction"> </textarea>
                     </div>
                 </div>
 
@@ -50,9 +50,7 @@
                 </div>
                 <div class="ub" data-control="BOX" id="Box_6SUxbr">
                     <div data-control="TEXT" class="" id="Text_r0fe8S">上传logo：</div>
-
-                    <input id="logo_url2" onchange="up()" type="file"  class="ub-f1" >
-
+                    <input id="logo_url2" onchange="up()" type="file"  class="ub-f1" style="width: 12em;height: 2em;font-size: 1em;">
 
                 </div>
 
@@ -93,9 +91,9 @@
                         </select>
                     </div>
                 </div>
-                </br>
-                <div class="ub uhide" data-control="BOX" id="_group1">
-                    <div data-control="TEXT" >一级团队组织：</div>
+
+                <div class="ub uhide pt03" data-control="BOX" id="_group1">
+                    <div data-control="TEXT" >一级团队：</div>
                     <div class="select uba bc-border bc-text" data-control="SELECT" id="service1">
                         <div class="text"></div>
                         <div class="icon">
@@ -107,10 +105,10 @@
                     </div>
                 </div>
 
-                </br>
 
-                <div class="ub uhide" data-control="BOX" id="_group2">
-                    <div data-control="TEXT" >二级团队组织：</div>
+
+                <div class="ub uhide pt03" data-control="BOX" id="_group2">
+                    <div data-control="TEXT" >二级团队：</div>
                     <div class="select uba bc-border bc-text" data-control="SELECT" id="service2">
                         <div class="text"></div>
                         <div class="icon">
@@ -120,10 +118,10 @@
                         </select>
                     </div>
                 </div>
-                </br>
 
-                <div class="ub uhide" data-control="BOX" id="_group3">
-                    <div data-control="TEXT" >三级团队组织：</div>
+
+                <div class="ub uhide pt03" data-control="BOX" id="_group3">
+                    <div data-control="TEXT" >三级团队：</div>
                     <div class="select uba bc-border bc-text" data-control="SELECT" id="service3">
                         <div class="text"></div>
                         <div class="icon">

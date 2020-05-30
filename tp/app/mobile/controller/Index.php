@@ -138,10 +138,10 @@ class Index
             }
 
             if($f)
-               return json(['code'=>1,'data'=>'账号服务类型不匹配']);
+               return json(['code'=>1,'data'=>'账号隶属服务类型不匹配']);
 
             if($f2)
-                return json(['code'=>1,'data'=>'账号组织类型不匹配']);
+                return json(['code'=>1,'data'=>'账号隶属组织类型不匹配']);
 
             if ($arrS->status=='待审核'){
                 return json(['code'=>1,'data'=>'账号待审核不能报名']);
