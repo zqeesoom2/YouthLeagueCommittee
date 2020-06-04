@@ -80,16 +80,14 @@ class Login
                 if ($arrUser){//登陆成功！
 
                     $arrU['uId'] =$arrUser['id'];
-                    Session::set("userInfo",$arrU);
 
-                    return json(['state'=>0,'data'=>$arrU]);
                 }else{//激活
 
                     $arrU['password'] = $password;
-                    return json(['state'=>0,'data'=>$arrU]);
+
                 }
-
-
+                Session::set("userInfo",$arrU);
+                return json(['state'=>0,'data'=>$arrU]);
                 //echo $login['synlogin'];//输出同步登录代码 （这步很重要）
 
             }

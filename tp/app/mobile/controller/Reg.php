@@ -32,16 +32,17 @@ class Reg
     public function create(Request $request)
     {
         $arrCreate = $request->post();
+
         $arrCreate['username'] = Session::get('userInfo')['username'];
         $arrGroupId= json_decode($arrCreate['group']);
 
 
         $objM = new Member();
-        //$objO = new Org();
+       // $objO = new Org();
 
         if (empty($objM->memberByName($arrCreate['username']))) {
-            //$arrCreate['group'] = $objO->splicingPath($arrCreate['group']);
-            unset($arrCreate['group']);
+           // $arrCreate['group'] = $objO->splicingPath($arrCreate['group']);
+            $arrCreate['group'] = '-';
             $arr = $objM->add($arrCreate,$arrGroupId);
 
             return  json($arr);
