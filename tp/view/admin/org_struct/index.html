@@ -20,7 +20,7 @@
         <tbody>
         {volist name='arrOrg' id='org'}
         <tr id="{$org.Id}">
-            <td>{if $org.service==0}{$org.Id}{/if}</td>
+            <td {if $org.service==0} style="display:none;" {/if} >{$org.Id}</td>
             <td {if $org.service==0} style="font-weight: 600;" {/if} >{:str_repeat('——',$org.level-1)}{$org.org_name}</td>
             <td>
                 {$org.area_id}
@@ -32,7 +32,7 @@
             <td>{$org.captain_tell}</td>
             <td>{if $org.service!=0}{$org.status}{/if} </td>
             {if $privil=='-'}
-            <td>
+            <td {if $org.service==0} style="display:none;" {/if}>
                 <div class="layui-btn-group">
                     <button class="layui-btn layui-btn-primary layui-btn-sm" onclick ="editorForum('#{$org.Id}')">编辑</button>
                     <button class="layui-btn layui-btn-primary layui-btn-sm">删除</button>
@@ -137,7 +137,7 @@
     function editorForum(id) {
         var data = $$(id).find('td');
         var num1 =num2 = '0';
-        $$('#editorForum [name="Id"]').val(data[0].innerText);
+        $$('#editfid').val(data[0].innerText);
         $$('#orgname').val(data[1].innerText);
        // $$('#editorForum [name="status"]').val(data[8].innerText);
         //$$('#editorForum [name="regist_auth"]').val(data[2].innerText);
@@ -159,6 +159,7 @@
             data: data,
             dataType: 'json',
             success: function (res) {
+
                 if (res.code == 0) {
                     mdui.snackbar(res.message, {
                         timeout: 2000,
@@ -181,7 +182,7 @@
                 }
 
             }
-        })
+        });
 
         return false;
     })

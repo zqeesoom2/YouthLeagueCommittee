@@ -81,7 +81,7 @@ class OrgStruct extends BaseController
      */
     public function update(Request $request)
     {
-        $strAccount = $request->post('org_name');
+        //$strAccount = $request->post('org_name');
 
         return  json((new org())->editorg($request->post()));
     }
