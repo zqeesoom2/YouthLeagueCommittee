@@ -45,6 +45,12 @@ class Reg
             $arrCreate['group'] = '-';
             $arr = $objM->add($arrCreate,$arrGroupId);
 
+            $Suser = Session::get('userInfo');
+
+            $Suser['uId'] =  $arr['uId'];
+
+            Session::set('userInfo',$Suser);
+
             return  json($arr);
         }
 

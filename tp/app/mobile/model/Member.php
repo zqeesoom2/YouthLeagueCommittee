@@ -27,9 +27,10 @@ class Member extends Model
            // self::find($member->id)->service()->saveAll($arrGid);
 
             //halt(MemberOrg::class);
-            self::create($data)->service()->saveAll($arrGid);
+            $Objmember =  self::create($data);
+            $Objmember->service()->saveAll($arrGid);
 
-            return ['state'=>0,'status'=>'审核中'];
+            return ['state'=>0,'status'=>'审核中','uId'=>$Objmember->id];
         }catch(\Exception $e){
             return ['state'=>1,'message'=>$e->getMessage()];
         }
