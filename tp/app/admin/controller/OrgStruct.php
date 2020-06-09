@@ -20,7 +20,6 @@ class OrgStruct extends BaseController
     {
         $n = Session::get('service') ? Session::get('service') : 0 ;
 
-
         $arrOrg = make_tree((new org())->likeListOrg(Session::get('privil')),$n);
 
         View::assign('arrOrg',$arrOrg);
@@ -34,9 +33,16 @@ class OrgStruct extends BaseController
      *
      * @return \think\Response
      */
-    public function create()
+    public function members()
     {
-        //
+        $list = (new org())->enrollList();
+        $count = $list ->total();
+        $page = $list->render();
+        View::assign(['list'=>$list,
+            'count'=>$count,
+            'page'=>$page
+        ]);
+        return View::fetch();
     }
 
     /**

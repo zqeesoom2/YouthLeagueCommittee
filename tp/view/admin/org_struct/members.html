@@ -1,0 +1,160 @@
+{extend name="public/admin_public"} {block name="content"}
+<div class="mdui-m-a-1 mdui-typo mdui-table-fluid">
+
+    <h1 class="mdui-m-l-3">活动列表</h1>
+    <table class="mdui-table mdui-textfield mdui-table-hoverable">
+        <thead>
+        <tr>
+            <th style="display: none">#</th>
+            <th>组织名称</th>
+            <th>服务类型</th>
+            <th>发起组织</th>
+            <th>招募人数</th>
+            <th>报名人数</th>
+            <th>报名成员</th>
+            <th>状态</th>
+            <th>操作</th>
+        </tr>
+        </thead>
+        <tbody>
+        {volist name='list' id='val'}
+        <tr >
+            <td style="display: none"></td>
+            <td style="overflow:hidden;height:42px;">{$val.title}</td>
+            <td>{$val.service_id}</td>
+            <td>{$val.group_id}</td>
+            <td>{$val.recruit_num}</td>
+            <td>{$val.enroll_num}</td>
+            <td>{$val.username}</td>
+            <td>{:projectStatus($val.status,$val.recruit_time_start,$val.recruit_time_end,$val.activity_time_start,$val.activity_time_end)}</td>
+            <td>
+                <div class="layui-btn-group">
+                    <button class="layui-btn layui-btn-primary layui-btn-sm"><a href="/admin/scoring/{$val.Id}" target="_blank">打分</a></button>
+                </div>
+            </td>
+
+        </tr>
+        {/volist}
+        <tr>
+            <td colspan="8"><span style="float:left;line-height:34px;">总计录数:{$count}。</span>{$page|raw}</td>
+        </tr>
+        </tbody>
+
+    </table>
+    <!--编辑-->
+    <div class="mdui-dialog mdui-typo" id="editorForum">
+        <div class="mdui-dialog-content">
+            <div class="mdui-dialog-title">编辑状态</div>
+            <form id="editForm" class="layui-form layui-form-pane mdui-m-y-1" lay-filter="formTest">
+
+                <input type="hidden" name="Id" id="editfid">
+                <div class="layui-form-item">
+                    <label class="layui-form-label">状态</label>
+                    <div class="layui-input-block">
+                        <input type="radio" name="status"  value="6"  title="通过" />
+                        <input type="radio" name="status"  value="5"  title="审核中" />
+                        <input type="radio" name="status"  value="4"  title="不通过"/>
+                    </div>
+                </div>
+            </form>
+        </div>
+        <div class="mdui-dialog-actions">
+            <button class="mdui-btn mdui-ripple" id="edit">保存</button>
+        </div>
+    </div>
+
+</div>
+
+{/block} {block name="js"}
+<script>
+    var form = '';
+    layui.use('form', function(){
+
+        form = layui.form;
+        form.render('radio');
+    });
+    var $$ = mdui.JQ,
+        data = '',
+        inst = new mdui.Dialog('#editorForum');
+
+    $$('#sys').addClass('mdui-collapse-item-open');
+    $$('#enroll').addClass('mdui-list-item-active');
+
+    $$('#submit').on('click', function () {
+        data = $$('form').serialize();
+
+        $$.ajax({
+            method: 'post',
+            url: '',
+            data: data,
+            dataType: 'json',
+            success: function (res) {
+                if (res.code == 0) {
+                    mdui.snackbar(res.message, {
+                        timeout: 2000,
+                        position: 'top'
+                    })
+                } else {
+                    mdui.snackbar(res.message, {
+                        timeout: 2000,
+                        position: 'top'
+                    })
+                }
+
+            }
+        });
+
+        return false;
+    });
+    // 编辑
+    function editorForum(id) {
+        var data = $$(id).find('td');
+        var num = '6';
+        $$('#editorForum [name="Id"]').val(data[0].innerText);
+
+
+        switch (data[8].innerText){
+            case '审核不通过' :num = '4';break;
+            case '审核中' : num = '5';break;
+        }
+
+            form.val("formTest", { "status":num });
+
+            inst.open();
+        }
+        // 保存
+        $$('#edit').on('click', function () {
+            data = $$('#editForm').serialize();
+            $$.ajax({
+                method: 'post',
+                url: "{:url('editOrgAct')}",
+                data: data,
+                dataType: 'json',
+                success: function (res) {
+                    if (res.code == 0) {
+                        mdui.snackbar(res.message, {
+                            timeout: 2000,
+                            position: 'top',
+                            onClose: function () {
+                                inst.close();
+                            },
+                            onClosed: function () {
+                                location.reload();
+                            }
+                        })
+                    } else {
+                        mdui.snackbar(res.message, {
+                            timeout: 2000,
+                            position: 'top',
+                            onClose: function () {
+                                inst.close();
+                            }
+                        })
+                    }
+
+                }
+            })
+
+            return false;
+        });
+</script> {/block}

@@ -63,6 +63,7 @@ class Index extends BaseController
             'arrVolunteer'=>$arrVolunteer,
             'count'=>$count
         ]);
+
         return View::fetch();
     }
 

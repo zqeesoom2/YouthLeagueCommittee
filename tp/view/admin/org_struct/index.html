@@ -13,14 +13,15 @@
             <th>队长</th>
             <th>详细地址</th>
             <th>联系电话</th>
+            <th>报名权限</th>
             <th>状态</th>
-            {if $privil=='-'}<th>操作</th>{/if}
+            <th>{if $privil=='-'}操作{/if}</th>
         </tr>
         </thead>
         <tbody>
         {volist name='arrOrg' id='org'}
         <tr id="{$org.Id}">
-            <td {if $org.service==0} style="display:none;" {/if} >{$org.Id}</td>
+            <td {if $org.service==0} style="visibility:hidden;" {/if} >{$org.Id}</td>
             <td {if $org.service==0} style="font-weight: 600;" {/if} >{:str_repeat('——',$org.level-1)}{$org.org_name}</td>
             <td>
                 {$org.area_id}
@@ -30,15 +31,17 @@
             <td>{$org.captain}</td>
             <td>{$org.address}</td>
             <td>{$org.captain_tell}</td>
-            <td>{if $org.service!=0}{$org.status}{/if} </td>
+            <td>{if $org.service!=0}{$org.status}{/if}</td>
+            <td>{if $org.service!=0} {if $org.regist_auth} 对外开放 {else} 对内开放 {/if} {/if}</td>
             {if $privil=='-'}
-            <td {if $org.service==0} style="display:none;" {/if}>
-                <div class="layui-btn-group">
+            <td >
+                <div class="layui-btn-group" {if $org.service==0} style="visibility:hidden;" {/if}>
                     <button class="layui-btn layui-btn-primary layui-btn-sm" onclick ="editorForum('#{$org.Id}')">编辑</button>
                     <button class="layui-btn layui-btn-primary layui-btn-sm">删除</button>
                 </div>
             </td>
             {/if}
+
         </tr>
         {/volist}
         </tbody>
@@ -142,10 +145,17 @@
        // $$('#editorForum [name="status"]').val(data[8].innerText);
         //$$('#editorForum [name="regist_auth"]').val(data[2].innerText);
       //  $$("[name="+name+"][value="+result.entity[name]+"]").prop('checked', true);
+
+        if (data[9].innerText=='对外开放')
+            num2 = '1';
+
+
         {if $privil=='-'}
             if (data[8].innerText=='审核通过')
              num1 = '1';
-             form.val("formTest", { "status":num1 });
+             form.val("formTest", { "status":num1, "regist_auth":num2});
+        {else}
+            form.val("formTest", { "regist_auth":num2});
         {/if}
 
         inst.open();
@@ -170,7 +180,8 @@
                         onClosed: function () {
                             location.reload();
                         }
-                    })
+                    });
+
                 } else {
                     mdui.snackbar(res.message, {
                         timeout: 2000,
@@ -180,7 +191,9 @@
                         }
                     })
                 }
-
+                setTimeout(function(){
+                    window.location.reload();
+                 },2100);
             }
         });
 

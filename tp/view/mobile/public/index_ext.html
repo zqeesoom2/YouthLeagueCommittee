@@ -74,7 +74,7 @@
             <div class="ub ub-ver">
                 <div class="ub" style="width:100%">
                     <div class="ub-f1 ub ub-ver ub-ac ubr ubb" style="width:33%;padding-bottom: 0.6em;">
-                        <a href="/mobile/index/news">
+                        <a class="blue" href="/mobile/index/news">
                             <div class="uwh-ele2 uc-a-ele1 c-wh ub ub-ac ub-pc">
                                 <div class="btn_wh1 ub-img eleIcon1"></div>
                             </div>
@@ -84,7 +84,7 @@
                         </a>
                     </div>
                     <div class="ub-f1 ub ub-ac ub-ver ubr ubb" style="width:33%" id="signIn">
-                        <a href="{:url('moblielogin')}">
+                        <a class="blue" href="{:url('moblielogin')}">
                             <div class="uwh-ele2 uc-a-ele1 c-wh ub ub-ac ub-pc">
                                 <div class="btn_wh1 ub-img eleIcon2" ></div>
                             </div>
@@ -94,7 +94,7 @@
                         </a>
                     </div>
                     <div class="ub-f1 ub ub-ac ub-ver ubb" style="width:33%">
-                        <a href="javascript:single_click('/mobile/index/orgReg')" id="orgReg">
+                        <a class="blue" href="javascript:single_click('/mobile/index/orgReg')" id="orgReg">
                             <div class="uwh-ele2 uc-a-ele1 c-wh ub ub-ac ub-pc">
                                 <div class="btn_wh1 ub-img eleIcon3" style="margin-left:1em;"></div>
                             </div>
@@ -108,7 +108,7 @@
                 <div class="ub" style="width:100%;border-bottom:10px solid #eee;">
 
                     <div class="ub-f1 ub ub-ver ub-ac ubr ubb" style="width:33%;padding-bottom: 0.6em;">
-                        <a href="javascript:tabIndex(1);">
+                        <a class="blue" href="javascript:tabIndex(1);">
                             <div class="uwh-ele2 uc-a-ele1 c-wh ub ub-ac ub-pc">
                                 <div class="btn_wh1 ub-img eleIcon4"></div>
                             </div>
@@ -155,7 +155,7 @@
                     <ul class="ub-f1 ub ub-ver marg-l">
                         <li class="bc-text ub ub-ver uof ut-m line1">#title#</li>
                         <li class="ulev-1 uof sc-text1 uinn3 line1" >#summary#</li>
-                        <li class="ulev-2  sc-text1 uinn3" id="service_id">#service_id#</li>
+                        <li class="ulev-2  sc-text1 uinn3" id="service_id"><div class="ufl">#service_id#</div><div class="ufr">#create_time#</div></li>
                     </ul>
                 </a>
             </ul>
@@ -358,7 +358,7 @@
 
         /*if(!l)
             return alert('暂无数据');*/
-
+        var _arr = [];
         for (var i = 0; i < l ; i++) {
             var datas = listdata[i];
 
@@ -368,6 +368,9 @@
             inserthtml = inserthtml.replace("#details#", 'details');
             inserthtml = inserthtml.replace("#url#", '/static/images/gqt.png');
             inserthtml = inserthtml.replace("#id#", datas.Id);
+            _arr=datas.create_time.split(" "); //字符分割
+            inserthtml = inserthtml.replace("#create_time#", _arr[0]);
+
 
             //activity_time_end: "2020-05-02 18:00"
             // activity_time_start: "2020-04-25 08:00"

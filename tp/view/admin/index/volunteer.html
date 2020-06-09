@@ -126,13 +126,14 @@
         var data = $$(id).find('td');
         var num1 =num2 = '0';
         $$('#editorForum [name="id"]').val(data[0].innerText);
-       $$('#real_name').val(data[1].innerText);
+        $$('#real_name').val(data[1].innerText);
         // $$('#editorForum [name="status"]').val(data[8].innerText);
         //$$('#editorForum [name="regist_auth"]').val(data[2].innerText);
         //  $$("[name="+name+"][value="+result.entity[name]+"]").prop('checked', true);
         {if $privil=='-'}
         $$('#editorForum [name="status"][value]').prop('checked', true);
-        if (data[7].innerText=='审核通过')
+
+        if (data[14].innerText=='志愿者会员')
             num1 = '1';
         form.val("formTest", { "status":num1 });
         {/if}

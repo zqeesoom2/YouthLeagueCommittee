@@ -13,7 +13,7 @@ use think\Model;
 class org extends Model
 {
     function likeListOrg($strPath) {
-        return self::where('path','like',$strPath.'%')->field('Id,org_name,address,status,release_quan,area_id,members,captain,path,service,captain_tell')->select()->toArray();
+        return self::where('path','like',$strPath.'%')->field('Id,org_name,address,status,release_quan,area_id,members,captain,path,service,captain_tell,regist_auth')->select()->toArray();
     }
 
 
