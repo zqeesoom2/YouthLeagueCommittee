@@ -433,7 +433,9 @@
 
             if (_u!=null) {
                 $("#me").removeClass('uhide');
-                $("#avatar").attr('style','background-image:url(http://www.07430743.com/uc_server/avatar.php?uid='+_u.user_id+'&size=middle)');
+                if(!_u.user_id)
+                 $("#avatar").attr('style','background-image:url(http://www.07430743.com/uc_server/avatar.php?uid='+_u.user_id+'&size=middle)');
+
                 if (_u.uId){
                     $.ajax({
                         type: "POST",

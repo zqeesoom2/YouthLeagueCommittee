@@ -3,6 +3,8 @@ declare (strict_types = 1);
 
 namespace app\admin\model;
 
+use app\mobile\model\Member;
+use app\mobile\model\MemberOrg;
 use think\facade\Db;
 use think\facade\Session;
 use think\Model;
@@ -16,7 +18,10 @@ class org extends Model
         return self::where('path','like',$strPath.'%')->field('Id,org_name,address,status,release_quan,area_id,members,captain,path,service,captain_tell,regist_auth')->select()->toArray();
     }
 
+    function members() {
 
+        return $this->belongsToMany(Member::class,MemberOrg::class,'member_Id','org_Id');
+    }
 
     function getStatusAttr($value){
         if ((int)($value))
@@ -72,6 +77,7 @@ class org extends Model
             $key++;
         }
         $arr = self::field('org_name')->where('Id','in',$str)->select()->toArray();
+
         foreach ($arr as $item) {
 
             if ($key2==0)
@@ -82,5 +88,11 @@ class org extends Model
         }
         return $str2;
 
+    }
+
+    public function getMemberById($id){
+        $member=self::find($id);
+        $member->members;
+        return $member;
     }
 }

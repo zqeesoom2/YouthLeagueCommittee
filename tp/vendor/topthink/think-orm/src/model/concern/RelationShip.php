@@ -521,6 +521,7 @@ trait RelationShip
      */
     public function belongsToMany(string $model, string $middle = '', string $foreignKey = '', string $localKey = ''): BelongsToMany
     {
+
         // 记录当前关联信息
         $model      = $this->parseModel($model);
         $name       = Str::snake(class_basename($model));

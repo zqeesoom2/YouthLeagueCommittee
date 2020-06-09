@@ -3,6 +3,7 @@ declare (strict_types = 1);
 
 namespace app\admin\controller;
 
+use app\admin\model\org;
 use app\BaseController;
 use app\mobile\model\Member;
 use think\facade\Session;
@@ -46,25 +47,40 @@ class Index extends BaseController
      *
      * @return \think\Response
      */
-    public function volunteer()
+    public function volunteer($oid=0)
     {
-        $count = 0;
-        $objMember = new Member();
 
-        $strPri = Session::get('privil');
+        if ($oid){
+            $objOrg = new org();
+            $arr = $objOrg->getMemberById($oid);
+            View::assign([
+                'privil' => '',
+                'arrVolunteer'=>'',
+                'count'=>0
+            ]);
+            return View::fetch();
+        }else{
+            $count = 0;
+            $objMember = new Member();
 
-        $arrVolunteer =  $objMember->list($strPri);
+            $strPri = Session::get('privil');
 
-        if ($arrVolunteer)
-         $count = $arrVolunteer->total();
+            $arrVolunteer =  $objMember->list($strPri);
 
-        View::assign([
-            'privil' => $strPri,
-            'arrVolunteer'=>$arrVolunteer,
-            'count'=>$count
-        ]);
+            if ($arrVolunteer)
+                $count = $arrVolunteer->total();
 
-        return View::fetch();
+            View::assign([
+                'privil' => $strPri,
+                'arrVolunteer'=>$arrVolunteer,
+                'count'=>$count
+            ]);
+
+
+
+            return View::fetch();
+        }
+
     }
 
     /**
