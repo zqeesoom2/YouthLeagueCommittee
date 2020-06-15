@@ -17,6 +17,15 @@
                 <input type="text" name="summary" required lay-verify="required" value="{$info.summary}" autocomplete="off" class="layui-input">
             </div>
         </div>
+        {if $privil=='-'}
+        <div class="layui-form-item">
+            <label class="layui-form-label">审核状态</label>
+            <div class="layui-input-block">
+                <input type="radio" name="status"  value=1  title="通过" />
+                <input type="radio" name="status"  value=0  title="不通过"/>
+            </div>
+        </div>
+        {/if}
 
         <div class="layui-form-item">
             <label class="layui-form-label">新闻内容</label>
@@ -50,9 +59,14 @@
 <script>
 
     var $$ = mdui.JQ
+    var form = '';
+
+
 
     layui.use(['layedit','form','upload','laydate'], function(){
          form = layui.form;
+        form.render('radio');
+
 
         layedit = layui.layedit;
         layedit.set({
@@ -132,9 +146,12 @@
             return false;
         });
 
+        form.val("formTest", { "status":'{$info.status}'});
     });
 
     $$('#froum').addClass('mdui-collapse-item-open');
     $$('#froumList').addClass('mdui-list-item-active');
+
+
 
 </script> {/block}

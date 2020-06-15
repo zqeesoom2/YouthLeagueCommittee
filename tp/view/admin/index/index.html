@@ -5,12 +5,19 @@
             <h3>系统信息</h3>
         </div>
 
-        <div class="mf-panel-bd">
-            <ul>
-                {volist name="serverinfo" id="vo"}
-                <li>{$key} : {$vo}</li>
-                {/volist}
+        <div class="mf-panel-bd" style="width:806px;">
+            {if $privil=='-'}
+            <ul style="width:370px;float: left">
+                <li>动态新闻待审核 :<a href="/admin/froum.html?id=0">{$noAuditNews}</a> 条</li>
+                <li>组织活动待审核 :<a href="/admin/Project.html?id=1">{$noAuditActiv}</a> 条</li>
             </ul>
+            {else}
+            <ul style="width:370px;float: left;">
+                <li>已发布动态新闻 :<a href="/admin/froum.html">{$noAuditNews}</a> 条</li>
+                <li>已发布组织活动 :<a href="/admin/Project.html">{$noAuditActiv}</a> 条</li>
+            </ul>
+            {/if}
+
         </div>
     </div>
     <div class="mdui-col-xs-12 mdui-col-sm-6 mf-panel" style="display:none;">

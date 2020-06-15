@@ -352,6 +352,7 @@ class Template
         }
 
         $includeFile = unserialize($matches[1]);
+       // $includeFile = unserialize(preg_replace_callback('#s:(\d+):"(.*?)";#s',function($match){return 's:'.strlen($match[2]).':"'.$match[2].'";';},$matches[1]));
 
         if (!is_array($includeFile)) {
             return false;

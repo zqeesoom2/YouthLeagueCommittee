@@ -3,6 +3,7 @@ declare (strict_types = 1);
 
 namespace app\admin\controller;
 
+use app\admin\model\Admin;
 use app\admin\model\OrgActivity;
 use app\BaseController;
 use app\mobile\model\Member;
@@ -19,10 +20,22 @@ class Project extends BaseController
      *
      * @return \think\Response
      */
-    public function index()
+    public function index(Request $request)
     {
 
-        $arrlist = (new OrgActivity())->adminPage(['privil'=>['like',Session::get('privil').'%']],20);
+        $arr = ['privil'=>['like',Session::get('privil').'%']];
+
+        if($request->get('id')==1){
+            $arr = 'admin';
+        }
+
+        if ($request->get('oid')) {
+            $objAdmin = (new Admin())->getByOid((int)$request->get('oid'));
+            $id = $objAdmin['Id'];
+            $arr = ['group_id'=>['=',$id]];
+        }
+
+        $arrlist = (new OrgActivity())->adminPage($arr,20);
 
         $count = $arrlist->total();
         $page = $arrlist->render();
@@ -33,6 +46,8 @@ class Project extends BaseController
                 'page'=>$page,
                 'count'=>$count
             ]);
+
+
 
         return  View::fetch();
     }
@@ -112,6 +127,7 @@ class Project extends BaseController
             if($request->post('Id')){
                 $id = $request->post('Id');//编辑审核状态
                 unset($data['Id']);
+
             }else{
                 $data = $this->handleData($data);
             }
@@ -125,6 +141,7 @@ class Project extends BaseController
 
             if ($id){
                 $info = (new OrgActivity())->whichOne($id);
+
                 View::assign(['info'=>$info,'service_id'=>Session::get('service')]);
                 return  View::fetch();
             }
@@ -164,13 +181,18 @@ class Project extends BaseController
 
     public  function enrollList(){
 
-        $list = (new OrgActivity())->enrollList();
-        $count = $list ->total();
-        $page = $list->render();
-        View::assign(['list'=>$list,
+       $list = (new OrgActivity())->enrollList();
+
+
+
+       $count = $list ->total();
+       $page = $list->render();
+
+       View::assign(['list'=>$list,
                  'count'=>$count,
                  'page'=>$page
         ]);
+
        return View::fetch();
     }
 

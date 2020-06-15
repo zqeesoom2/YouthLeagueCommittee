@@ -23,6 +23,9 @@ class Froum extends BaseController
 
             if ($group_id==1){
                 $arr = ['1'=>['=',1]];
+                if (!$id) {
+                    $arr = ['status'=>['=',0]];
+                }
             }
 
             $arrlist = (new \app\admin\model\Froum())->adminPage($arr,20);
@@ -37,7 +40,6 @@ class Froum extends BaseController
                 'count'=>$count
             ]);
             return  View::fetch();
-
 
     }
 

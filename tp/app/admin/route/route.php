@@ -35,3 +35,6 @@ Route::rule('addFroum','admin/Froum/create','GET|POST')->name('addFroum');
 Route::get('froum/[:id]','admin/Froum/index')->name('froum');
 Route::rule('editFroum/[:id]','admin/Froum/editFroum','GET|POST')->name('editFroum');
 Route::post('delFroum','admin/Froum/delete')->name('delFroum');
+
+Route::rule('user','admin/index/user','GET|POST')->name('adduser');
+Route::get('listuser','admin/index/listuser')->name('listuser');

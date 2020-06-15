@@ -6,6 +6,7 @@ namespace app;
 use think\App;
 use think\exception\ValidateException;
 use think\facade\Session;
+use think\facade\View;
 use think\Validate;
 
 /**
@@ -57,6 +58,7 @@ abstract class BaseController
         if (!Session::has("uid")){
             return redirect((string) url('login/index'))->send();
         }
+        view::assign('privil',Session::get('privil'));
     }
 
     /**

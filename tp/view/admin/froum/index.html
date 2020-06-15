@@ -1,7 +1,7 @@
 {extend name="public/admin_public"} {block name="content"}
 <div class="mdui-m-a-1 mdui-typo mdui-table-fluid">
 
-    <h1 class="mdui-m-l-3">活动列表</h1>
+    <h1 class="mdui-m-l-3">新闻列表</h1>
     <table class="mdui-table mdui-textfield mdui-table-hoverable">
         <thead>
         <tr>
@@ -9,6 +9,7 @@
             <th>新闻标题</th>
             <th>发起组织</th>
             <th>摘要</th>
+            <th>状态</th>
             <th>发布时间</th>
             <th>操作</th>
         </tr>
@@ -20,6 +21,7 @@
             <td>{$val.title}</td>
             <td>{$val.group_id}</td>
             <td>{$val.summary}</td>
+            <td>{if $val.status}通过{else}审核中{/if}</td>
             <td>{$val.create_time}</td>
             <td>
                 <div class="layui-btn-group">
@@ -45,6 +47,8 @@
     var $$ = mdui.JQ,
         data = '',
         inst = new mdui.Dialog('#editorForum');
+
+
 
     $$('#froum').addClass('mdui-collapse-item-open');
     $$('#froumList').addClass('mdui-list-item-active');

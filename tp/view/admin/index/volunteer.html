@@ -45,10 +45,12 @@
             <td>{$volu.length_ser}</td>
             <td>{$volu.status}</td>
             <td>
+                {if $privil=='-'}
                 <div class="layui-btn-group">
                     <button class="layui-btn layui-btn-primary layui-btn-sm" onclick ="editorForum('#{$volu.id}')">编辑</button>
                     <button class="layui-btn layui-btn-primary layui-btn-sm">删除</button>
                 </div>
+                {/if}
             </td>
 
         </tr>
@@ -132,6 +134,7 @@
         //  $$("[name="+name+"][value="+result.entity[name]+"]").prop('checked', true);
         {if $privil=='-'}
         $$('#editorForum [name="status"][value]').prop('checked', true);
+
 
         if (data[14].innerText=='志愿者会员')
             num1 = '1';

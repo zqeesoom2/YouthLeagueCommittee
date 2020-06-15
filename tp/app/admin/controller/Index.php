@@ -3,12 +3,17 @@ declare (strict_types = 1);
 
 namespace app\admin\controller;
 
+use app\admin\model\Froum;
 use app\admin\model\org;
+use app\admin\model\OrgActivity;
 use app\BaseController;
 use app\mobile\model\Member;
+use think\facade\Db;
 use think\facade\Session;
 use think\Request;
 use think\facade\View;
+use think\facade\Config;
+
 
 class Index extends BaseController
 {
@@ -20,25 +25,88 @@ class Index extends BaseController
     public function index(Request $request)
     {
 
+        $objFroum =  new Froum();
+        $objOrgActivity = new OrgActivity();
+        $uid = Session::get('uid');
 
-        $serverinfo =[
-            "操作系统"    =>PHP_OS,
-            "运行环境"    =>($request->server())["SERVER_SOFTWARE"],
-            "主机名"      =>$request->host(),
-            "WEB服务端口" =>$request->port(),
-            "网站文档目录" =>$request->root(),
-            "浏览器信息"  =>($request->server())["HTTP_USER_AGENT"],
-            "通信协议"    => $request->protocol(),
-            "请求方法"    => $request->method(),
-            "手机端"=>  $request->isMobile() ? 'true'  :  'false'
 
-        ];
+        if ($uid==1) {
+            $arrWhere['status'] = 0;
+            $arrWhere2 = '';
+
+        }else {
+
+            $arrWhere['status'] = 1;
+            $arrWhere['group_id'] = $uid;
+
+            $arrWhere2[0] = ['status','=',6];
+            $arrWhere2[1] = ['privil','like',Session::get('privil').'%'];
+         }
+
+
 
 
         View::assign([
-            "serverinfo" => $serverinfo,
+            "noAuditNews" => $objFroum->noAuditStatistics($arrWhere),
+            'noAuditActiv' => $objOrgActivity->noAuditStatistics($arrWhere2),
             'privil' => Session::get('privil')
         ]);
+
+        return  View::fetch();
+    }
+
+    public function user(Request $request)
+    {
+
+        $show = '';
+        if (!empty($request->post('password'))) {
+
+
+            $arrCreate = $request->post();
+
+            try{
+                Db::startTrans();
+                $obj = new \app\mobile\model\Org();
+
+                if ( $arrCreate['username'] && empty($obj->orgByName($arrCreate['username']))) {
+
+
+                    $arrCreate['path'] = '-'.$arrCreate['service_id'];
+                    $arrCreate['service'] = $arrCreate['service_id'];
+                    $arrCreate['status'] = 1;
+
+
+                    $password = md5($arrCreate['password'].Config::get('cus.salt'));
+                    $username = $arrCreate['username'];
+
+                    $arrCreate['org_name'] = $arrCreate['username'];
+
+                    unset($arrCreate['password2']);
+                    unset($arrCreate['password']);
+                    unset($arrCreate['service_id']);
+                    unset($arrCreate['username']);
+
+
+                    $arr = $obj->add($arrCreate);
+
+                    (new \app\mobile\model\Admin())->add(['username'=>$username,'password'=>$password,'privil'=>$arrCreate['path'],'org_id'=>$arr['data']['org_id']]);
+
+
+                    Db::commit();
+
+                    return  json($arr);
+                }
+
+                return json( ['code'=>0,'message'=>'账号名已存在']);
+
+            } catch (\Exception $e) {
+                Db::rollback();
+                return json( ['code'=>0,'message'=>$e->getMessage()]);
+            }
+
+        }
+
+
         return  View::fetch();
     }
 
@@ -75,9 +143,6 @@ class Index extends BaseController
                 'arrVolunteer'=>$arrVolunteer,
                 'count'=>$count
             ]);
-
-
-
             return View::fetch();
         }
 

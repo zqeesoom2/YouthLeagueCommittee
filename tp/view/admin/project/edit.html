@@ -9,8 +9,21 @@
 
             <div class="layui-input-block">
                 <input type="text" name="title" required lay-verify="required" value="{$info.title}" autocomplete="off" class="layui-input">
+
             </div>
         </div>
+
+        {if $privil=='-'}
+        <div class="layui-form-item">
+            <label class="layui-form-label">审核状态</label>
+            <div class="layui-input-block">
+                <input type="radio" name="status"  value=6  title="通过" />
+                <input type="radio" name="status"  value=5  title="审核中" />
+                <input type="radio" name="status"  value=4  title="不通过"/>
+            </div>
+        </div>
+        {/if}
+
         <div class="layui-form-item">
             <label class="layui-form-label">项目摘要</label>
             <div class="layui-input-block">
@@ -116,6 +129,7 @@
 
     layui.use(['layedit','form','upload','laydate'], function(){
          form = layui.form;
+        form.render('radio');
 
         layedit = layui.layedit;
         layedit.set({
@@ -219,6 +233,16 @@
             return false;
         });
 
+        var status_val = '{$info.status}' ;
+        switch(status_val){
+            case '1':
+            case '2':
+            case '3': status_val = 6; break;
+
+
+        }
+
+        form.val("formTest",{"status":status_val});
     });
 
     $$('#sys').addClass('mdui-collapse-item-open');

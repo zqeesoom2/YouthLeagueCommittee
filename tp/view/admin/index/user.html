@@ -1,0 +1,133 @@
+{extend name="public/admin_public"} {block name="content"}
+<div class="mdui-m-a-1 mdui-typo mdui-table-fluid">
+
+    <h1 class="mdui-m-l-3">添加管理员</h1>
+    <div class="mdui-dialog-content">
+        <form id="addForm" class="layui-form layui-form-pane mdui-m-y-1">
+            <div class="layui-form-item">
+                <label class="layui-form-label">登陆账号</label>
+
+                <div class="layui-input-block">
+                    <input type="text" name="username" required lay-verify="required" placeholder="以单位名称作为登陆账号" autocomplete="off" class="layui-input">
+                </div>
+            </div>
+            <div class="layui-form-item">
+                <label class="layui-form-label">密码</label>
+                <div class="layui-input-block">
+                    <input type="password" name="password" required lay-verify="required" placeholder="请输入密码" autocomplete="off" class="layui-input">
+                </div>
+            </div>
+
+            <div class="layui-form-item">
+                <label class="layui-form-label">确认密码</label>
+                <div class="layui-input-block">
+                    <input type="password" name="password2" required lay-verify="required" placeholder="请输入密码" autocomplete="off" class="layui-input">
+                </div>
+            </div>
+
+            <div class="layui-form-item">
+                <label class="layui-form-label">服务类型</label>
+                <div class="layui-input-block">
+                    <select name="service_id" lay-verify="required">
+                        <option value="">请选择</option>
+                        <option value="1">礼仪服务</option>
+                        <option value="2">文明创建宣传</option>
+                        <option value="3">卫生健康</option>
+                        <option value="4">爱心助学</option>
+                        <option value="5">心理咨询</option>
+                        <option value="6">疫情防控</option>
+                        <option value="7">应急救援</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="layui-form-item">
+                <label class="layui-form-label">地区</label>
+                <div class="layui-input-block">
+                    <select name="area_id" lay-verify="required">
+                        <option value="">请选择</option>
+                        <option value="2">州直单位</option>
+                        <option value="3">州社会团体</option>
+
+                    </select>
+                </div>
+            </div>
+
+
+            <div class="layui-form-item">
+                <label class="layui-form-label">单位地址</label>
+
+                <div class="layui-input-block">
+                    <input type="text" name="address" required lay-verify="required" placeholder="请输入单位地址" autocomplete="off" class="layui-input">
+                </div>
+            </div>
+
+            <div class="layui-form-item">
+                <label class="layui-form-label">队长姓名</label>
+
+                <div class="layui-input-block">
+                    <input type="text" name="captain" required lay-verify="required" placeholder="请输入队长姓名" autocomplete="off" class="layui-input">
+                </div>
+            </div>
+
+            <div class="layui-form-item">
+                <label class="layui-form-label">队长电话</label>
+
+                <div class="layui-input-block">
+                    <input type="text" name="captain_tell" required lay-verify="required" placeholder="请输入队长电话" autocomplete="off" class="layui-input">
+                </div>
+            </div>
+
+
+
+
+            </br>
+            </br>
+            <div class="layui-form-item">
+                <center>
+                    <button class="layui-btn"  lay-submit lay-filter="formSubmit">提&nbsp;交</button></center>
+            </div>
+        </form></div>
+
+</div>
+
+{/block} {block name="js"}
+<script>
+
+    var $$ = mdui.JQ
+
+    layui.use(['form'], function(){
+        form = layui.form;
+
+
+        form.on('submit(formSubmit)', function(data){
+
+            var JsonVal =data.field;
+
+            if (JsonVal.password!=JsonVal.password2) {
+                layer.alert('二次密码不一致！', {icon: 6});
+            }
+
+               $$.ajax({
+                    method: 'POST',
+                    url: "{:url('adduser')}",
+                    data: JsonVal,
+                    dataType: 'json',
+                    success: function (res) {
+                        if (res.code) {
+                            layer.alert('提交成功', {icon: 6});
+                        } else {
+                            layer.alert(res.message, {icon: 6});
+                        }
+                    }
+                });
+
+                return false;
+            });
+
+    });
+
+    $$('#sys').addClass('mdui-collapse-item-open');
+    $$('#addProject').addClass('mdui-list-item-active');
+
+</script> {/block}
