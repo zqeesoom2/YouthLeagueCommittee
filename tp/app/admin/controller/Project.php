@@ -31,7 +31,7 @@ class Project extends BaseController
 
         if ($request->get('oid')) {
             $objAdmin = (new Admin())->getByOid((int)$request->get('oid'));
-            $id = $objAdmin['Id'];
+            $id = $objAdmin[0]['Id'];
             $arr = ['group_id'=>['=',$id]];
         }
 
