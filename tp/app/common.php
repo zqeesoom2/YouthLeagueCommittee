@@ -11,7 +11,7 @@ function make_tree($data,$parent_id = 0,$level = 1)
 
             $d["level"] = $level;
             $newData[] = $d;
-            make_tree($data,$d["Id"],$level+1);
+            make_tree($data,$d["id"],$level+1);
         }
     }
 

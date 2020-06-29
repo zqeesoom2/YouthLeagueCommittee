@@ -1,0 +1,124 @@
+{extend name="public/index_ext"}
+{block name="Header_0"}
+<div class="ub">
+    <div class="nav-btn" id="nav-left">
+        <div class="fa fa-1g ub-img1 fa-angle-left fa-2x bc-text-head">
+        </div>
+    </div>
+    <h1 class="ut ub-f1 ulev-3 ut-s tx-c bc-text-head" tabindex="0">我的服务类型</h1>
+    <div class="nav-btn" id="nav-right">
+        <div class="fa  fa-1g  ub-img1">
+        </div>
+    </div>
+</div>
+{/block}
+{block name="Pane_0"}
+<div class="tab_pane active" style="min-height:120px;"></div>
+{/block}
+{block name="ScrollContent_Pa34I9"}{/block}
+{block name="Pane_1"}{/block}
+{block name="Pane_2"}
+<div class="ub ub-ver" id="me">
+
+    <div class="ub ub-ver ub-f1 ub-pc ubr b-gra-per">
+        <div class="t-gra5 ulev-4 tx-c ub-f1">
+            参加的服务类型(最多只能选四个)
+        </div>
+    </div>
+
+    <div class="ub" data-control="BOX" id="Box_ImXwIJ">
+        <div class="ub ub-f1 ub-ver" data-control="BOX" data-bind="">
+            <ul id="group">
+                <li class="ubb ub bc-border bc-text ub-ac lis" id="1" data-index="0"><div class="checkbox2 umar-r"><input type="checkbox" class="uabs ub-con"></div><div class="lv_title ub-f1 marg-l ub ub-ver ut-m line1">礼仪服务</div></li>
+
+                <li class="ubb ub bc-border bc-text ub-ac lis" id="2" data-index="1"><div class="checkbox2 umar-r"><input type="checkbox" class="uabs ub-con"></div><div class="lv_title ub-f1 marg-l ub ub-ver ut-m line1">文明创建宣传</div></li>
+
+                <li class="ubb ub bc-border bc-text ub-ac lis" id="3" data-index="2"><div class="checkbox2 umar-r"><input type="checkbox" class="uabs ub-con"></div><div class="lv_title ub-f1 marg-l ub ub-ver ut-m line1">卫生健康</div></li>
+
+                <li class="ubb ub bc-border bc-text ub-ac lis" id="4" data-index="3"><div class="checkbox2 umar-r"><input type="checkbox" class="uabs ub-con"></div><div class="lv_title ub-f1 marg-l ub ub-ver ut-m line1">爱心助学</div></li>
+
+                <li class="ubb ub bc-border bc-text ub-ac lis" id="5" data-index="4"><div class="checkbox2 umar-r"><input type="checkbox" class="uabs ub-con"></div><div class="lv_title ub-f1 marg-l ub ub-ver ut-m line1">心理咨询</div></li>
+
+                <li class="ubb ub bc-border bc-text ub-ac lis" id="6" data-index="5"><div class="checkbox2 umar-r"><input type="checkbox" class="uabs ub-con"></div><div class="lv_title ub-f1 marg-l ub ub-ver ut-m line1">疫情防控</div></li>
+
+                <li class="ubb ub bc-border bc-text ub-ac lis" id="7" data-index="6"><div class="checkbox2 umar-r"><input type="checkbox" class="uabs ub-con"></div><div class="lv_title ub-f1 marg-l ub ub-ver ut-m line1">应急救援</div></li>
+            </ul>
+
+            <input type="button" value="提交" id="save" class="save">
+
+        </div>
+    </div>
+</div>
+
+{/block}
+{block name="js"}
+<script src="__JS__/service.js"></script>
+<script>
+
+    (function($) {
+        $('#Pane_2').removeAttr('data-control').removeClass('tab_pane').attr('style','');
+        if (_u !=null && typeof(_u.uId)!='undefined') {
+
+            $.ajax({
+                    type: "POST",
+                    url: "/mobile/index/userInfo",
+                    data: {'id':_u.uId},
+                    success: function(data){
+                        var res =  JSON.parse(data);
+                        checkItems(res.service,true);
+
+                        /* $li = $('#org_templte').html();
+                         var l = res.group.length;
+
+                         for (var i=0;i<l;i++){
+                             var ll = res.group[i].length;
+                             for (var j = 0; j<ll  ;j++){
+                                 var inserthtml = $li.replace("#org_name#", res.group[i][j].org_name);
+                                 inserthtml = inserthtml.replace("#umar-l#",'umar-l'+res.group[i][j].level);
+                                 $('#org_ul').append(inserthtml);
+                             }
+                         }*/
+                    }
+            });
+
+
+
+
+
+            $('#save').click(function(){
+
+                if (confirm("你确定选择这个服务吗，选择后不能更改？")) {
+                    arrOrg = checkItems();
+                    if(!arrOrg){
+                        return alert('只能选四个服务');
+                    }
+                    var l = arrOrg.length;
+                    if(l)
+                        $.ajax({
+                            type: "POST",
+                            url: "/mobile/index/editService",
+                            data: {'id':_u.uId,'service':arrOrg},
+                            success: function(data){
+                                appcan.window.openToast(data.msg, 2000);
+                                var ul =  $("#group").children();
+                                for (var i =0;i<l;i++) {
+                                    $li = $(ul[arrOrg[i]-1]);
+                                    $checkbox = $li.find('input[type=checkbox]');
+                                    $checkbox.attr('disabled','disabled');
+                                }
+                                window.location.reload();
+
+                            }
+                        });
+
+                }
+
+            });
+
+        }else{
+            window.location.href="{:url('moblielogin')}"
+        }
+
+    })($);
+</script>
+{/block}

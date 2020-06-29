@@ -125,46 +125,59 @@ class Index
 
         if ( $id && $uid ) {
 
+            $ObjOrgActivity = new OrgActivity();
+            $resOrgAct = $ObjOrgActivity->whichOne($id);
+
             $arrS = (new Member())->getMemberById($uid,'',true);
-
-            foreach ($arrS->service->toArray() as $val){
-               if( $val['org_name']==$service  ){
-                   $f = false;
-               }
-                if( $val['org_name']== $group ){
-                    $f2 = false;
-                }
-
-            }
-
-            if($f)
-               return json(['code'=>1,'data'=>'账号隶属服务类型不匹配']);
-
-            if($f2)
-                return json(['code'=>1,'data'=>'账号隶属组织类型不匹配']);
 
             if ($arrS->status=='待审核'){
                 return json(['code'=>1,'data'=>'账号待审核不能报名']);
             }
 
+            if ($resOrgAct->regist_auth=='对内开放'){
+
+                foreach ($arrS->service->toArray() as $val) {
+                    if ( $val['org_name']==$service  ) {
+                        $f = false;
+                    }
+                    if ( $val['org_name']== $group ) {
+                        $f2 = false;
+                    }
+
+                }
+
+                if($f)
+                    return json(['code'=>1,'data'=>'账号隶属服务类型不匹配']);
+
+                if($f2)
+                    return json(['code'=>1,'data'=>'账号隶属组织类型不匹配']);
+            }
+
+
            /* if ($arrS->group!=$group){
                 return json(['code'=>1,'data'=>'账号服务类型错误']);
             }*/
 
-            $msg = '报名失败';
+            $msg = '已报名';
             $obj = new OrgActivUid();
             $arr = $obj->findOne($id,$uid);
 
             if (empty($arr)) {
 
                $objD = $obj->add(['org_act_id'=>$id,'uid'=>$uid]);
+
                if ($objD){
+                   $res = $ObjOrgActivity->incEnroll($id);
+                   $msg = '报名成功';
 
-                   (new OrgActivity())->incEnroll($id);
-                   $msg = '已报名成功';
+                   if(!$res){
+                       $msg = '报名失败';
+                       $obj->delEnroll(['org_act_id'=>$id,'uid'=>$uid]);
+                   }
 
+               }else{
+                   $msg = '报名失败';
                }
-
 
             }
             return json(['code'=>1,'data'=>$msg]);
@@ -269,8 +282,6 @@ class Index
 
                         $org->incMembers($val,'inc');
 
-
-
                     }catch (\Exception $e){
                         $msg =  $e->getMessage();
                     }
@@ -328,6 +339,11 @@ class Index
         }
 
        return View::fetch();
+    }
+
+    public function serviceType(){
+
+        return View::fetch('service');
     }
 
 

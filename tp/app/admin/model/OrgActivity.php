@@ -5,6 +5,7 @@ namespace app\admin\model;
 
 use app\admin\model\org;
 use app\mobile\model\Admin;
+use app\mobile\model\OrgActivUid;
 use think\facade\Db;
 use think\Model;
 use think\model\concern\SoftDelete;
@@ -192,14 +193,14 @@ class OrgActivity extends Model
     }
 
 
-    function enrollList ($id=0,$num=20) {
+    function enrollList ($id=0,$num=20,$where = '') {
 
-       $where = $g = '';
+
         $strGc = 'oa.enroll_num,oa.recruit_num,oa.status,oa.Id,oa.recruit_time_start,oa.recruit_time_end,oa.activity_time_start,oa.activity_time_end,group_concat(m.real_name,",") as username ';
 
         if($id){
             $where = 'oa.Id='.$id;
-            $g = 'oa.Id';
+
             $strGc = 'oa.Id,m.id as uid ,m.real_name,m.length_ser,m.phone,oa.already_did';
         }
         $obj = self::Db('org_activity')->alias("oa")
@@ -223,5 +224,6 @@ class OrgActivity extends Model
     public function del($id) {
        return self::find($id)->delete();
     }
+
 
 }

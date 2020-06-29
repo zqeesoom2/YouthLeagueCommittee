@@ -23,9 +23,9 @@
                 <ul id="org_ul">
                     {volist  name='group'  id='v'}
 
-                    <li class="ubb ub bc-border bc-text ub-ac lis" level="{$v['level']}" id="{$v['Id']}"><div class="checkbox2 umar-r umar-l{$v['level']}">
+                    <li class="ubb ub bc-border bc-text ub-ac lis" level="{$v['level']}" id="{$v['id']}"><div class="checkbox2 umar-r umar-l{$v['level']}">
 
-                        <input type="checkbox"   {volist  name='arrOid'  id='val'} {if $val['org_Id']==$v['Id']} id="{$val['id']}"  {$f = 1} checked=true {if !$exitTeam} disabled=disabled {/if}   {/if}  {/volist} class="uabs ub-con">
+                        <input type="checkbox"   {volist  name='arrOid'  id='val'} {if $val['org_Id']==$v['id']} id="{$val['id']}"  {$f = 1} checked=true {if !$exitTeam} disabled=disabled {/if}   {/if}  {/volist} class="uabs ub-con">
 
                     </div><div class="lv_title ub-f1 marg-l ub ub-ver ut-m line1">{$v['org_name']}</div></li>
 

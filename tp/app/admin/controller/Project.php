@@ -181,8 +181,12 @@ class Project extends BaseController
 
     public  function enrollList(){
 
-       $list = (new OrgActivity())->enrollList();
+        $objOrgAct = (new OrgActivity());
 
+        if (Session::get('privil')=='-')
+          $list = $objOrgAct->enrollList();
+        else
+            $list = $objOrgAct->enrollList($id=0,$num=20,'oa.group_id='.Session::get('uid'));
 
 
        $count = $list ->total();
@@ -238,9 +242,9 @@ class Project extends BaseController
             }
 
             Db::commit();
-            json(['message'=>'打分成功','code'=>0]);
+           return json(['message'=>'打分成功','code'=>0]);
         } catch (\Exception $e) {
-            json(['message'=>'打分失败','code'=>1]);
+            return  json(['message'=>'打分失败','code'=>1]);
             Db::rollback();
         }
 

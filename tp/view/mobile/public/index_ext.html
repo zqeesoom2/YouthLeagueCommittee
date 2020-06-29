@@ -175,11 +175,11 @@
     {block name="Pane_1"}  <div id="showGoods"></div>{/block}
 </div>
 
-<div class="tab_pane " data-control="PANE" id="Pane_2" style="margin-top:4em">
+<div class="tab_pane " data-control="PANE" id="Pane_2" style="margin-top:3.3em">
     {block name="Pane_2"}
     <div class="ub ub-ver uhide" id="me">
         <div class="ub-img1 perBg ub-fh ub ub-ver">
-            <div class="uinn-a1 ub ub-f1">
+            <div class="uinn-a1 ub ub-f1" style="padding-top:0;">
                 <div class="uwh-per2 uc-a-per1 bc-bg ub ub-ac ub-pc uinn-a16">
                     <div class="ub-fh ub-fv  ub-img setImg1 uc-a-per2" id="avatar"> </div>
                 </div>
@@ -213,13 +213,7 @@
                 </div>
             </div>
             <div class="ub c-wh-per uinn-a11 ub-ae" id="hid">
-                <div class="ub ub-ver ub-f1 ub-pc ubr b-gra-per">
-                    <div class="t-gra5 ulev-4 tx-c ub-f1">
-                        参加的服务类型(最多只能选四个)
-                    </div>
-                </div>
-
-                <!--  <div class="ub ub-ver ub-f1 ub-pc ubr b-gra-per">
+                  <div class="ub ub-ver ub-f1 ub-pc ubr b-gra-per">
                      <div class="t-gra5 ulev-4 tx-c ub-f1">
                           正在参加的项目
                      </div>
@@ -236,7 +230,7 @@
                          0
                      </div>
                  </div>
-                 <div class="ub ub-ver ub-f1 ub-pc ubr b-gra-per">
+                 <!--<div class="ub ub-ver ub-f1 ub-pc ubr b-gra-per">
                       <div class="t-gra5 ulev-4 tx-c ub-f1">
 
                       </div>
@@ -254,6 +248,13 @@
                   </div>-->
             </div>
         </div>
+
+        <!--<div class="ub ub-ver ub-f1 ub-pc ubr b-gra-per">
+            <div class="t-gra5 ulev-4 tx-c ub-f1">
+                参加的服务类型(最多只能选四个)
+            </div>
+        </div>
+
         <div class="ub" data-control="BOX" id="Box_ImXwIJ">
                 <div class="ub ub-f1 ub-ver" data-control="BOX" data-bind="">
                     <ul id="group">
@@ -275,25 +276,21 @@
                     <input type="button" value="提交" id="save" class="save">
 
                 </div>
+        </div>-->
+    </div>
+    <div class="ub-f1 ub ub-ver">
+        <div id="listview2" class="ubt bc-border c-wh umar-at1">
+            <ul>
+                <li class="ubb ub bc-border bc-text ub-ac lis" id="servicetype">
+                    <div class="lv_title ub-f1 marg-l ub ub-ver ut-m line1">服务类型</div>
+                    <div class="fa fa-angle-right ulev2 sc-text"></div>
+                </li>
+            </ul>
         </div>
-
-        <div class="ub-f1 ub ub-ver">
-            <!-- <div id="indexCon_2-listview1"  class="ubt bc-border c-wh">
-
-             </div>
-             <div id="indexCon_2-listview2"  class="ubt bc-border c-wh umar-at1">
-
-             </div>
-             <div id="indexCon_2-listview3"  class="ubt bc-border c-wh umar-at1">
-
-             </div>
-             <div id="indexCon_2-listview4"  class="ubt bc-border c-wh umar-at1">
-                 <div class="button ub ub-ac bc-text-head ub-pc bc-btn" id="loginOut">退&nbsp;&nbsp;&nbsp;出</div>
-             </div>-->
-
-         </div>
     </div>
     {/block}
+
+
 </div>
 
 
@@ -311,8 +308,7 @@
 <script src="__JS__/index.js"></script>
 <script src="__JS__/iscroll.js"></script>
 {block name="js"}
-<script src="__JS__/service.js">
-</script>
+<script src="__JS__/service.js"></script>
 <script>
 
     function single_click(url){
@@ -446,29 +442,19 @@
                             $('#orgname').html(res.username);
                             $('#status').html(res.status);
                             $('#length_ser').html(res.length_ser+'小时');
-                            checkItems(res.service,true);
+                           // checkItems(res.service,true);
 
-                           /* $li = $('#org_templte').html();
-                            var l = res.group.length;
 
-                            for (var i=0;i<l;i++){
-                                var ll = res.group[i].length;
-                                for (var j = 0; j<ll  ;j++){
-                                    var inserthtml = $li.replace("#org_name#", res.group[i][j].org_name);
-                                    inserthtml = inserthtml.replace("#umar-l#",'umar-l'+res.group[i][j].level);
-                                    $('#org_ul').append(inserthtml);
-                                }
-                            }*/
                         }
                     });
-
+                    ;
                 }else{
                     window.location.href="{:url('moblielogin')}"
                 }
 
             }
 
-            $('#save').click(function(){
+           /* $('#save').click(function(){
 
                 if (confirm("你确定选择这个服务吗，选择后不能更改？")) {
                     arrOrg = checkItems();
@@ -496,7 +482,7 @@
 
                 }
 
-            });
+            });*/
 
         }
 
@@ -512,8 +498,15 @@
             history.replaceState({page:'search'}, 'search', '?page=search');
         });
 
+        $('#servicetype').on('click', function(ele) {
+
+            history.replaceState({page:'me'}, "me", "?page=me");
+            appcan.openWinWithUrl('elecoupon','/mobile/index/serviceType');
+
+        });
 
     })($);
+
 </script>
 {/block}
 </body>

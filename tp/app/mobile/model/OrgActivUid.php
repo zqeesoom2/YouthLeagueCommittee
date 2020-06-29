@@ -3,6 +3,7 @@ declare (strict_types = 1);
 
 namespace app\mobile\model;
 
+
 use think\Model;
 
 /**
@@ -19,4 +20,9 @@ class OrgActivUid extends Model
 
         return self::create($data);
     }
+
+    public function delEnroll($dada){
+        return self::where($dada)->delete();
+    }
+
 }
