@@ -113,5 +113,9 @@ class Member extends Model
         return $member;
     }
 
+    public function userParting(){
+
+        return $this->hasMany(OrgActivUid::class,'uid','id');//定义一对多的关联
+    }
 
 }

@@ -65,7 +65,7 @@
                     data: {'id':_u.uId},
                     success: function(data){
                         var res =  JSON.parse(data);
-                        checkItems(res.service,true);
+                        checkItems(res.user.service,true);
 
                         /* $li = $('#org_templte').html();
                          var l = res.group.length;

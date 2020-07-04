@@ -230,7 +230,15 @@ class Index
 
         if($id){
 
-           return json_encode((new Member())->getMemberById($id,false,true));
+           $objMember = new Member();
+
+           $alreadyProNum = (new OrgActivity())->alreadyPro($id);
+
+           $member = Member::find($id);
+
+           $PartingNum = $member->userParting()->where('integral',0)->count();
+
+           return json_encode(['user'=> $objMember->getMemberById($id,false,true),'alreadyProNum'=>$alreadyProNum,'PartingNum'=>$PartingNum]);
            /* $member =  (new Member())->getMemberById($id,false,true);
 
             $arr = $member->service->toArray();
@@ -260,7 +268,7 @@ class Index
 
     }
 
-    public function partTeam(Request $request,$id=0,$exitTeam=0) {
+    public function partTeam(Request $request,$id=0,$exitTeam=0,$uId=0) {
 
         if ($request->isPost()) {
 
@@ -315,9 +323,12 @@ class Index
 
                 $arrUser = session::get('userInfo');
 
-                if ($arrUser) {
+                if ($arrUser || $uId) {
 
-                   $arrOid = (new MemberOrg())->getInfoByMemberId($arrUser['uId']);
+                   if (!$uId)
+                       $arrOid = (new MemberOrg())->getInfoByMemberId($arrUser['uId']);
+                   else
+                       $arrOid = (new MemberOrg())->getInfoByMemberId($uId);
 
                    View::assign(['group'=>$arrG,'arrOid'=>$arrOid,'serviceId'=>$id,'exitTeam'=>$exitTeam,'f'=>null]);
 
@@ -389,5 +400,23 @@ class Index
        if ((int)$service_id) {
           return json_encode((new Org())->orgByService($service_id)->toArray());
        }
+    }
+
+    public function userIntegral($uId) {
+        $list = $page = $count = [];
+
+        if ($uId) {
+            $list = (new OrgActivity())->enrollList(0,20,$where = 'm.id='.$uId,'oa.Id,oau.integral');
+            $count = $list ->total();
+            $page = $list->render();
+        }
+
+
+        View::assign(['list'=>$list,
+            'count'=>$count,
+            'page'=>$page
+        ]);
+
+        return View::fetch();
     }
 }

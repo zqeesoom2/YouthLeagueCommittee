@@ -3,12 +3,12 @@ declare (strict_types = 1);
 
 namespace app\admin\model;
 
-use app\admin\model\org;
+
 use app\mobile\model\Admin;
-use app\mobile\model\OrgActivUid;
 use think\facade\Db;
 use think\Model;
 use think\model\concern\SoftDelete;
+
 
 /**
  * @mixin think\Model
@@ -183,9 +183,6 @@ class OrgActivity extends Model
             return self::where('status',4)->whereOr('status',5)->count();
         }
 
-
-
-
     }
 
     public function incEnroll($id){
@@ -193,36 +190,47 @@ class OrgActivity extends Model
     }
 
 
-    function enrollList ($id=0,$num=20,$where = '') {
+    function enrollList ($id=0,$num=20,$where = '',$strField='') {
 
+        if (!$strField){
+            $strGc = 'oa.enroll_num,oa.recruit_num,oa.status,oa.Id,oa.recruit_time_start,oa.recruit_time_end,oa.activity_time_start,oa.activity_time_end,group_concat(m.real_name,",") as username ';
 
-        $strGc = 'oa.enroll_num,oa.recruit_num,oa.status,oa.Id,oa.recruit_time_start,oa.recruit_time_end,oa.activity_time_start,oa.activity_time_end,group_concat(m.real_name,",") as username ';
+        }else{
+            $strGc = $strField;
+        }
+
 
         if($id){
             $where = 'oa.Id='.$id;
 
             $strGc = 'oa.Id,m.id as uid ,m.real_name,m.length_ser,m.phone,oa.already_did';
         }
+
+
         $obj = self::Db('org_activity')->alias("oa")
             ->field('oa.title,oa.service_id,oa.group_id,'.$strGc)
             ->join('org_activ_uid oau','oa.Id=oau.org_act_id')
             ->join('member m','oau.uid =m.id')
             ->where($where);
 
-        if(!$id){
+        if(!$id && !$strField){
             $obj = $obj->group('oa.Id');
         }
+
 
         return $obj->order('oa.Id', 'desc')->withAttr('service_id',function($value,$data){
 
             return (new org())->getServiceByPath($value);
         })->paginate($num);
 
-
     }
 
     public function del($id) {
        return self::find($id)->delete();
+    }
+
+    public function alreadyPro($uid) {
+        return self::where('already_did', 'like', '%'.$uid.'%')->count();
     }
 
 

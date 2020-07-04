@@ -25,4 +25,8 @@ class OrgActivUid extends Model
         return self::where($dada)->delete();
     }
 
+    public function updateIntegral($org_act_id,$uid,$integral){
+        return self::update(['integral'=>$integral],['org_act_id'=>$org_act_id,'uid'=>$uid]);
+    }
+
 }

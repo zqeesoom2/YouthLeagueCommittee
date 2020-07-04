@@ -8,6 +8,7 @@ use app\admin\model\OrgActivity;
 use app\BaseController;
 use app\mobile\model\Member;
 use app\mobile\model\Org;
+use app\mobile\model\OrgActivUid;
 use think\facade\Session;
 use think\Request;
 use think\facade\View;
@@ -220,6 +221,8 @@ class Project extends BaseController
 
         $data = $request->post();
 
+        $integral = $data['length_ser'];
+
         $data['length_ser'] += $data['old_length_ser'];
 
         $uid = $data['uid'];
@@ -239,6 +242,8 @@ class Project extends BaseController
                 $obj =  OrgActivity::field('already_did')->find($Id);
                 $obj->already_did .= $uid.',';
                 $obj->save();
+
+                (new  OrgActivUid())->updateIntegral($Id,$uid,$integral);
             }
 
             Db::commit();

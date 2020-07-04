@@ -193,7 +193,7 @@
                         </div>
                     </div>
                     <div class="ub ub-ae" id="hid1">
-                        <div class="ub ub-ae umar-r-per1">
+                        <div class="ub ub-ae umar-r-per1" id="length_look">
                             <div class="ulev-4" >
                                 服务时长
                             </div>
@@ -203,7 +203,7 @@
                         </div>
                         <div class="ub ub-ae">
                             <div class="ulev-4">
-                                服务星级
+                                评价星级
                             </div>
                             <div class="ulev0 ufm1 umar-l ufsty sc-text-warn">
                                 0
@@ -217,16 +217,16 @@
                      <div class="t-gra5 ulev-4 tx-c ub-f1">
                           正在参加的项目
                      </div>
-                     <div class="ub-ae t-gra5 ufm1 tx-c">
+                     <div class="ub-ae sc-text-warn ufm1 tx-c" id="PartingNum">
                          0
                      </div>
                  </div>
 
-                 <div class="ub ub-ver ub-f1 ub-pc ubr b-gra-per">
+                 <div class="ub ub-ver ub-f1 ub-pc ubr b-gra-per" id="alreadyPro">
                      <div class="t-gra5 ulev-4 tx-c ub-f1">
                          已参加的项目
                      </div>
-                     <div class="ub-ae sc-text-warn ufm1 tx-c" >
+                     <div class="ub-ae t-gra5 ufm1 tx-c" id="alreadyProNum">
                          0
                      </div>
                  </div>
@@ -438,51 +438,27 @@
                         url: "/mobile/index/userInfo",
                         data: {'id':_u.uId},
                         success: function(data){
+
                             var res =  JSON.parse(data);
-                            $('#orgname').html(res.username);
-                            $('#status').html(res.status);
-                            $('#length_ser').html(res.length_ser+'小时');
-                           // checkItems(res.service,true);
+                            $('#orgname').html(res.user.username);
+                            $('#status').html(res.user.status);
+                            $('#length_ser').html(res.user.length_ser+'小时');
+                            $('#alreadyProNum').html(res.alreadyProNum);
+                            $('#PartingNum').html(res.PartingNum);
 
-
+                            $('#length_look').click(function () {
+                                window.location.href='/mobile/Index/userIntegral/uId/'+_u.uId;
+                            });
+                            $('#alreadyPro').click(function(){
+                                window.location.href='/mobile/Index/userIntegral/uId/'+_u.uId;
+                            });
                         }
                     });
                     ;
                 }else{
                     window.location.href="{:url('moblielogin')}"
                 }
-
             }
-
-           /* $('#save').click(function(){
-
-                if (confirm("你确定选择这个服务吗，选择后不能更改？")) {
-                    arrOrg = checkItems();
-                    if(!arrOrg){
-                        return alert('只能选四个服务');
-                    }
-                    var l = arrOrg.length;
-                    if(l)
-                        $.ajax({
-                            type: "POST",
-                            url: "/mobile/index/editService",
-                            data: {'id':_u.uId,'service':arrOrg},
-                            success: function(data){
-                                appcan.window.openToast(data.msg, 2000);
-                                var ul =  $("#group").children();
-                                for (var i =0;i<l;i++) {
-                                    $li = $(ul[arrOrg[i]-1]);
-                                    $checkbox = $li.find('input[type=checkbox]');
-                                    $checkbox.attr('disabled','disabled');
-                                }
-                                window.location.reload();
-
-                            }
-                        });
-
-                }
-
-            });*/
 
         }
 
