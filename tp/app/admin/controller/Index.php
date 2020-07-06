@@ -128,7 +128,8 @@ class Index extends BaseController
             View::assign([
                 'privil' => $strPri,
                 'arrVolunteer'=>$arr,
-                'count'=> count($arr)
+                'count'=> count($arr),
+                'nopage'=>1
             ]);
             return View::fetch();
 
@@ -146,7 +147,8 @@ class Index extends BaseController
             View::assign([
                 'privil' => $strPri,
                 'arrVolunteer'=>$arrVolunteer,
-                'count'=>$count
+                'count'=>$count,
+                'nopage'=>0
             ]);
             return View::fetch();
         }

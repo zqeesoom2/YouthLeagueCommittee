@@ -58,7 +58,7 @@
         </tbody>
     </table>
 
-    <span style="float:left;line-height:34px;padding-left:10px;">总计录数:{$count}。</span>{$arrVolunteer|raw}
+    <span style="float:left;line-height:34px;padding-left:10px;">总计录数:{$count}。</span>{if !$nopage}{$arrVolunteer|raw} {/if}
     <!--编辑-->
     <div class="mdui-dialog mdui-typo" id="editorForum">
         <div class="mdui-dialog-content">

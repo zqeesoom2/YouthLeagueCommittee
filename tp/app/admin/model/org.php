@@ -103,21 +103,7 @@ class org extends Model
        return $list;
 
 
-       /* 分页
-       $page = $this->request->param('page',1);
-        $limit = $this->request->param('limit',10);
 
-        $pageSize= $limit * ($page - 1);
-        $list = Db::name('user')
-            ->alias('T1')
-            ->leftJoin( 'user_activity_statistics T2' ,"T2.user_id = T1.id" )
-            ->where('')
-            ->field('T1.id as userId,')
-            ->order('T1.id desc');
-
-        $res = $list->limit($pageSize,$limit)->select();
-
-        $this->jsonShow(200,'',$res,$list->count());*/
 
     }
 }
