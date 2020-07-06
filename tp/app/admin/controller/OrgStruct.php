@@ -12,9 +12,9 @@ use app\admin\model\org;
 class OrgStruct extends BaseController
 {
     /**
-     * 显示资源列表
      *
-     * @return \think\Response
+     *
+     * 团队组织结构
      */
     public function index()
     {
@@ -45,45 +45,12 @@ class OrgStruct extends BaseController
         return View::fetch();
     }
 
-    /**
-     * 保存新建的资源
-     *
-     * @param  \think\Request  $request
-     * @return \think\Response
-     */
-    public function save(Request $request)
-    {
-        //
-    }
 
-    /**
-     * 显示指定的资源
-     *
-     * @param  int  $id
-     * @return \think\Response
-     */
-    public function read($id)
-    {
-        //
-    }
-
-    /**
-     * 显示编辑资源表单页.
-     *
-     * @param  int  $id
-     * @return \think\Response
-     */
-    public function edit($id)
-    {
-        //
-    }
 
     /**
      * 保存更新的资源
      *
-     * @param  \think\Request  $request
-     * @param  int  $id
-     * @return \think\Response
+     *
      */
     public function update(Request $request)
     {
@@ -92,14 +59,5 @@ class OrgStruct extends BaseController
         return  json((new org())->editorg($request->post()));
     }
 
-    /**
-     * 删除指定资源
-     *
-     * @param  int  $id
-     * @return \think\Response
-     */
-    public function delete($id)
-    {
-        //
-    }
+
 }

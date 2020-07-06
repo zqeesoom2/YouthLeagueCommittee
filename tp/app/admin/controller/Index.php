@@ -111,27 +111,32 @@ class Index extends BaseController
     }
 
     /**
-     * 显示创建资源表单页.
+     * 列出组织中的成员
      *
-     * @return \think\Response
+     *
      */
-    public function volunteer($oid=0)
+    public function volunteer(Request $request, $oid=0)
     {
+
+        $strPri = Session::get('privil');
 
         if ($oid){
             $objOrg = new org();
+
             $arr = $objOrg->getMemberById($oid);
+
             View::assign([
-                'privil' => '',
-                'arrVolunteer'=>'',
-                'count'=>0
+                'privil' => $strPri,
+                'arrVolunteer'=>$arr,
+                'count'=> count($arr)
             ]);
             return View::fetch();
-        }else{
-            $count = 0;
-            $objMember = new Member();
 
-            $strPri = Session::get('privil');
+        }else{
+
+            $count = 0;
+
+            $objMember = new Member();
 
             $arrVolunteer =  $objMember->list($strPri);
 

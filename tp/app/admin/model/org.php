@@ -15,13 +15,15 @@ use think\Model;
 class org extends Model
 {
     function likeListOrg($strPath) {
-        return self::where('path','like',$strPath.'%')->field('Id,org_name,address,status,release_quan,area_id,members,captain,path,service,captain_tell,regist_auth')->select()->toArray();
+        return self::where('path','like',$strPath.'%')->field('id,org_name,address,status,release_quan,area_id,members,captain,path,service,captain_tell,regist_auth')->select()->toArray();
     }
 
-    function members() {
+    function users() {
 
         return $this->belongsToMany(Member::class,MemberOrg::class,'member_Id','org_Id');
     }
+
+
 
     function getStatusAttr($value){
         if ((int)($value))
@@ -33,7 +35,7 @@ class org extends Model
     public function editorg($arr)
     {
         try{
-            self::where('Id',array_shift($arr))->update($arr);
+            self::where('id',array_shift($arr))->update($arr);
             return ["code" => 1, "message" => "更新成功"];
         }catch(\Exception $e){
             return ["code" =>0, "message" => $e->getMessage()];
@@ -90,9 +92,32 @@ class org extends Model
 
     }
 
+
+
     public function getMemberById($id){
-        $member=self::find($id);
-        $member->members;
-        return $member;
+
+        $orgId = self::find($id);
+
+        $list =$orgId->users;
+
+       return $list;
+
+
+       /* 分页
+       $page = $this->request->param('page',1);
+        $limit = $this->request->param('limit',10);
+
+        $pageSize= $limit * ($page - 1);
+        $list = Db::name('user')
+            ->alias('T1')
+            ->leftJoin( 'user_activity_statistics T2' ,"T2.user_id = T1.id" )
+            ->where('')
+            ->field('T1.id as userId,')
+            ->order('T1.id desc');
+
+        $res = $list->limit($pageSize,$limit)->select();
+
+        $this->jsonShow(200,'',$res,$list->count());*/
+
     }
 }

@@ -20,14 +20,14 @@
         </thead>
         <tbody>
         {volist name='arrOrg' id='org'}
-        <tr id="{$org.Id}">
-            <td {if $org.service==0} style="visibility:hidden;" {/if} >{$org.Id}</td>
+        <tr id="{$org.id}">
+            <td {if $org.service==0} style="visibility:hidden;" {/if} >{$org.id}</td>
             <td {if $org.service==0} style="font-weight: 600;" {/if} >{:str_repeat('——',$org.level-1)}{$org.org_name}</td>
             <td>
                 {$org.area_id}
             </td>
-            <td><a href="{:url('volunteer',['oid'=>$org.Id])}">{$org.members}</a></td>
-            <td><a href="/admin/Project.html?oid={$org.Id}">{$org.release_quan}</a></td>
+            <td><a href="{:url('volunteer',['oid'=>$org.id])}">{$org.members}</a></td>
+            <td><a href="/admin/Project.html?oid={$org.id}">{$org.release_quan}</a></td>
             <td>{$org.captain}</td>
             <td>{$org.address}</td>
             <td>{$org.captain_tell}</td>
@@ -36,7 +36,7 @@
             {if $privil=='-'}
             <td >
                 <div class="layui-btn-group" {if $org.service==0} style="visibility:hidden;" {/if}>
-                    <button class="layui-btn layui-btn-primary layui-btn-sm" onclick ="editorForum('#{$org.Id}')">编辑</button>
+                    <button class="layui-btn layui-btn-primary layui-btn-sm" onclick ="editorForum('#{$org.id}')">编辑</button>
                     <button class="layui-btn layui-btn-primary layui-btn-sm">删除</button>
                 </div>
             </td>
@@ -52,7 +52,7 @@
             <div class="mdui-dialog-title">编辑团队</div>
             <form id="editForm" class="layui-form layui-form-pane mdui-m-y-1" lay-filter="formTest">
                 <div class="layui-form-item">
-                    <input type="hidden" name="Id" id="editfid">
+                    <input type="hidden" name="id" id="editfid">
                     <label class="layui-form-label">团队名称</label>
                     <div class="layui-input-block">
                         <input type="text" lay-verify="required" disabled id="orgname" autocomplete="off" class="layui-input">

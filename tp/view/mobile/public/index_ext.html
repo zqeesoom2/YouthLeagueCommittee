@@ -438,8 +438,8 @@
                         url: "/mobile/index/userInfo",
                         data: {'id':_u.uId},
                         success: function(data){
-
                             var res =  JSON.parse(data);
+
                             $('#orgname').html(res.user.username);
                             $('#status').html(res.user.status);
                             $('#length_ser').html(res.user.length_ser+'小时');
@@ -476,8 +476,9 @@
 
         $('#servicetype').on('click', function(ele) {
 
-            history.replaceState({page:'me'}, "me", "?page=me");
             appcan.openWinWithUrl('elecoupon','/mobile/index/serviceType');
+            history.replaceState({page:'me'}, "me", "?page=me");
+
 
         });
 
