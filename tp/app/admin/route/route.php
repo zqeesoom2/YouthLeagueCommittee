@@ -10,6 +10,7 @@ Route::get('adminIndex','admin/index/index')->name('adminIndex');
 Route::get('Project','admin/project/index')->name('Project');
 Route::get('addProject','admin/project/create')->name('addProject');
 
+Route::get('notvolunteer','admin/OrgStruct/examineInfo');
 
 Route::rule('volunteer/[:oid]','admin/index/volunteer','GET|POST')->name('volunteer');
 //团队组织

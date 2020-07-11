@@ -71,8 +71,6 @@ class UcApi{
                'email'  => $email ,
                'synlogin' => uc_user_synlogin($uid),
            );
-
-           
        } else{
             self::$lastAction = 'login';
             self::$lastErrorCode = $uid;
@@ -103,7 +101,7 @@ class UcApi{
         setcookie(self::$authPre . 'auth', '', -86400);
         return uc_user_synlogout();
     }
-    
+
     static function addFeed($uid, $username, $url, $where, $action, $event, $desc, $images =array()) {
         $feed = array();
         $feed['icon'] = 'thread';

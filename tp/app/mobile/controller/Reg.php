@@ -15,23 +15,16 @@ class Reg
     public function index(Request $request)
     {
 
-
-
         return View::fetch();
     }
 
-    /**
-     * 显示创建资源表单页.
-     *
-     * @return \think\Response
-     */
+    //用户加入服务组织
     public function create(Request $request)
     {
         $arrCreate = $request->post();
 
         $arrCreate['username'] = Session::get('userInfo')['username'];
         $arrGroupId= json_decode($arrCreate['group']);
-
 
         $objM = new Member();
        // $objO = new Org();
@@ -51,6 +44,37 @@ class Reg
         }
 
         return json( ['state'=>1,'message'=>'已激活']);
+
+    }
+
+    //用户排行榜
+    public function ranking(Request $request){
+
+
+
+        if ($request->isPost()){
+
+
+            $type =  $request->post('type_');
+
+            $list = (new Member())->statistics($type);
+
+            if ($list)
+                $state = 1;
+            else
+                $state = 0;
+
+            return json(['msg'=>$state,'list'=>$list]);
+        }else{
+
+            $list = (new Member())->statistics();
+
+            View::assign('list',$list);
+
+            return View::fetch();
+
+        }
+
 
     }
 

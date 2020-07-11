@@ -38,6 +38,8 @@ abstract class BaseController
      */
     protected $middleware = [];
 
+    protected $strPri;
+
     /**
      * 构造方法
      * @access public
@@ -58,7 +60,8 @@ abstract class BaseController
         if (!Session::has("uid")){
             return redirect((string) url('login/index'))->send();
         }
-        view::assign('privil',Session::get('privil'));
+        $this->strPri=   Session::get('privil');
+        view::assign('privil',);
     }
 
     /**

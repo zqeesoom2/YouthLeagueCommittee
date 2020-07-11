@@ -73,8 +73,8 @@ class Login
                 $password = md5($request->param('password').$strSalt);
 
                 $arrUser = Db::name('member')->where([
-                    'username'=>$login['username'],
-                    'password'=>$password
+                    'username'=>$login['username']
+                   // , 'password'=>$password
                 ])->find();
 
                 if ($arrUser){//登陆成功！

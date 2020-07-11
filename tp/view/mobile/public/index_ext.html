@@ -2,7 +2,6 @@
 <link rel="stylesheet" href="__CSS__/index.css">
 <style>#divscroll{display: block;}#loginOut{width: 80%;margin: 0 auto;margin-top: 1em;}</style>
 </head>
-
 <body class="" ontouchstart>
 <div class="uh bc-head  ubb bc-border header" data-control="HEADER" id="Header_0">
     {block name="Header_0"}
@@ -85,7 +84,7 @@
                     </div>
                     <div class="ub-f1 ub ub-ac ub-ver ubr ubb" style="width:33%" id="signIn">
                         <a class="blue" href="{:url('moblielogin')}">
-                            <div class="uwh-ele2 uc-a-ele1 c-wh ub ub-ac ub-pc">
+                            <div class="uwh-ele2 uc-a-ele1 c-wh ub ub-ac ub-pc" style="margin-left: 10px;">
                                 <div class="btn_wh1 ub-img eleIcon2" ></div>
                             </div>
                             <div class="umar-at1 t-gra7 tx-c ulev-2" >
@@ -118,12 +117,14 @@
                         </a>
                     </div>
                     <div class="ub-f1 ub ub-ac ub-ver ubr ubb" style="width:33%">
-                        <div class="uwh-ele2 uc-a-ele1 c-wh ub ub-ac ub-pc">
-                            <div class="btn_wh1 ub-img "></div>
-                        </div>
-                        <div class="umar-at1 t-gra7 tx-c ulev-2">
-                            <!-- <a href="https://share.0743sh.com/wap/login/register?url=https%3A%2F%2Fshare.0743sh.com%2F">志愿者注册</a>-->
-                        </div>
+                        <a class="blue" href="/mobile/Reg/ranking">
+                            <div class="uwh-ele2 uc-a-ele1 c-wh ub ub-ac ub-pc">
+                                <div class="btn_wh1 ub-img eleIcon5"></div>
+                            </div>
+                            <div class="umar-at1 t-gra7 tx-c ulev-2">
+                               排行榜
+                            </div>
+                        </a>
                     </div>
                     <div class="ub-f1 ub ub-ac ub-ver ubb" style="width:33%">
                         <div class="uwh-ele2 uc-a-ele1 c-wh ub ub-ac ub-pc">
@@ -146,12 +147,12 @@
         <li  class="ubb ub bc-border t-bla ub-ac lis uof" data-index="0">
             <ul class="ub ub ub-ver">
                 <li class="">
-                    <div class="lazy lis-icon ub-img" data-original="css/res/appcan_s.png" style="background-image:url(#url#)"></div>
+                    <div class="lazy lis-icon ub-img" data-original="css/res/appcan_s.png" ><img width="100%" src="#url#"></div>
                     <div class="ulev-1 bc-text umar-t"></div>
                 </li>
             </ul>
             <ul class="ub-f1 ub ub-pj ub-ac">
-                <a class="ub ub-ver" href="/mobile/index/#details#/?id=#id#">
+                <a class="ub ub-ver ub-f1" href="/mobile/index/#details#/?id=#id#">
                     <ul class="ub-f1 ub ub-ver marg-l">
                         <li class="bc-text ub ub-ver uof ut-m line1">#title#</li>
                         <li class="ulev-1 uof sc-text1 uinn3 line1" >#summary#</li>
@@ -447,9 +448,11 @@
                             $('#PartingNum').html(res.PartingNum);
 
                             $('#length_look').click(function () {
+                                history.replaceState({page:'me'}, 'me', '?page=me');
                                 window.location.href='/mobile/Index/userIntegral/uId/'+_u.uId;
                             });
                             $('#alreadyPro').click(function(){
+                                history.replaceState({page:'me'}, 'me', '?page=me');
                                 window.location.href='/mobile/Index/userIntegral/uId/'+_u.uId;
                             });
                         }
@@ -478,7 +481,6 @@
 
             appcan.openWinWithUrl('elecoupon','/mobile/index/serviceType');
             history.replaceState({page:'me'}, "me", "?page=me");
-
 
         });
 

@@ -6,6 +6,7 @@ namespace app\mobile\model;
 use app\admin\model\org;
 use think\Model;
 use app\mobile\validate\Member as MemberVal;
+use think\model\Relation;
 
 /**
  * @mixin think\Model
@@ -108,6 +109,7 @@ class Member extends Model
         if($get_serivce){
             $member =self::find($id);
             $member->service;
+
         }
 
         return $member;
@@ -115,7 +117,22 @@ class Member extends Model
 
     public function userParting(){
 
-        return $this->hasMany(OrgActivUid::class,'uid','id');//定义一对多的关联
+        return $this->hasMany(OrgActivUid::class,'uid','id');
     }
 
+    public function statistics($type=1){
+
+        $Obj = self::field('username,length_ser');
+
+        if ($type==2){//年度
+              $Obj = $Obj->whereYear('create_time');
+
+        }elseif($type==3){//季度
+            $endTime=  date('Ym');
+            $quarter = getQuarterByMonth($endTime);
+            $Obj = $Obj->whereNotBetweenTime('create_time', $quarter, $endTime);
+        }
+
+        return $Obj->order('length_ser','DESC')->limit(10)->select();
+    }
 }

@@ -1,0 +1,103 @@
+{extend name="public/index_ext"}
+{block name="Header_0"}
+<link rel="stylesheet" href="__CSS__/ranking.css">
+<div class="ub">
+    <div class="nav-btn" id="nav-left">
+        <div class="fa fa-1g ub-img1 fa-angle-left fa-2x bc-text-head">
+        </div>
+    </div>
+    <h1 class="ut ub-f1 ulev-3 ut-s tx-c bc-text-head" tabindex="0">排行榜</h1>
+    <div class="nav-btn" id="nav-right">
+        <div class="fa  fa-1g  ub-img1">
+        </div>
+    </div>
+</div>
+{/block}
+{block name="Pane_0"}
+<div class="tab_pane active" style="min-height:3.5em;"></div>
+{/block}
+{block name="ScrollContent_Pa34I9"}{/block}
+{block name="Pane_1"}{/block}
+{block name="Pane_2"}
+<div class="ub ub-ver">
+    <div class="ub ub-ver uinn-a1">
+        <div class="ub-img-rank rank-bg uinn-t-rank">
+            <div class="ub c-blu-rank uinn-a1 t-blu-rank umar-fr1" id="ranking">
+                <div class="ub-f1 stab" id="1">
+                     总排行榜
+                </div>
+                <div class="ub-f1" id="2">
+                    年度排行榜
+                </div>
+                <div class="ub-f1" id="3">
+                    季度排行榜
+                </div>
+            </div>
+            <div class="ub c-wh uinn-a1 ubb bc-border" id="username">
+                {volist  name='list'  id='s'}
+                    <div class="ub-f1">
+                        &nbsp;&nbsp;&nbsp;{$i}&nbsp;&nbsp;&nbsp;
+                    </div>
+                    <div class="ub-f1">
+                        &nbsp;&nbsp;&nbsp;{$s.username}
+                    </div>
+                    <div class="ub-f1">
+                        &nbsp;&nbsp;&nbsp;{$s.length_ser}小时
+                    </div>
+                {/volist}
+            </div>
+
+        </div>
+    </div>
+
+
+</div>
+<style>.zhy_bg{opacity:1 !important;}.loader_confirm{height: 200% !important;position:absolute !important;}</style>
+
+{/block}
+
+{block name="js"}
+
+<script>
+    function _temple(listdata) {
+
+        var s='',datas = [],inserthtml='',l =listdata.length,temple = '<div class="ub-f1">&nbsp;&nbsp;&nbsp;#id#&nbsp;&nbsp;&nbsp;</div><div class="ub-f1">&nbsp;&nbsp;&nbsp;#name#</div><div class="ub-f1">&nbsp;&nbsp;&nbsp;#hours#小时</div>';
+
+        for (var i = 0; i < l ; i++) {
+           datas = listdata[i];
+            inserthtml = temple.replace("#id#", i+1);
+            inserthtml = inserthtml.replace("#name#", datas.username);
+            inserthtml = inserthtml.replace("#hours#", datas.length_ser);
+        }
+
+        if(!l)
+            s = '没有数据!';
+        $('#username').html(s).append(inserthtml);
+
+    }
+
+
+    (function($) {
+        $('#ranking div').click(function () {
+            $('#ranking .stab').removeClass('stab');
+            var div = $(this),type_ = 0;
+            div.addClass('stab');
+
+            type_ =  div.attr('id');
+            $.ajax({
+                type: "POST",
+                url: "/mobile/Reg/ranking",
+                data: {'type_':type_},
+                success: function(data){
+                    if(data.state);
+                      _temple(data.list);
+                }
+            });
+
+
+        });
+        $('#Pane_2').removeAttr('data-control').removeClass('tab_pane').attr('style','');
+
+    })($);
+</script>
+{/block}

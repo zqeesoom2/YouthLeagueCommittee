@@ -113,7 +113,7 @@ class Index
         }
     }
 
-
+    //报名
     public function enroll(Request $request) {
 
         $id = (int) $request->get('id');
@@ -128,13 +128,14 @@ class Index
             $ObjOrgActivity = new OrgActivity();
             $resOrgAct = $ObjOrgActivity->whichOne($id);
 
-            $arrS = (new Member())->getMemberById($uid,'',true);
-
-            if ($arrS->status=='待审核'){
-                return json(['code'=>1,'data'=>'账号待审核不能报名']);
-            }
+            /*
+           if ($arrS->status=='待审核'){
+               return json(['code'=>1,'data'=>'账号待审核不能报名']);
+           }*/
 
             if ($resOrgAct->regist_auth=='对内开放'){
+
+                $arrS = (new Member())->getMemberById($uid,'',true);
 
                 foreach ($arrS->service->toArray() as $val) {
                     if ( $val['org_name']==$service  ) {
@@ -151,7 +152,28 @@ class Index
 
                 if($f2)
                     return json(['code'=>1,'data'=>'账号隶属组织类型不匹配']);
+
+                $oid = (new Admin())->getByName($group)[0]['Id'];
+
+                $resArr = (new MemberOrg())->getMemberState($uid,$oid);
+
+                if (empty($resArr)){
+                    return json(['code'=>1,'data'=>'你还没有参加组织，不能报名']);
+                }
+
+                if (!$resArr[0][state]){
+                    return json(['code'=>1,'data'=>'账号待审核不能报名']);
+                }
+
+            }else{
+
+                $resArr = (new MemberOrg())->getMemberElse($uid);
+
+                if (empty($resArr)){
+                    return json(['code'=>1,'data'=>'你还没有任何参加组织，不能报名']);
+                }
             }
+
 
 
            /* if ($arrS->group!=$group){
@@ -186,9 +208,11 @@ class Index
 
     }
 
+    //内容页面
     public function details(Request $request)
     {
         $id = $request->get('id');
+
 
         if ($id){
             $info = (new OrgActivity())->whichOne($id,1);
@@ -209,10 +233,9 @@ class Index
     }
 
     /**
-     * 显示指定的资源
      *
-     * @param  int  $id
-     * @return \think\Response
+     *
+     *
      */
     public function read($index)
     {
@@ -221,10 +244,9 @@ class Index
         return json(['result'=>'success','datas'=>$arrlist,'isMore'=>'True']);
     }
 
-
+    //获取用户信息
     public function userInfo(Request $request)
     {
-
 
         $id = $request->post('id');
 
@@ -268,6 +290,7 @@ class Index
 
     }
 
+    //团队管理
     public function partTeam(Request $request,$id=0,$exitTeam=0,$uId=0) {
 
         if ($request->isPost()) {
@@ -309,7 +332,7 @@ class Index
 
             return json(['result'=>'success','msg'=>$msg]);
 
-        }else{
+        }else{//退出团队
 
             if($id)
 
@@ -352,12 +375,14 @@ class Index
        return View::fetch();
     }
 
+    //服务类型
     public function serviceType(){
 
         return View::fetch('service');
     }
 
 
+    //用户加入8个服务其中之4
     public function editService(Request $request)
     {
         if ( $request->isPost() ) {
@@ -367,6 +392,7 @@ class Index
             foreach ($arr['service'] as $val) {
                 try{
                     $member = $member->find($arr['id']);
+                    // 增加关联的中间表数据
                     $member->service()->attach($val);
                 }catch (\Exception $e){
                    $msg =  $e->getMessage();

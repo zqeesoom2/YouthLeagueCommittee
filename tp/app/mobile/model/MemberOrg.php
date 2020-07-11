@@ -10,6 +10,7 @@ use think\model\Pivot;
  */
 class MemberOrg extends Pivot
 {
+
     public function getInfoByMemberId($id){
         return self::where('member_Id',$id)->select()->toArray();
     }
@@ -24,5 +25,21 @@ class MemberOrg extends Pivot
 
     }
 
+    public function updateState($arr,$state) {
+        return self::where($arr)->update(['state'=>$state]);
+    }
 
+    public function delByUidOid($arr){
+
+        return self::where($arr)->delete();
+
+    }
+
+    public function getMemberState($uid,$oid){
+        return self::where(['member_Id'=>$uid,'org_Id'=>$oid])->select()->toArray();
+    }
+
+    public function getMemberElse($uid,$type=1){
+        return self::where(['member_Id'=>$uid,'state'=>$type])->limit(1)->select()->toArray();
+    }
 }

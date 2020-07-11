@@ -18,9 +18,9 @@ use think\facade\Config;
 class Index extends BaseController
 {
     /**
-     * 显示资源列表
      *
-     * @return \think\Response
+     *
+     * 系统信息，审核统计
      */
     public function index(Request $request)
     {
@@ -28,7 +28,6 @@ class Index extends BaseController
         $objFroum =  new Froum();
         $objOrgActivity = new OrgActivity();
         $uid = Session::get('uid');
-
 
         if ($uid==1) {
             $arrWhere['status'] = 0;
@@ -40,16 +39,23 @@ class Index extends BaseController
             $arrWhere['group_id'] = $uid;
 
             $arrWhere2[0] = ['status','=',6];
-            $arrWhere2[1] = ['privil','like',Session::get('privil').'%'];
+            $arrWhere2[1] = ['privil','like',$this->strPri.'%'];
          }
 
+        // 待审核会员
+       $list =  (new org())->getALLNot($this->strPri)->toArray();
 
+        $num = 0;
 
+        foreach ($list as $value) {
+            $num+=$value['users_count'];
+        }
 
         View::assign([
             "noAuditNews" => $objFroum->noAuditStatistics($arrWhere),
             'noAuditActiv' => $objOrgActivity->noAuditStatistics($arrWhere2),
-            'privil' => Session::get('privil')
+            'privil' => Session::get('privil'),
+            'notExamine'=>$num
         ]);
 
         return  View::fetch();
@@ -106,27 +112,26 @@ class Index extends BaseController
 
         }
 
-
         return  View::fetch();
     }
 
     /**
-     * 列出组织中的成员
+     * 团队成员
      *
      *
      */
     public function volunteer(Request $request, $oid=0)
     {
 
-        $strPri = Session::get('privil');
+
 
         if ($oid){
             $objOrg = new org();
 
-            $arr = $objOrg->getMemberById($oid);
+            $arr = $objOrg->getMemberById($oid)->toArray();
 
             View::assign([
-                'privil' => $strPri,
+                'privil' => $this->strPri,
                 'arrVolunteer'=>$arr,
                 'count'=> count($arr),
                 'nopage'=>1
@@ -139,49 +144,32 @@ class Index extends BaseController
 
             $objMember = new Member();
 
-            $arrVolunteer =  $objMember->list($strPri);
+            $arrVolunteer =  $objMember->list($this->strPri);
 
             if ($arrVolunteer)
                 $count = $arrVolunteer->total();
 
             View::assign([
-                'privil' => $strPri,
+                'privil' => $this->strPri,
                 'arrVolunteer'=>$arrVolunteer,
                 'count'=>$count,
-                'nopage'=>0
+                'nopage'=>0,
+                'orgId'=>Session::get('ordId')
             ]);
             return View::fetch();
         }
 
     }
 
-    /**
-     * 保存新建的资源
-     *
-     * @param  \think\Request  $request
-     * @return \think\Response
-     */
-    public function save(Request $request)
-    {
-        //
-    }
+
+
+
 
     /**
-     * 显示指定的资源
      *
-     * @param  int  $id
-     * @return \think\Response
-     */
-    public function read($id)
-    {
-        //
-    }
-
-    /**
-     * 显示编辑资源表单页.
      *
-     * @param  int  $id
-     * @return \think\Response
+     * 会员通过审核，
+     *
      */
     public function editAccout(Request $request)
     {
@@ -198,26 +186,7 @@ class Index extends BaseController
        return  json(['code'=>$code,'message'=>$msg]);
     }
 
-    /**
-     * 保存更新的资源
-     *
-     * @param  \think\Request  $request
-     * @param  int  $id
-     * @return \think\Response
-     */
-    public function update(Request $request, $id)
-    {
-        //
-    }
 
-    /**
-     * 删除指定资源
-     *
-     * @param  int  $id
-     * @return \think\Response
-     */
-    public function delete($id)
-    {
-        //
-    }
+
+
 }

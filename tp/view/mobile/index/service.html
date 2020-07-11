@@ -13,7 +13,7 @@
 </div>
 {/block}
 {block name="Pane_0"}
-<div class="tab_pane active" style="min-height:120px;"></div>
+<div class="tab_pane active" style="min-height:3.5em;"></div>
 {/block}
 {block name="ScrollContent_Pa34I9"}{/block}
 {block name="Pane_1"}{/block}
@@ -49,13 +49,35 @@
         </div>
     </div>
 </div>
+<style>.zhy_bg{opacity:1 !important;}.loader_confirm{height: 200% !important;position:absolute !important;}</style>
 
 {/block}
+
 {block name="js"}
 <script src="__JS__/service.js"></script>
 <script>
 
     (function($) {
+        $('#group .checkbox2').click(function () {
+
+            $li = $(this);
+
+            $checkbox = $li.find('input[type=checkbox]');
+
+            if ($checkbox.get(0).checked) {
+
+                appcan.window.alert({
+
+                    title : "提示",
+
+                    content : '<img style="width:100%;" src="https://www.07430743.com/data/attachment/zxz.jpg">',
+
+                    button : ['确定']
+
+                });
+            }
+
+        });
         $('#Pane_2').removeAttr('data-control').removeClass('tab_pane').attr('style','');
         if (_u !=null && typeof(_u.uId)!='undefined') {
 
@@ -90,7 +112,7 @@
                 if (confirm("你确定选择这个服务吗，选择后不能更改？")) {
                     arrOrg = checkItems();
                     if(!arrOrg){
-                        return alert('只能选四个服务');
+                        return appcan.window.openToast('最多只能填四个服务', 1000);
                     }
                     var l = arrOrg.length;
                     if(l)

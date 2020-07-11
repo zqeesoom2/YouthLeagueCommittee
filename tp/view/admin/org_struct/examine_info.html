@@ -1,0 +1,34 @@
+{extend name="public/admin_public"} {block name="content"}
+<div class="mdui-m-a-1 mdui-typo mdui-table-fluid">
+
+    <h1 class="mdui-m-l-3">团队组织结构</h1>
+    <table class="mdui-table mdui-textfield mdui-table-hoverable">
+        <thead>
+        <tr>
+            <th>ID</th>
+            <th>团队服务</th>
+            <th>待审核数量</th>
+            <th>操作</th>
+        </tr>
+        </thead>
+        <tbody>
+        {volist name='arrOrg' id='org'}
+        <tr>
+            <td>{$org.id}</td>
+            <td>{$org.org_name}</td>
+            <td>{$org.users_count}人</td>
+            <td>
+                <div class="layui-btn-group">
+                    <button class="layui-btn layui-btn-primary layui-btn-sm"><a href="/admin/OrgStruct/notVolunteer/oid/{$org.id}/name/{$org.org_name}">去审核</a></button>
+                </div>
+            </td>
+        </tr>
+        {/volist}
+        </tbody>
+    </table>
+
+</div>
+
+{/block}
+{block name="js"}
+{/block}

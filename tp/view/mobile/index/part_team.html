@@ -62,7 +62,7 @@
 
     function exitTeam(url){
         history.replaceState({page:2}, "forward 2", "?page=2");
-        window.location.href = url;
+        window.location.href = url+'/uId/'+_u.uId;
     }
 
     {if $exitTeam}

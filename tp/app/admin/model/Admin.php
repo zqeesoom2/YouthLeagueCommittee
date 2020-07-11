@@ -49,4 +49,6 @@ class Admin extends Model
 
        return self::where('org_id',$id)->select()->toArray();
     }
+
+
 }

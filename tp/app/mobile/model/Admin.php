@@ -23,4 +23,9 @@ class Admin extends Model
         return self::where('id',$id)->update(['username'=>$account]);
 
     }
+
+    public function getByName($name) {
+
+        return self::where('username',$name)->select()->toArray();
+    }
 }

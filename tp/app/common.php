@@ -70,8 +70,24 @@ function timeStatus($recruit_time_start,$recruit_time_end,$activity_time_start,$
 
 
 }
-
+//删除空数组
 function filter_pri($value) {
    return array_filter(explode('-',$value));
 }
 
+//根据年月获取季度
+function getQuarterByMonth($date){
+
+    $year = (int) substr($date,0,4);
+
+    $month = (int) substr($date,-2);
+
+    if($month<=3){
+        $year -= 1;
+        $month =  12-$month;
+
+    }else{
+        $month -=  3;
+    }
+    return $year.$month;
+}

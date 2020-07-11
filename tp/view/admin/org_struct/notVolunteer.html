@@ -2,7 +2,7 @@
 <style>  .pagination{display:-webkit-box;width:90%;}.pagination li{padding:5px;}</style>
 <div class="mdui-m-a-1 mdui-typo mdui-table-fluid">
 
-    <h1 class="mdui-m-l-3">志愿者管理</h1>
+    <h1 class="mdui-m-l-3">{$orgName}--参员人员审核</h1>
     <table class="mdui-table mdui-textfield mdui-table-hoverable">
         <thead>
         <tr>
@@ -20,7 +20,7 @@
             <th>证件号码</th>
             <th>最高学历</th>
             <th>从业状况</th>
-            <th>服务时长</th>
+            <th>地区</th>
             <th>状态</th>
             <th>操作</th>
         </tr>
@@ -42,18 +42,15 @@
             <td>{$volu.card}</td>
             <td>{$volu.education}</td>
             <td>{$volu.pract}</td>
-            <td>{$volu.length_ser}</td>
+            <td>{$volu.area}</td>
             <td>{$volu.status}</td>
             <td>
-                {if $privil=='-'}
+
                 <div class="layui-btn-group">
-                   <button class="layui-btn layui-btn-primary layui-btn-sm" onclick ="editorForum('#{$volu.id}')">编辑</button>
+                    <button class="layui-btn layui-btn-primary layui-btn-sm" onclick ="editorForum('#{$volu.id}')">编辑</button>
+                    <!--<button class="layui-btn layui-btn-primary layui-btn-sm">删除</button>-->
                 </div>
-                {else}
-                <div class="layui-btn-group">
-                    <button class="layui-btn layui-btn-primary layui-btn-sm" onclick ="dele('{$volu.id}')">删除</button>
-                </div>
-                {/if}
+
             </td>
 
         </tr>
@@ -69,9 +66,10 @@
             <form id="editForm" class="layui-form layui-form-pane mdui-m-y-1" lay-filter="formTest">
                 <div class="layui-form-item">
                     <input type="hidden" name="id" id="editfid">
+                    <input type="hidden" name="oid" value="{$oid}">
                     <label class="layui-form-label">成员姓名</label>
                     <div class="layui-input-block">
-                        <input id="real_name" name="real_name" type="text" readonly="readonly" required lay-verify="required" autocomplete="off" class="layui-input">
+                        <input id="real_name"  type="text" readonly="readonly" required lay-verify="required" autocomplete="off" class="layui-input">
                     </div>
                 </div>
 
@@ -135,29 +133,24 @@
         // $$('#editorForum [name="status"]').val(data[8].innerText);
         //$$('#editorForum [name="regist_auth"]').val(data[2].innerText);
         //  $$("[name="+name+"][value="+result.entity[name]+"]").prop('checked', true);
-        {if $privil=='-'}
-        $$('#editorForum [name="status"][value]').prop('checked', true);
 
-
-        if (data[14].innerText=='志愿者会员')
-            num1 = '1';
-        form.val("formTest", { "status":num1 });
-        {/if}
-            $$('#editorForum [name="regist_auth"][value]').prop('checked', true);
+        //报名权限
+       /* $$('#editorForum [name="regist_auth"][value]').prop('checked', true);
 
             if (data[1].innerText=='对外开放')
                 num2 = '1';
 
             form.val("formTest", { "regist_auth":num2 });
 
-            inst.open();
+            */
+        inst.open();
         }
         // 保存
         $$('#edit').on('click', function () {
             data = $$('#editForm').serialize();
             $$.ajax({
                 method: 'post',
-                url: "/admin/index/editAccout",
+                url:"/admin/OrgStruct/editAccout", //"/admin/index/editAccout",
                 data: data,
                 dataType: 'json',
                 success: function (res) {
@@ -175,7 +168,7 @@
                         })
                     } else {
                         mdui.snackbar(res.message, {
-                            timeout: 2000,
+                            timeout: 3000,
                             position: 'top',
                             onClose: function () {
                                 inst.close();
@@ -189,43 +182,4 @@
             return false;
         });
 
-
-
-        function dele(uid) {
-
-            if(window.confirm('你确定要删除会员吗？')){
-
-                $$.ajax({
-                    method: 'post',
-                    url:"/admin/OrgStruct/delMemberOrg",
-                    data: {'uid':uid,'oid':{$orgId}},
-                    dataType: 'json',
-                    success: function (res) {
-
-                        if (res.code == 0) {
-                            mdui.snackbar(res.message, {
-                                timeout: 2000,
-                                position: 'top',
-                                onClose: function () {
-                                    inst.close();
-                                },
-                                onClosed: function () {
-                                    location.reload();
-                                }
-                            })
-                        } else {
-                            mdui.snackbar(res.message, {
-                                timeout: 2000,
-                                position: 'top',
-                                onClose: function () {
-                                    inst.close();
-                                }
-                            })
-                        }
-
-                    }
-                });
-            }
-
-        }
 </script> {/block}

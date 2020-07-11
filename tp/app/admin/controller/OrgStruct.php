@@ -3,6 +3,7 @@ declare (strict_types = 1);
 
 namespace app\admin\controller;
 
+use app\mobile\model\MemberOrg;
 use think\facade\Session;
 use app\BaseController;
 use think\Request;
@@ -29,9 +30,9 @@ class OrgStruct extends BaseController
     }
 
     /**
-     * 显示创建资源表单页.
      *
-     * @return \think\Response
+     *
+     *
      */
     public function members()
     {
@@ -59,5 +60,103 @@ class OrgStruct extends BaseController
         return  json((new org())->editorg($request->post()));
     }
 
+    //查看团队审核明细
+    public function examineInfo(Request $request) {
 
+        $list = (new org())->getALLNot($this->strPri)->toArray();
+        $list2 = [];
+        foreach ($list as $item) {
+            if ($item['users_count']){
+                array_push($list2,$item);
+            }
+        }
+
+        View::assign([
+            'privil' => $this->strPri,
+            'arrOrg'=>$list2
+
+        ]);
+
+        return View::fetch();
+    }
+
+    //查看审核人员
+    public function notVolunteer(Request $request) {
+
+        $id = $request->param('oid');
+        $orgName = $request->param('name');
+
+
+       $list = (new org())->getMemberById($id,0)->toArray();
+
+
+        View::assign([
+            'privil' => $this->strPri,
+            'arrVolunteer'=>$list,
+            'count'=> count($list),
+            'nopage'=>1,
+            'orgName'=>$orgName,
+            'oid'=>$id
+        ]);
+
+        return View::fetch('notVolunteer');
+    }
+
+    /**
+     *
+     *
+     * 会员通过审核，
+     *
+     */
+    public function editAccout(Request $request)
+    {
+        $post = $request->post();
+
+        $msg = '提交失败';
+        $code = 1;
+        $MemberOrgObj = new MemberOrg();
+
+        //判断有没有被最上层服务审核
+        $orgObj = (new org())->getOrgById($post['oid']);
+
+        if (!$orgObj->service){
+            if ( $MemberOrgObj->updateState(['member_Id'=>$post['id'],'org_Id'=>$post['oid']],$post['status']) ){
+                $msg = '提交成功';
+                $code = 0;
+            }
+        }else{
+
+           $arr = array_filter(explode('-',$orgObj->path));
+
+           $service = array_shift($arr);
+
+           $resArr = (new MemberOrg())->getMemberState($post['id'],$service);
+
+            if(!($resArr[0]['state'])){
+                $msg = '提交失败,参加的服务类型还没有通过';
+                $code = 1;
+            }
+
+        }
+
+
+
+
+        return  json(['code'=>$code,'message'=>$msg]);
+    }
+
+    //删除会员
+    public function delMemberOrg(Request $request){
+
+        $post = $request->post();
+        $msg = '提交失败,该会员不属于你的团队';
+        $code = 1;
+
+        if ( (new MemberOrg())->delByUidOid(['member_Id'=>$post['uid'],'org_Id'=>$post['oid']]) ){
+            $msg = '提交成功';
+            $code = 0;
+        }
+
+        return  json(['code'=>$code,'message'=>$msg]);
+    }
 }

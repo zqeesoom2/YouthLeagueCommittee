@@ -8,6 +8,8 @@ use app\mobile\model\MemberOrg;
 use think\facade\Db;
 use think\facade\Session;
 use think\Model;
+use think\model\Relation;
+
 
 /**
  * @mixin think\Model
@@ -24,6 +26,9 @@ class org extends Model
     }
 
 
+    function getOrgById($id) {
+        return self::find($id);
+    }
 
     function getStatusAttr($value){
         if ((int)($value))
@@ -94,16 +99,22 @@ class org extends Model
 
 
 
-    public function getMemberById($id){
+    public function getMemberById($id,$type=1){
 
-        $orgId = self::find($id);
+       /* $orgId = self::find($id);
 
-        $list =$orgId->users;
+        $list =$orgId->users;*/
+        $list =  self::with(['users' => function(Relation $query) use ($type) {
+            $query->where('state', $type);
+        }])->select($id);
 
-       return $list;
+       return $list[0]['users'];
 
+    }
 
-
-
+    public function getALLNot($strPri) {
+       return self::where('path','like',$strPri.'%')->where('status',1)->withCount(['users' => function(Relation $query) {
+            $query->where('state', 0);
+        }])->select();
     }
 }
