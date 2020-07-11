@@ -33,20 +33,21 @@
                     季度排行榜
                 </div>
             </div>
-            <div class="ub c-wh uinn-a1 ubb bc-border" id="username">
+            <div id="username">
                 {volist  name='list'  id='s'}
-                    <div class="ub-f1">
-                        &nbsp;&nbsp;&nbsp;{$i}&nbsp;&nbsp;&nbsp;
-                    </div>
-                    <div class="ub-f1">
-                        &nbsp;&nbsp;&nbsp;{$s.username}
-                    </div>
-                    <div class="ub-f1">
-                        &nbsp;&nbsp;&nbsp;{$s.length_ser}小时
-                    </div>
+                <div class="ub c-wh uinn-a1 ubb bc-border">
+                        <div class="ub-f1">
+                            &nbsp;&nbsp;&nbsp;{$i}&nbsp;&nbsp;&nbsp;
+                        </div>
+                        <div class="ub-f1">
+                            &nbsp;&nbsp;&nbsp;{$s.username}
+                        </div>
+                        <div class="ub-f1">
+                            &nbsp;&nbsp;&nbsp;{$s.length_ser}小时
+                        </div>
+                </div>
                 {/volist}
             </div>
-
         </div>
     </div>
 

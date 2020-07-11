@@ -35,7 +35,9 @@
                     <div class="button ub ub-ac bc-text-head ub-pc bc-btn" id="Button_5f65Bo">确定</div>
                 </div>
                 <div class="ub-f1" style="position:absolute;right:1em;" data-control="BOX" id="Box_IABGkC">
-                    <a href="https://share.0743sh.com/wap/login/register?url=http://zyz.07430743.com/mobile/moblielogin.html">志愿者注册</a>
+                    <a href="https://share.0743sh.com/wap/login/register?url=http://zyz.07430743.com/mobile/moblielogin.html" class="umar-r">志愿者注册</a>
+                    &nbsp;
+                    <a href="javascript:findpsw();" >忘记密码</a>
                 </div>
             </div>
         </div>
@@ -50,6 +52,18 @@
         <script src="__JS__/mvvm_login.js">
         </script>
         <script >
+            function findpsw(){
+                appcan.window.alert({
+                    title : "提示",
+                    content : "请下载客户端前去找回?",
+                    buttons : ['前去下载', '我再看看'],
+                    callback : function(err, data, dataType, optId) {
+                        if(!data){
+                            window.location.href='https://share.0743sh.com/wap/download/index';
+                        }
+                    }
+                });
+            }
             appcan.button("#nav-left", "btn-act", function() {
                 window.history.back()
             });

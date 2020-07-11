@@ -50,10 +50,7 @@ class Reg
     //用户排行榜
     public function ranking(Request $request){
 
-
-
         if ($request->isPost()){
-
 
             $type =  $request->post('type_');
 
