@@ -60,6 +60,8 @@ class Login
 
         if (!empty($_POST['username']) && !empty($_POST['password'])) {
             $login = UcApi::login($_POST['username'], $_POST['password']);
+            //$login['username'] = '张2哈';
+            //  $login['uid'] = 8698;
             if ($login === FALSE) {
                 return json(['state'=>1,'data'=>UcApi::getError()]);
             } else {//得到UC
@@ -74,7 +76,7 @@ class Login
 
                 $arrUser = Db::name('member')->where([
                     'username'=>$login['username']
-                   // , 'password'=>$password
+                   //, 'password'=>$password
                 ])->find();
 
                 if ($arrUser){//登陆成功！

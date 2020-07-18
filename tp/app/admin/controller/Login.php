@@ -38,7 +38,7 @@ class Login
 
                  Session::set('service',array_shift($arr));
                  Session::set('ordId',$arrUser['org_id']);
-
+                 Session::set('username',$username);
                  Session::set('uid',$arrUser['Id']);
 
                 return redirect((string) url('adminIndex'));
@@ -52,37 +52,7 @@ class Login
         return  View::fetch();
     }
 
-    /**
-     * 显示创建资源表单页.
-     *
-     * @return \think\Response
-     */
-    public function create()
-    {
-        //
-    }
 
-    /**
-     * 保存新建的资源
-     *
-     * @param  \think\Request  $request
-     * @return \think\Response
-     */
-    public function save(Request $request)
-    {
-        //
-    }
-
-    /**
-     * 显示指定的资源
-     *
-     * @param  int  $id
-     * @return \think\Response
-     */
-    public function read($id)
-    {
-        //
-    }
 
 
     public function out()
@@ -95,26 +65,5 @@ class Login
        return redirect((string) url('login/index'));
     }
 
-    /**
-     * 保存更新的资源
-     *
-     * @param  \think\Request  $request
-     * @param  int  $id
-     * @return \think\Response
-     */
-    public function update(Request $request, $id)
-    {
-        //
-    }
 
-    /**
-     * 删除指定资源
-     *
-     * @param  int  $id
-     * @return \think\Response
-     */
-    public function delete($id)
-    {
-        //
-    }
 }

@@ -40,7 +40,7 @@
                             &nbsp;&nbsp;&nbsp;{$i}&nbsp;&nbsp;&nbsp;
                         </div>
                         <div class="ub-f1">
-                            &nbsp;&nbsp;&nbsp;{$s.username}
+                            &nbsp;&nbsp;&nbsp;{$s.real_name}
                         </div>
                         <div class="ub-f1">
                             &nbsp;&nbsp;&nbsp;{$s.length_ser}小时
@@ -62,12 +62,12 @@
 <script>
     function _temple(listdata) {
 
-        var s='',datas = [],inserthtml='',l =listdata.length,temple = '<div class="ub-f1">&nbsp;&nbsp;&nbsp;#id#&nbsp;&nbsp;&nbsp;</div><div class="ub-f1">&nbsp;&nbsp;&nbsp;#name#</div><div class="ub-f1">&nbsp;&nbsp;&nbsp;#hours#小时</div>';
+        var s='',datas = [],inserthtml='',l =listdata.length,temple = '<div class="ub c-wh uinn-a1 ubb bc-border"><div class="ub-f1">&nbsp;&nbsp;&nbsp;#id#&nbsp;&nbsp;&nbsp;</div><div class="ub-f1">&nbsp;&nbsp;&nbsp;#name#</div><div class="ub-f1">&nbsp;&nbsp;&nbsp;#hours#小时</div></div>';
 
         for (var i = 0; i < l ; i++) {
            datas = listdata[i];
             inserthtml = temple.replace("#id#", i+1);
-            inserthtml = inserthtml.replace("#name#", datas.username);
+            inserthtml = inserthtml.replace("#name#", datas.real_name);
             inserthtml = inserthtml.replace("#hours#", datas.length_ser);
         }
 

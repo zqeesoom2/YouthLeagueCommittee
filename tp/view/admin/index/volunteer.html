@@ -15,35 +15,35 @@
             <th>出生日期</th>
             <th>性别</th>
             <th>政治面貌</th>
-          <!--  <th>服务类型</th>-->
+            <th>服务类型</th>
             <th>证件类型</th>
             <th>证件号码</th>
             <th>最高学历</th>
             <th>从业状况</th>
             <th>服务时长</th>
-            <th>状态</th>
-            <th>操作</th>
-        </tr>
-        </thead>
-        <tbody>
-        {volist name='arrVolunteer' id='volu'}
-        <tr id="{$volu.id}">
-            <td>{$volu.id}</td>
-            <td>{$volu.real_name}</td>
-            <td>{$volu.phone}</td>
-            <td>{$volu.address}</td>
-            <td>{$volu.email}</td>
-            <td>{$volu.nation}</td>
-            <td>{$volu.brith}</td>
-            <td>{$volu.gender}</td>
-            <td>{$volu.political_affil}</td>
-            <!--<td>{$volu.group}</td>-->
+            <!--  <th>状态</th>
+             <th>操作</th>-->
+         </tr>
+         </thead>
+         <tbody>
+         {volist name='arrVolunteer' id='volu'}
+         <tr id="{$volu.id}">
+             <td>{$volu.id}</td>
+             <td>{$volu.real_name}</td>
+             <td>{$volu.phone}</td>
+             <td>{$volu.address}</td>
+             <td>{$volu.email}</td>
+             <td>{$volu.nation}</td>
+             <td>{$volu.brith}</td>
+             <td>{$volu.gender}</td>
+             <td>{$volu.political_affil}</td>
+             <td>{$volu.org_name}</td>
             <td>{$volu.card_type}</td>
             <td>{$volu.card}</td>
             <td>{$volu.education}</td>
             <td>{$volu.pract}</td>
             <td>{$volu.length_ser}</td>
-            <td>{$volu.status}</td>
+           <!-- <td>{$volu.status}</td>
             <td>
                 {if $privil=='-'}
                 <div class="layui-btn-group">
@@ -54,7 +54,7 @@
                     <button class="layui-btn layui-btn-primary layui-btn-sm" onclick ="dele('{$volu.id}')">删除</button>
                 </div>
                 {/if}
-            </td>
+            </td>-->
 
         </tr>
         {/volist}
@@ -228,4 +228,5 @@
             }
 
         }
+
 </script> {/block}

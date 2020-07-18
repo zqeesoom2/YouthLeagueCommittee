@@ -42,7 +42,7 @@
                 <div class="ub" data-control="BOX" id="Box_FQtUaY">
                     <div data-control="TEXT" class="" id="Text_ZS0zjT">简介：</div>
                     <div class="uinput ub bc-border uba" data-control="TEXTAREA" id="introduction">
-                        <textarea placeholder=""  class="ub-f1" data-control-scope="introduction" data-bind="value:introduction"> </textarea>
+                        <textarea  style="width: 10em;" class="ub-f1" data-control-scope="introduction" data-bind="value:introduction"> </textarea>
                     </div>
                 </div>
 
@@ -50,7 +50,7 @@
                 </div>
                 <div class="ub" data-control="BOX" id="Box_6SUxbr">
                     <div data-control="TEXT" class="" id="Text_r0fe8S">上传logo：</div>
-                    <input id="logo_url2" onchange="up()" type="file"  class="ub-f1" style="width: 12em;height: 2em;font-size: 1em;">
+                    <input id="logo_url2" onchange="up()" type="file"  class="ub-f1" style="width: 11em;height: 2em;font-size: 1em;">
 
                 </div>
 
@@ -58,7 +58,7 @@
                 </div>
                 <div class="ub" data-control="BOX" id="Box_4zQueP">
                     <div data-control="TEXT" class="" id="Text_JRYqMQ">所属区域：</div>
-                    <div class="select uba bc-border bc-text" data-control="SELECT" id="area_id">
+                    <div class="select uba bc-border bc-text" data-control="SELECT" id="area_id" style="width:11.5em">
                         <div class="text">
                         </div>
                         <div class="icon">
@@ -74,7 +74,7 @@
                 </div>
                  <div class="ub" data-control="BOX" id="Box_YwydNp">
                     <div data-control="TEXT" class="" id="Text_c7RdlE">服务类型：</div>
-                    <div class="select uba bc-border bc-text" data-control="SELECT" id="service">
+                    <div class="select uba bc-border bc-text" data-control="SELECT" id="service" style="width:11.5em">
                         <div class="text">
                         </div>
                         <div class="icon">
@@ -160,7 +160,7 @@
 
                 <div class="" data-control="BOX" id="Box_rp56ij">
                 </div>
-                <div class="button ub ub-ac bc-text-head ub-pc bc-btn" id="Button_kTG4bh">确定</div>
+                <div class="button ub ub-ac bc-text-head ub-pc bc-btn" id="Button_kTG4bh">提&nbsp;&nbsp;交</div>
                 <div class="" data-control="BOX" id="Box_9ixFVb">
                 </div>
                
@@ -208,8 +208,6 @@
                });
            }
 
-
-
            function _group(val,index,_this){
 
                if(val) {
@@ -218,13 +216,10 @@
                        url: 'getorg',
                        data: {'service_id':val},
                        success: function(data){
-
                           var res =  JSON.parse(data);
                             if (res.length) {
                                 if (_setlistview('group'+index,res))
                                     appcan.select($("#service"+index), function(ele, value) {});
-
-
                             }
 
                        }

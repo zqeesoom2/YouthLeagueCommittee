@@ -194,7 +194,7 @@
                         </div>
                     </div>
                     <div class="ub ub-ae" id="hid1">
-                        <div class="ub ub-ae umar-r-per1" id="length_look">
+                        <div class="ub ub-ae umar-r-per1" >
                             <div class="ulev-4" >
                                 服务时长
                             </div>
@@ -214,7 +214,7 @@
                 </div>
             </div>
             <div class="ub c-wh-per uinn-a11 ub-ae" id="hid">
-                  <div class="ub ub-ver ub-f1 ub-pc ubr b-gra-per">
+                  <div class="ub ub-ver ub-f1 ub-pc ubr b-gra-per" id="length_look">
                      <div class="t-gra5 ulev-4 tx-c ub-f1">
                           正在参加的项目
                      </div>
@@ -424,6 +424,8 @@
                         data = '团队注册成功,'+data;
 
                     $("#status").html(data);
+
+                    $('#listview2').hide();
                 }
             });
         }else{
@@ -439,6 +441,7 @@
                         url: "/mobile/index/userInfo",
                         data: {'id':_u.uId},
                         success: function(data){
+
                             var res =  JSON.parse(data);
 
                             $('#orgname').html(res.user.username);
@@ -449,11 +452,12 @@
 
                             $('#length_look').click(function () {
                                 history.replaceState({page:'me'}, 'me', '?page=me');
-                                window.location.href='/mobile/Index/userIntegral/uId/'+_u.uId;
+                                window.location.href='/mobile/Index/userIntegral/uId/'+_u.uId+'/flag/0';
                             });
+
                             $('#alreadyPro').click(function(){
                                 history.replaceState({page:'me'}, 'me', '?page=me');
-                                window.location.href='/mobile/Index/userIntegral/uId/'+_u.uId;
+                                window.location.href='/mobile/Index/userIntegral/uId/'+_u.uId+'/flag/1';
                             });
                         }
                     });

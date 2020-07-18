@@ -27,7 +27,11 @@ class Index extends BaseController
 
         $objFroum =  new Froum();
         $objOrgActivity = new OrgActivity();
+        $objOrg = new org();
+
+
         $uid = Session::get('uid');
+        $notOrg = 0;
 
         if ($uid==1) {
             $arrWhere['status'] = 0;
@@ -43,7 +47,7 @@ class Index extends BaseController
          }
 
         // 待审核会员
-       $list =  (new org())->getALLNot($this->strPri)->toArray();
+       $list =  $objOrg->getALLNot($this->strPri)->toArray();
 
         $num = 0;
 
@@ -51,11 +55,15 @@ class Index extends BaseController
             $num+=$value['users_count'];
         }
 
+
+        $notOrg = $objOrg->getNotOrgNum($this->strPri);
+
         View::assign([
             "noAuditNews" => $objFroum->noAuditStatistics($arrWhere),
             'noAuditActiv' => $objOrgActivity->noAuditStatistics($arrWhere2),
-            'privil' => Session::get('privil'),
-            'notExamine'=>$num
+            'privil' => $this->strPri,
+            'notExamine'=>$num,
+            'notOrg'=>$notOrg
         ]);
 
         return  View::fetch();
@@ -124,7 +132,6 @@ class Index extends BaseController
     {
 
 
-
         if ($oid){
             $objOrg = new org();
 
@@ -134,17 +141,32 @@ class Index extends BaseController
                 'privil' => $this->strPri,
                 'arrVolunteer'=>$arr,
                 'count'=> count($arr),
-                'nopage'=>1
+                'nopage'=>1,
+                'orgId'=>Session::get('ordId')
             ]);
             return View::fetch();
 
         }else{
+           $oid =  Session::get('ordId');
+
+            $arr = $arrIn = ['1','2','3','4','5','6','7'];
+            if ($this->strPri != '-'){
+                $arr = filter_pri($this->strPri);
+                array_push($arr,$oid);
+                /*foreach ($arr as &$item) {
+                        if (in_array($item,$arrIn)){
+                            $item =$oid;
+                        }
+                }*/
+            }
 
             $count = 0;
 
             $objMember = new Member();
 
-            $arrVolunteer =  $objMember->list($this->strPri);
+            $arrVolunteer =  $objMember->list($arr);
+
+
 
             if ($arrVolunteer)
                 $count = $arrVolunteer->total();
@@ -154,15 +176,12 @@ class Index extends BaseController
                 'arrVolunteer'=>$arrVolunteer,
                 'count'=>$count,
                 'nopage'=>0,
-                'orgId'=>Session::get('ordId')
+                'orgId'=>$oid
             ]);
             return View::fetch();
         }
 
     }
-
-
-
 
 
     /**

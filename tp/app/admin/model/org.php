@@ -20,6 +20,10 @@ class org extends Model
         return self::where('path','like',$strPath.'%')->field('id,org_name,address,status,release_quan,area_id,members,captain,path,service,captain_tell,regist_auth')->select()->toArray();
     }
 
+    function likeListOrg2($strPath) {
+        return self::where('path','like',$strPath.'%')->where('status',0)->field('id,org_name,address,status,release_quan,area_id,members,captain,path,service,captain_tell,regist_auth')->select()->toArray();
+    }
+
     function users() {
 
         return $this->belongsToMany(Member::class,MemberOrg::class,'member_Id','org_Id');
@@ -117,4 +121,9 @@ class org extends Model
             $query->where('state', 0);
         }])->select();
     }
+
+    public function getNotOrgNum($strPri){
+        return self::where('path','like',$strPri.'%')->where('status',0)->count();
+    }
+
 }

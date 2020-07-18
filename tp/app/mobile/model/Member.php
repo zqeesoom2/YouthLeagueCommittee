@@ -61,6 +61,7 @@ class Member extends Model
     }
 
     public  function getStatusAttr($value){
+
         if ($value==0) {
             return "待审核";
         }else{
@@ -69,20 +70,30 @@ class Member extends Model
 
     }
 
+
     public function list($pri){
 
-        if ($pri=='-') {
+        return self::Db('member')->alias("m")
+            ->field('m.id,m.real_name,m.phone,m.address,m.email,m.nation,m.brith,m.gender,m.political_affil,m.card_type,m.card,m.education,m.pract,m.length_ser ,group_concat(o.org_name) as org_name')
+            ->join('member_org mo','m.id=mo.member_Id')
+            ->join('org o','mo.org_Id =o.id')
+            ->where('mo.state',1)
+            ->where('mo.org_Id','in',$pri)
+            ->group('m.id')->paginate(20);
+
+       /* if ($pri=='-') {
             return self::where('group','like',$pri.'%')->order('id', 'desc')->paginate(20);
         }else{
 
-            $arr = filter_pri($pri);
+            $pri = filter_pri($pri);
 
             return self::Db('member')->alias("m")
                 ->field('m.id,m.real_name,m.phone,m.address,m.email,m.nation,m.brith,m.gender,m.political_affil,m.card_type,m.card,m.education,m.pract,m.length_ser,m.status')
                 ->join('member_org mo','m.id=mo.member_Id')
-                ->where('mo.org_Id','in',$arr)->group('m.id')
+                ->where('mo.state',1)
+                ->where('mo.org_Id','in',$pri)->group('m.id')
                 ->order('id', 'desc')->paginate(20);
-        }
+        }*/
 
 
 

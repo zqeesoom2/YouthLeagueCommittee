@@ -60,8 +60,11 @@ abstract class BaseController
         if (!Session::has("uid")){
             return redirect((string) url('login/index'))->send();
         }
+
         $this->strPri=   Session::get('privil');
-        view::assign('privil',);
+        view::assign('privil',$this->strPri);
+        view::assign('admin', Session::get('username'));
+
     }
 
     /**

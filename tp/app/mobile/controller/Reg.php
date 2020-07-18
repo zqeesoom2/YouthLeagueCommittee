@@ -44,7 +44,6 @@ class Reg
         }
 
         return json( ['state'=>1,'message'=>'已激活']);
-
     }
 
     //用户排行榜

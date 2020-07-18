@@ -15,7 +15,7 @@
         {volist name='arrOrg' id='org'}
         <tr>
             <td>{$org.id}</td>
-            <td>{$org.org_name}</td>
+            <td><div {if !$org.service} style="font-weight:600;"{/if} >{$org.org_name}</div></td>
             <td>{$org.users_count}人</td>
             <td>
                 <div class="layui-btn-group">

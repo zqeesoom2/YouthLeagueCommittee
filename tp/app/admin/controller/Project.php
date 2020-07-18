@@ -54,9 +54,7 @@ class Project extends BaseController
     }
 
     /**
-     * 显示创建资源表单页.
-     *
-     * @return \think\Response
+     * 添加自愿项目
      */
     public function create()
     {

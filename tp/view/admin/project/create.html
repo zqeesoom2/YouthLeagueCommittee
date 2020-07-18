@@ -181,11 +181,27 @@
                 data: JsonVal,
                 dataType: 'json',
                 success: function (res) {
-                    if (res.code) {
-                        alert('提交成功');
-                    } else {
-                        alert('提交失败');
+
+                    var str = '提交成功';
+                    if (!res.code) {
+                        mdui.snackbar('提交失败', {
+                            timeout: 2000,
+                            position: 'top'
+                        });
+
+                    }else{
+                        mdui.snackbar(str, {
+                            timeout: 2000,
+                            position: 'top',
+                            onClose: function () {
+                                ;
+                            },
+                            onClosed: function () {
+                                window.history.back();
+                            }
+                        });
                     }
+
                 }
             })
 

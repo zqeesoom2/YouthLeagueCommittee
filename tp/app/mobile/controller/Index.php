@@ -58,9 +58,9 @@ class Index
        return View::fetch();
     }
     /**
-     * 显示创建资源表单页.
      *
-     * @return \think\Response
+     *
+     *创建团队
      */
     public function create(Request $request)
     {
@@ -83,7 +83,7 @@ class Index
 
                 for($i=1;$i<4;$i++){
                     $key = "service$i";
-                    if ($arrCreate[$key]){
+                    if ($arrCreate[$key]) {
                         $arrCreate['path'] .= '-'.$arrCreate[$key];
                         $arrCreate['service'] = $arrCreate[$key];
                     }
@@ -123,19 +123,35 @@ class Index
         $f = true;
         $f2 = true;
 
+        $arrS = (new Member())->getMemberById($uid,'',true);
+
+        if ($arrS->status=='待审核'){
+
+            return json(['code'=>1,'data'=>'账号待审核不能报名']);
+        }
+
         if ( $id && $uid ) {
 
             $ObjOrgActivity = new OrgActivity();
             $resOrgAct = $ObjOrgActivity->whichOne($id);
 
-            /*
-           if ($arrS->status=='待审核'){
-               return json(['code'=>1,'data'=>'账号待审核不能报名']);
-           }*/
-
             if ($resOrgAct->regist_auth=='对内开放'){
 
-                $arrS = (new Member())->getMemberById($uid,'',true);
+                $oid = (new Org())->orgByName($group)['id'];
+
+                //$oid = (new Admin())->getByName($group)[0]['Id'];
+
+                $resArr = (new MemberOrg())->getMemberState($uid,$oid);
+
+
+
+                if (empty($resArr)){
+                    return json(['code'=>1,'data'=>'你还没有参加组织，不能报名']);
+                }
+
+                if (!$resArr[0]['state']){
+                    return json(['code'=>1,'data'=>'账号在组织中待审核不能报名']);
+                }
 
                 foreach ($arrS->service->toArray() as $val) {
                     if ( $val['org_name']==$service  ) {
@@ -153,18 +169,6 @@ class Index
                 if($f2)
                     return json(['code'=>1,'data'=>'账号隶属组织类型不匹配']);
 
-                $oid = (new Admin())->getByName($group)[0]['Id'];
-
-                $resArr = (new MemberOrg())->getMemberState($uid,$oid);
-
-                if (empty($resArr)){
-                    return json(['code'=>1,'data'=>'你还没有参加组织，不能报名']);
-                }
-
-                if (!$resArr[0][state]){
-                    return json(['code'=>1,'data'=>'账号待审核不能报名']);
-                }
-
             }else{
 
                 $resArr = (new MemberOrg())->getMemberElse($uid);
@@ -173,8 +177,6 @@ class Index
                     return json(['code'=>1,'data'=>'你还没有任何参加组织，不能报名']);
                 }
             }
-
-
 
            /* if ($arrS->group!=$group){
                 return json(['code'=>1,'data'=>'账号服务类型错误']);
@@ -311,7 +313,7 @@ class Index
 
                         $member->service()->attach($val);
 
-                        $org->incMembers($val,'inc');
+                        //$org->incMembers($val,'inc');
 
                     }catch (\Exception $e){
                         $msg =  $e->getMessage();
@@ -428,15 +430,21 @@ class Index
        }
     }
 
-    public function userIntegral($uId) {
+    //已参加的项目
+    public function userIntegral($uId,$flag=1) {
+
         $list = $page = $count = [];
 
+        $whereTime = ['activity_time_end','<=',time()];
+
+        if(!$flag)
+            $whereTime = ['recruit_time_end','>=',time()];
+
         if ($uId) {
-            $list = (new OrgActivity())->enrollList(0,20,$where = 'm.id='.$uId,'oa.Id,oau.integral');
+            $list = (new OrgActivity())->enrollList(0,20,$where = 'm.id='.$uId,'oa.Id,oau.integral',$whereTime);
             $count = $list ->total();
             $page = $list->render();
         }
-
 
         View::assign(['list'=>$list,
             'count'=>$count,

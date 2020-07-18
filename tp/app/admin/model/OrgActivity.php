@@ -190,7 +190,7 @@ class OrgActivity extends Model
     }
 
 
-    function enrollList ($id=0,$num=20,$where = '',$strField='') {
+    function enrollList ($id=0,$num=20,$where = '',$strField='',$whereTmie='') {
 
         if (!$strField){
             $strGc = 'oa.enroll_num,oa.recruit_num,oa.status,oa.Id,oa.recruit_time_start,oa.recruit_time_end,oa.activity_time_start,oa.activity_time_end,group_concat(m.real_name,",") as username ';
@@ -212,6 +212,9 @@ class OrgActivity extends Model
             ->join('org_activ_uid oau','oa.Id=oau.org_act_id')
             ->join('member m','oau.uid =m.id')
             ->where($where);
+
+        if($whereTmie)
+            $obj = $obj->whereTime(...$whereTmie);
 
         if(!$id && !$strField){
             $obj = $obj->group('oa.Id');

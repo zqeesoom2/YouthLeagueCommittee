@@ -15,6 +15,8 @@ Route::get('notvolunteer','admin/OrgStruct/examineInfo');
 Route::rule('volunteer/[:oid]','admin/index/volunteer','GET|POST')->name('volunteer');
 //团队组织
 Route::get('adminAdminOrgs','admin/OrgStruct/index')->name('adminAdminOrgs');
+Route::get('examineOrg','admin/OrgStruct/examineOrg')->name('examineOrg');
+
 Route::post('orgUpdate','admin/OrgStruct/update')->name('orgUpdate');
 
 Route::get('out','admin/login/out')->name('out');
