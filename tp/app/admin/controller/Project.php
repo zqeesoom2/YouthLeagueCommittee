@@ -16,11 +16,7 @@ use think\facade\Db;
 
 class Project extends BaseController
 {
-    /**
-     * 显示资源列表
-     *
-     * @return \think\Response
-     */
+    //志愿者活动项目列表
     public function index(Request $request)
     {
 
@@ -45,7 +41,8 @@ class Project extends BaseController
 
         View::assign(['arrlist'=>$arrlist,
                 'page'=>$page,
-                'count'=>$count
+                'count'=>$count,
+                'strPri'=>$this->strPri
             ]);
 
 

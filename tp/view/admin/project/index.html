@@ -30,7 +30,7 @@
            <!-- <td>{$val.service_id}</td>-->
             <td>{$val.recruit_time_start} - {$val.recruit_time_end}</td>
             <td>{:explode(' ',$val.activity_time_start)[0]} - {:explode(' ',$val.activity_time_end)[0]}</td>
-            <td > <a href="javascript:editorForum('#{$val.Id}');">{$val.status}</a> </td>
+            <td > <a {if $strPri =='-' } href="javascript:editorForum('#{$val.Id}');"{/if}>{$val.status}</a> </td>
 
             <td>
                 <div class="layui-btn-group">

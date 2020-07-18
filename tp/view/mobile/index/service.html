@@ -1,7 +1,5 @@
 {extend name="public/index_ext"}
 {block name="Header_0"}
-<style>.zhy_bg{opacity:1 !important;}.loader_confirm{top:-9em!important;height: 200% !important;position:absolute !important;}</style>
-
 <div class="ub">
     <div class="nav-btn" id="nav-left">
         <div class="fa fa-1g ub-img1 fa-angle-left fa-2x bc-text-head">
@@ -51,7 +49,8 @@
         </div>
     </div>
 </div>
-<style>.zhy_bg{opacity:1 !important;}.loader_confirm{height: 200% !important;position:absolute !important;}</style>
+<style>.zhy_bg{opacity:1 !important;}.loader_confirm{top:-9em!important;height: 200% !important;position:absolute !important;}</style>
+
 
 {/block}
 
@@ -116,6 +115,7 @@
                     if(!arrOrg){
                         return appcan.window.openToast('最多只能填四个服务', 1000);
                     }
+
                     var l = arrOrg.length;
                     if(l)
                         $.ajax({
