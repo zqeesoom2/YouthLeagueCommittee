@@ -133,7 +133,7 @@ class Member extends Model
 
     public function statistics($type=1){
 
-        $Obj = self::field('real_name,length_ser')->where('status',1);
+        $Obj = self::field('real_name,length_ser')->where('status',1)->where('length_ser','>',0);
 
         if ($type==2){//年度
               $Obj = $Obj->whereYear('create_time');

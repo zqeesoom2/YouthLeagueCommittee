@@ -60,7 +60,7 @@ class Login
 
         if (!empty($_POST['username']) && !empty($_POST['password'])) {
             $login = UcApi::login($_POST['username'], $_POST['password']);
-           // $login['username'] = '张2哈2';
+            //$login['username'] = '张2哈';
             //$login['uid'] = 8698;
             if ($login === FALSE) {
                 return json(['state'=>1,'data'=>UcApi::getError()]);
