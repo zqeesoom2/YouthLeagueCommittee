@@ -448,7 +448,8 @@ class Index
 
         View::assign(['list'=>$list,
             'count'=>$count,
-            'page'=>$page
+            'page'=>$page,
+            'flag'=>$flag
         ]);
 
         return View::fetch();
