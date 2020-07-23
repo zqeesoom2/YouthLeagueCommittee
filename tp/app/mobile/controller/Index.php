@@ -383,6 +383,11 @@ class Index
         return View::fetch('service');
     }
 
+    //服务介绍
+    public function serviceInfo(){
+
+        return View::fetch();
+    }
 
     //用户加入8个服务其中之4
     public function editService(Request $request)
