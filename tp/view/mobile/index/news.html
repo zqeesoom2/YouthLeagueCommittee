@@ -55,7 +55,7 @@
             if(datas.image){
                 inserthtml = inserthtml.replace("#url#", datas.image);
             }else{
-                $('#imgurl').hide();
+                $(mobanhtml).find('ul:first').hide();
             }
 
             $('#divscroll').append(inserthtml);
