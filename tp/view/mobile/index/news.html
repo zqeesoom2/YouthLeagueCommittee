@@ -18,8 +18,8 @@
 {block name="Pane_1"}{/block}
 {block name="Pane_2"}{/block}
 {block name="js"}
+<div class="mores" id="mores" style="position: fixed;left:45%; bottom: 2em;"> 加载更多</div>
 <style>#divscroll   .ub-img{ width: 10em !important;}</style>
-<script src="__JS__/iscroll2.js"></script>
 <script>
 
     function nologinDeal(){
@@ -36,7 +36,7 @@
         UseIScrollHelper.url = "/mobile/readNews";
         UseIScrollHelper.datas = "";
         UseIScrollHelper.getData();
-        UseIScrollHelper.loadSroll();
+       // UseIScrollHelper.loadSroll();
 
     }
 
@@ -68,7 +68,9 @@
     (function($) {
 
         $('.service_id').hide();
-
+        $('#mores').click(function(){
+            UseIScrollHelper.getData();
+        });
     })($);
 </script>
 {/block}
