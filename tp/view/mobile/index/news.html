@@ -55,7 +55,7 @@
             if(datas.image){
                 inserthtml = inserthtml.replace("#url#", datas.image);
             }else{
-                inserthtml =  $(inserthtml).find('ul:first').remove() ;
+                inserthtml = inserthtml.replace("#urlimg#", 'urlimg');
             }
 
             $('#divscroll').append(inserthtml);
