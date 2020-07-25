@@ -51,8 +51,12 @@
             var inserthtml = mobanhtml.replace("#title#", datas.title);
             inserthtml = inserthtml.replace("#summary#", datas.summary);
             inserthtml = inserthtml.replace("#details#", 'content');
-            inserthtml = inserthtml.replace("#id#", datas.Id);
-            inserthtml = inserthtml.replace("#url#", datas.image);
+            inserthtml = inserthtml.replace("#id#", datas.Id)
+            if(datas.image){
+                inserthtml = inserthtml.replace("#url#", datas.image);
+            }else{
+                $('#imgurl').hide();
+            }
 
             $('#divscroll').append(inserthtml);
         }
