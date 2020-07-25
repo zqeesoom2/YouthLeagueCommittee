@@ -389,6 +389,12 @@ class Index
         return View::fetch();
     }
 
+    //品牌项目
+    public function brand(){
+
+        return View::fetch();
+    }
+
     //用户加入8个服务其中之4
     public function editService(Request $request)
     {
