@@ -39,7 +39,7 @@ class Froum extends Model
         $arrAdmin = Db::name('admin')->find($value);
         $value = $arrAdmin['username'];
         if ($value=='admin') {
-            $value = '州团委';
+            $value = '团州委';
         }
         return $value;
     }
