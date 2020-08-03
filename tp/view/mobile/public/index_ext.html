@@ -303,6 +303,7 @@
 <script src="__JS__/index.js"></script>
 <script src="__JS__/iscroll.js"></script>
 {block name="js"}
+<div class="mores" id="mores"> 加载更多</div>
 <script src="__JS__/service.js"></script>
 <script>
 
@@ -482,7 +483,9 @@
 
         });
 
-
+        $('#mores').click(function(){
+            UseIScrollHelper.getData();
+        });
 
     })($);
 

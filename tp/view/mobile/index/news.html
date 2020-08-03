@@ -22,14 +22,6 @@
 <div class="mores" id="mores" > 加载更多</div>
 <script>
 
-    function nologinDeal(){
-        $('#divscroll').append('<div id="loading">正在加载中。。。</div>');
-    }
-
-    function hideLoadding() {
-        $('#loading').remove();
-    }
-
     window.onload = function () {
         mobanhtml = $('#celltemplate').html();
         UseIScrollHelper.fillList = FillList;
@@ -42,9 +34,6 @@
 
     function FillList(listdata) {
         var l =listdata.length;
-
-        if(!l)
-            return alert('暂无数据');
 
         for (var i = 0; i < l ; i++) {
             var datas = listdata[i];
