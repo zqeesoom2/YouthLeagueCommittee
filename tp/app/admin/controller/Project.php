@@ -70,8 +70,11 @@ class Project extends BaseController
 
        $strUrl = upload_img($strFlag);
 
+       if ($strUrl) {
+           return json([ 'code'=>0,'msg'=>'','data'=>[ 'src'=>'/storage/'.$strUrl]]);
+       }
 
-       return json([ 'code'=>0,'msg'=>'','data'=>[ 'src'=>'/storage/'.$strUrl]]);
+       return '上传的字段name没有定义';
     }
 
     public function upvideo() {

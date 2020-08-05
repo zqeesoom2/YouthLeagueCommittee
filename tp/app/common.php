@@ -22,17 +22,21 @@ function make_tree($data,$parent_id = 0,$level = 1)
 function upload_img($field , $catalog = 'images'){
 
     $file = request()->file($field);
+   if ($file){
+       try {
+           validate(['file' => [
+               'fileSize' => 8388608, 'fileExt' => 'gif,jpg,png,mp4']])->check(['file'=>$file]);
 
-    try {
-        validate(['file' => [
-            'fileSize' => 8388608, 'fileExt' => 'gif,jpg,png,mp4']])->check(['file'=>$file]);
+           $savename= \think\facade\Filesystem::disk('public')->putFile($catalog, $file);
 
-        $savename= \think\facade\Filesystem::disk('public')->putFile($catalog, $file);
+           return $savename;
+       } catch (\think\exception\ValidateException $e) {
+           return  $e->getMessage();
+       }
+   }
 
-        return $savename;
-    } catch (\think\exception\ValidateException $e) {
-        return  $e->getMessage();
-    }
+   return 0;
+
 }
 
 function projectStatus ($status,$recruit_time_start,$recruit_time_end,$activity_time_start,$activity_time_end) {

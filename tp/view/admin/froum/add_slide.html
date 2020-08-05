@@ -1,0 +1,130 @@
+{extend name="public/admin_public"} {block name="content"}
+<div class="mdui-m-a-1 mdui-typo mdui-table-fluid">
+
+    <h1 class="mdui-m-l-3">添加幻灯片</h1>
+    <div class="mdui-dialog-content">
+    <form id="addForm" class="layui-form layui-form-pane mdui-m-y-1" lay-filter="formTest">
+       <!-- <div class="layui-form-item">
+            <label class="layui-form-label">标题</label>
+
+            <div class="layui-input-block">
+                <input type="text" name="title" required lay-verify="required" placeholder="请输入文章标题" autocomplete="off" class="layui-input">
+            </div>
+        </div>-->
+        <div class="layui-form-item">
+            <div id="img" class="layui-input-block">
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">幻灯片</label>
+            <div class="layui-input-block">
+                <button type="button"  class="layui-btn" id="upimage">
+                    <i class="layui-icon">&#xe67c;</i>上传图片(尺寸：640*300)
+                </button>
+                <input type="hidden" name="img" id="imageurl" value="">
+            </div>
+        </div>
+
+        <!--  <div class="layui-form-item">
+            <label class="layui-form-label">类型</label>
+            <div class="layui-input-block">
+                <input type="radio" name="type"  value=1  title="电脑版" />
+                <input type="radio" name="type"  value=0  title="手机版"/>
+            </div>
+        </div>-->
+
+        <div class="layui-form-item">
+            <label class="layui-form-label">跳转地址</label>
+
+            <div class="layui-input-block">
+                <input type="text" name="url" value="#" required lay-verify="required" placeholder="请输入幻灯片跳转地址" autocomplete="off" class="layui-input">
+            </div>
+        </div>
+
+        <div class="layui-form-item">
+            <label class="layui-form-label">排序</label>
+
+            <div class="layui-input-block">
+                <input type="text" name="rank"  value="0" placeholder="请输入排序地址" autocomplete="off" class="layui-input">
+
+            </div>
+            <div>越大越靠前</div>
+        </div>
+
+        <div class="layui-form-item">
+                <center>
+                <button class="layui-btn"  lay-submit lay-filter="formSubmit">保&nbsp;存</button></center>
+        </div>
+    </form></div>
+
+</div>
+
+{/block} {block name="js"}
+<script>
+
+    var $$ = mdui.JQ
+
+    layui.use(['form','upload'], function(){
+
+         form = layui.form;
+    <!--  form.render('radio');-->
+        var upload = layui.upload;
+
+        var uploadInst = upload.render({
+            elem: '#upimage'
+            ,field:"img"
+            ,url: "{:url('articleUpimage/img')}"
+            ,done: function(res){
+                var path = res.data.src;
+                var img = "<img src='"+path+"' />";
+                $$("#imageurl").val(path);
+                $$("#img").html(img);
+            }
+        });
+
+
+
+        form.on('submit(formSubmit)', function(data){
+
+            var JsonVal =data.field;
+
+            $$.ajax({
+                method: 'POST',
+                url: "{:url('addSlide')}",
+                data: JsonVal,
+                dataType: 'json',
+                success: function (res) {
+                    var str = '提交成功';
+                    if (!res.code) {
+                        mdui.snackbar('提交失败', {
+                            timeout: 2000,
+                            position: 'top'
+                        });
+
+                    }else{
+                        mdui.snackbar(str, {
+                            timeout: 2000,
+                            position: 'top',
+                            onClose: function () {
+                                ;
+                            },
+                            onClosed: function () {
+                                window.location.href = '/admin/Froum/slideList.html';
+
+                            }
+                        });
+                    }
+                }
+            })
+
+            return false;
+        });
+
+    <!--   form.val("formTest", { "type":'0'});-->
+    });
+
+    //左边菜单控制
+    $$('#froum').addClass('mdui-collapse-item-open');
+    $$('#addSlide').addClass('mdui-list-item-active');
+
+</script> {/block}

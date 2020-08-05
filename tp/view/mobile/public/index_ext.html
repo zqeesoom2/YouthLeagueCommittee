@@ -487,6 +487,30 @@
             UseIScrollHelper.getData();
         });
 
+        /*pane0*/
+        function adImg(arrSlide) {
+            //广告图片轮播
+            var slider = appcan.slider({
+                selector : '#slider',
+                aspectRatio : 9 / 16,
+                hasLabel : false,
+                index : 0
+            });
+
+            slider.set(arrSlide);
+
+            slider.on("clickItem", function(index, data) {
+                window.location.href=data.url;
+            });
+        }
+
+        var arrSlide = [];
+        {volist name='arrlist' id='val'}
+            arrSlide.push({'img' : '{$val.img}','url':'{$val.url}'});
+        {/volist}
+
+        adImg(arrSlide);
+
     })($);
 
 

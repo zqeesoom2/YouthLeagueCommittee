@@ -1,0 +1,75 @@
+{extend name="public/admin_public"} {block name="content"}
+<div class="mdui-m-a-1 mdui-typo mdui-table-fluid">
+
+    <h1 class="mdui-m-l-3">幻灯片列表</h1>
+    <table class="mdui-table mdui-textfield mdui-table-hoverable">
+        <thead>
+        <tr>
+            <th style="display: none">#</th>
+            <th>幻灯片</th>
+            <th>跳转地址</th>
+            <th>排序</th>
+            <th>操作</th>
+        </tr>
+        </thead>
+        <tbody>
+        {volist name='arrlist' id='val'}
+        <tr id="{$val.id}">
+            <td style="display:none">{$val.id}</td>
+            <td><img height="75" src="{$val.img}"></td>
+            <td><a href="{$val.url}">{$val.url}</a></td>
+            <td>{$val.rank}</td>
+            <td>
+                <div class="layui-btn-group">
+                    <button class="layui-btn layui-btn-primary layui-btn-sm"><a href="{:url('editSlide',['id'=>$val.id])}">编辑</a></button>
+                    <button class="layui-btn layui-btn-primary layui-btn-sm" onclick="Ondel({$val.id})" id="confirm1">删除</button>
+                </div>
+            </td>
+
+        </tr>
+        {/volist}
+
+        </tbody>
+
+    </table>
+
+</div>
+
+{/block} {block name="js"}
+<script>
+
+    var $$ = mdui.JQ,
+        data = '',
+        inst = new mdui.Dialog('#editorForum');
+
+
+
+    $$('#froum').addClass('mdui-collapse-item-open');
+    $$('#froumList').addClass('mdui-list-item-active');
+
+    function Ondel(id){
+        mdui.confirm('确定删除吗?','',function(){
+                $$.ajax({
+                    method: 'post',
+                    url: "{:url('delFroum')}",
+                    data: {'id':id},
+                    dataType: 'json',
+                    success: function (res) {
+                        if (res.code == 0) {
+                            mdui.snackbar(res.message, {
+                                timeout: 2000,
+                                position: 'top',
+                                onClose: function () {
+                                    inst.close();
+                                },
+                                onClosed: function () {
+                                    location.reload();
+                                }
+                            });
+                        }
+                    }
+                })
+        }
+        ,'',{'confirmText':'确定','cancelText':'取消'});
+    }
+</script> {/block}

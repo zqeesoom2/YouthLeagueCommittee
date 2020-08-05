@@ -41,3 +41,7 @@ Route::post('delFroum','admin/Froum/delete')->name('delFroum');
 
 Route::rule('user','admin/index/user','GET|POST')->name('adduser');
 Route::get('listuser','admin/index/listuser')->name('listuser');
+
+Route::rule('addSlide','admin/Froum/addSlide','GET|POST')->name('addSlide');
+Route::get('slideList','admin/Froum/slideList')->name('slideList');
+Route::rule('editSlide/[:id]','admin/Froum/editSlide','GET|POST')->name('editSlide');

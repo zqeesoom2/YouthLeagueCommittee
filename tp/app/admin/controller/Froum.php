@@ -7,6 +7,7 @@ use app\BaseController;
 use think\Request;
 use think\facade\View;
 use think\facade\Session;
+use think\facade\Db;
 
 class Froum extends BaseController
 {
@@ -122,4 +123,74 @@ class Froum extends BaseController
             return json(['code'=>0,'message'=>'删除成功']);
         }
     }
+
+    /**
+     * 添加幻灯片
+     *
+     */
+    public function addSlide(Request $request)
+    {
+        if ($request->isPost()){
+
+            $code = 0;
+
+            $data = $request->post();
+
+            $nRows = Db::name('slide')->insert($data);
+
+            if ($nRows) {
+                $code = 1;
+            }
+
+            return json(['code'=>$code]);
+        }
+
+        return  View::fetch();
+
+    }
+
+    /**
+     * 查看幻灯片
+     * */
+    public function slideList(){
+
+        $arrRes = Db::name('slide')->order('rank','desc')->select()->toArray();
+
+        View::assign('arrlist',$arrRes);
+
+        return  View::fetch();
+
+    }
+
+    /**
+     * 编辑幻灯片
+     *
+     */
+    public function editSlide(Request $request,$id=0)
+    {
+        if ($request->isPost()) {
+
+            if ($id) {
+
+               $data = $request->post();
+
+               $nRes =  Db::name('slide')->where('id',$id)->update($data);
+               if ($nRes) {
+                   return ["code" => 1, "message" => "更新成功"];
+               }
+                return ["code" => 0, "message" => "更新失败"];
+            }
+
+        }else{
+
+            if ($id) {
+                $info = Db::name('slide')->find($id);
+                View::assign('info',$info);
+                return  View::fetch();
+            }
+
+        }
+
+    }
+
 }

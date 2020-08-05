@@ -16,6 +16,7 @@ use think\facade\Session;
 use think\Request;
 use think\facade\View;
 use think\facade\Db;
+use function MongoDB\BSON\toJSON;
 
 
 class Index
@@ -29,7 +30,9 @@ class Index
     {
         $arrM = '';
         //$arrM = (new Member() )->memberByName(Session::get('userInfo')['username']);
+        $arrRes = Db::name('slide')->order('rank','desc')->select()->toArray();
 
+        View::assign('arrlist',$arrRes);
         View::assign('me',$arrM);
         return View::fetch();
     }
