@@ -321,7 +321,7 @@
         window.location.href = url;
     }
 
-    window.onload = function () {
+ /*   window.onload = function () {
         mobanhtml = $('#celltemplate').html();
         UseIScrollHelper.fillList = FillList;
         UseIScrollHelper.url = "/mobile/readAct";
@@ -329,7 +329,7 @@
         UseIScrollHelper.getData();
         console.log('测试window.onload');
     }
-
+*/
 
 
     /*window.onscroll = function () {
@@ -399,6 +399,13 @@
 
     (function($) {
 
+        mobanhtml = $('#celltemplate').html();
+        UseIScrollHelper.fillList = FillList;
+        UseIScrollHelper.url = "/mobile/readAct";
+        UseIScrollHelper.datas = "";
+        UseIScrollHelper.getData();
+        console.log('测试window.onload');
+        
         if (_u !=null && typeof(_u.org_id)!='undefined') {
             if(!_u.logo_url)
                 _u.logo_url='/static/images/gqt.png';
