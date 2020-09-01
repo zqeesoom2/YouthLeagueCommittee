@@ -16,7 +16,7 @@
         </div>
     {/block}
 </div>
-<div class="uh ub ub-f1 ub-pc ub-ac uhide header bc-head" data-control="HEADERBOX" id="Header_1" style="position:relative;">
+<div class="uh ub ub-f1 ub-pc ub-ac uhide header bc-head" data-control="HEADERBOX" id="Header_1" style="position:fixed;">
     {block name="Header_1"}
         <div class="uinput ub bc-border uba ub-f1 umar-l umar-r" data-control="SEARCH" id="Search">
             <div class="uinn fa fa-search sc-text"></div>
@@ -296,10 +296,10 @@
         </div>
     </div>
     {/block}
-
-
 </div>
-
+<div class="uf sc-bg ubt sc-border-tab ub-f1 ub" data-control="FOOTER" id="Footer">
+    <div class="ub-f1 ub" data-control="TAB" id="Tab"></div>
+</div>
 <script src="__JS__/appcan.js"></script>
 <script src="__JS__/appcan.control.js"></script>
 <script src="__JS__/appcan.listview.js"></script>
@@ -489,9 +489,9 @@
 
         });
 
-        $('#mores').click(function(){
+       /*$('#mores').click(function(){
             UseIScrollHelper.getData();
-        });
+        });*/
 
         /*pane0*/
         function adImg(arrSlide) {
