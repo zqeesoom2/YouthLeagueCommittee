@@ -1,5 +1,17 @@
-{include file="public/head"}
-<link rel="stylesheet" href="__CSS__/index.css">
+<?php /*a:3:{s:55:"D:\phpstudy_pro\WWW\YLC\tp\view\mobile\index\index.html";i:1587977967;s:60:"D:\phpstudy_pro\WWW\YLC\tp\view\mobile\public\index_ext.html";i:1599291185;s:55:"D:\phpstudy_pro\WWW\YLC\tp\view\mobile\public\head.html";i:1599128251;}*/ ?>
+<!DOCTYPE html>
+<html>
+<head>
+    <title>志愿者服务平台</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
+    <link rel="stylesheet" href="/static/css/fonts/font-awesome.min.css">
+    <link rel="stylesheet" href="/static/css/ui-box.css">
+    <link rel="stylesheet" href="/static/css/ui-base.css">
+    <link rel="stylesheet" href="/static/css/ui-color.css">
+    <link rel="stylesheet" href="/static/css/appcan.icon.css">
+    <link rel="stylesheet" href="/static/css/appcan.control.css">
+<link rel="stylesheet" href="/static/css/index.css">
 <style>#divscroll{display: block;}#loginOut{width: 80%;margin: 0 auto;margin-top: 1em;}</style>
 <script src="https://cdn.bootcss.com/vConsole/3.3.4/vconsole.min.js"></script>
 <script>
@@ -11,14 +23,14 @@
 </head>
 <body ontouchstart>
 <div class="uh bc-head  ubb bc-border header" data-control="HEADER" id="Header_0">
-    {block name="Header_0"}
+    
         <div class="ub">
             <h1 class="ut ub-f1 ulev-3 ut-s tx-c" tabindex="0">湘西志愿者服务平台</h1>
         </div>
-    {/block}
+    
 </div>
 <div class="uh ub ub-f1 ub-pc ub-ac uhide header bc-head" data-control="HEADERBOX" id="Header_1" style="position:fixed;">
-    {block name="Header_1"}
+    
         <div class="uinput ub bc-border uba ub-f1 umar-l umar-r" data-control="SEARCH" id="Search">
             <div class="uinn fa fa-search sc-text"></div>
             <input placeholder="请输入关键词" type="search" class="ub-f1 ub ub-pc ub-ac" id="Search_1" data-control-scope="Search">
@@ -26,11 +38,11 @@
         <div class="ub ub-ac ub-pc ub-img1 umar-r" data-control="" id="fa-search">
             <div class="fa  fa-1g  ub-img1 fa-search" data-control-icon=""></div>
         </div>
-    {/block}
+    
 </div>
 
 <div class="uh bc-head  ubb bc-border uhide header" data-control="HEADER" id="Header_2">
-    {block name="Header_2"}
+    
     <div class="ub">
         <div class="nav-btn" id="nav-left">
             <div class="fa fa-1g ub-img1"></div>
@@ -40,10 +52,10 @@
             <div class="fa ub-img1 fa-sign-out a-1g  ulev2"></div>
         </div>
     </div>
-    {/block}
+    
 </div>
 <div class="uh ub ub-pc ub-ac uhide header bc-head" data-control="HEADERBOX" id="Header_3">
-    {block name="Header_3"}
+    
     <div class="ub-f1 ub-ac ub-pc uinn">
         <div class="ub uc-a1  b-wh uba1 tx-c">
             <input type="radio" name="rdi1" class="uhide" value="" checked="true">
@@ -60,9 +72,9 @@
             </div>
         </div>
     </div>
-    {/block}
+    
 </div>
-{block name="Pane_0"}
+
 <div class="tab_pane active" data-control="PANE" id="Pane_0">
     <div class="ub ub-ver ub-fv">
         <!--top-->
@@ -90,7 +102,7 @@
                         </a>
                     </div>
                     <div class="ub-f1 ub ub-ac ub-ver ubr ubb" style="width:33%" id="signIn">
-                        <a class="blue" href="{:url('moblielogin')}">
+                        <a class="blue" href="<?php echo url('moblielogin'); ?>">
                             <div class="uwh-ele2 uc-a-ele1 c-wh ub ub-ac ub-pc" style="margin-left: 10px;">
                                 <div class="btn_wh1 ub-img eleIcon2" ></div>
                             </div>
@@ -147,9 +159,9 @@
         </div>
     </div>
 </div>
-{/block}
+
 <div class="sc-bg"  id="ScrollContent_Pa34I9">
-    {block name="ScrollContent_Pa34I9"}
+    
     <div id="celltemplate" style="display:none">
         <li  class="ubb ub bc-border t-bla ub-ac lis uof" data-index="0">
             <ul class="ub ub ub-ver #urlimg#" >
@@ -176,15 +188,15 @@
     <ul id="divscroll">
 
     </ul>
-    {/block}
+    
 </div>
 
 <div class="tab_pane" data-control="PANE" id="Pane_1">
-    {block name="Pane_1"}  <div id="showGoods"></div>{/block}
+      <div id="showGoods"></div>
 </div>
 
 <div class="tab_pane " data-control="PANE" id="Pane_2" style="margin-top:3.3em">
-    {block name="Pane_2"}
+    
     <div class="ub ub-ver uhide" id="me">
         <div class="ub-img1 perBg ub-fh ub ub-ver">
             <div class="uinn-a1 ub ub-f1" style="padding-top:0;">
@@ -296,24 +308,24 @@
             </ul>
         </div>
     </div>
-    {/block}
+    
 </div>
 <div class="uf sc-bg ubt sc-border-tab ub-f1 ub" data-control="FOOTER" id="Footer">
     <div class="ub-f1 ub" data-control="TAB" id="Tab"></div>
 </div>
 
-<script src="__JS__/appcan.js"></script>
-<script src="__JS__/appcan.control.js"></script>
-<script src="__JS__/appcan.listview.js"></script>
-<script src="__JS__/template.import.js"></script>
-<script src="__JS__/appcan.tab.js"></script>
-<script src="__JS__/appcan.slider.js"></script>
-<script src="__JS__/iscroll.js"></script>
-<script src="__JS__/index.js"></script>
+<script src="/static/js/appcan.js"></script>
+<script src="/static/js/appcan.control.js"></script>
+<script src="/static/js/appcan.listview.js"></script>
+<script src="/static/js/template.import.js"></script>
+<script src="/static/js/appcan.tab.js"></script>
+<script src="/static/js/appcan.slider.js"></script>
+<script src="/static/js/iscroll.js"></script>
+<script src="/static/js/index.js"></script>
 <!--<script>alert('<-');</script>-->
-{block name="js"}
+
 <div class="mores" id="mores"> 加载更多</div>
-<script src="__JS__/service.js"></script>
+<script src="/static/js/service.js"></script>
 <script>
 
     function single_click(url){
@@ -468,7 +480,7 @@
                     });
                     ;
                 }else{
-                    window.location.href="{:url('moblielogin')}"
+                    window.location.href="<?php echo url('moblielogin'); ?>"
                 }
             }
 
@@ -515,9 +527,9 @@
         }
 
         var arrSlide = [];
-        {volist name='arrlist' id='val'}
-            arrSlide.push({'img' : '{$val.img}','url':'{$val.url}'});
-        {/volist}
+        <?php if(is_array($arrlist) || $arrlist instanceof \think\Collection || $arrlist instanceof \think\Paginator): $i = 0; $__LIST__ = $arrlist;if( count($__LIST__)==0 ) : echo "" ;else: foreach($__LIST__ as $key=>$val): $mod = ($i % 2 );++$i;?>
+            arrSlide.push({'img' : '<?php echo htmlentities($val['img']); ?>','url':'<?php echo htmlentities($val['url']); ?>'});
+        <?php endforeach; endif; else: echo "" ;endif; ?>
 
         adImg(arrSlide);
 
@@ -525,6 +537,6 @@
 
 
 </script>
-{/block}
+
 </body>
 </html>

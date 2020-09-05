@@ -1,0 +1,2 @@
+<?php /*a:1:{s:52:"D:\phpstudy_pro\WWW\YLC\tp\view\mobile\index\PC.html";i:1599132143;}*/ ?>
+<center><iframe width="600"  height="100%"frameborder="0" style="overflow:hidden;" border="0" src="/mobile/index"></iframe></center>

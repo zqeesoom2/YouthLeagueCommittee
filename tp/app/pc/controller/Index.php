@@ -1,7 +1,7 @@
 <?php
 declare (strict_types = 1);
 
-namespace app\mobile\controller;
+namespace app\pc\controller;
 
 use app\admin\model\Froum;
 use app\admin\model\OrgActivity;
@@ -26,16 +26,11 @@ class Index
      *
      * @return \think\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        $arrM ='';
-        //$arrM = (new Member() )->memberByName(Session::get('userInfo')['username']);
-        $arrRes = Db::name('slide')->order('rank','desc')->select()->toArray();
 
-        View::assign('arrlist',$arrRes);
-        View::assign('me',$arrM);
+            return View::fetch();
 
-        return View::fetch();
 
     }
 
